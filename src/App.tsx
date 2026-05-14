@@ -219,6 +219,8 @@ type Translation = {
   };
 };
 
+const publicAsset = (path: string) => `${import.meta.env.BASE_URL}${path.replace(/^\//, '')}`;
+
 const translations: Record<Language, Translation> = {
   en: {
     meta: {
@@ -1385,7 +1387,7 @@ function Header({
   return (
     <header className="site-header">
       <a href="#home" className="brand" aria-label="KRKN Garage home" onClick={closeMenu}>
-        <img src="/logo.png" alt="KRKN Garage logo" />
+        <img src={publicAsset('logo.png')} alt="KRKN Garage logo" />
         <span>KRKN Garage</span>
       </a>
 
@@ -1497,7 +1499,7 @@ function LanguageSwitcher({
 function Hero({ t }: { t: Translation }) {
   return (
     <section className="hero section-band" id="home">
-      <img src="/assets/krkn-hero-garage.png" alt={t.hero.imageAlt} className="hero-bg" />
+      <img src={publicAsset('assets/krkn-hero-garage.png')} alt={t.hero.imageAlt} className="hero-bg" />
       <div className="hero-overlay" />
       <div className="container hero-grid">
         <div className="hero-copy">
@@ -2165,7 +2167,7 @@ function About({ t }: { t: Translation }) {
           </div>
         </div>
         <div className="about-panel">
-          <img src="/logo.png" alt="KRKN Garage logo badge" />
+          <img src={publicAsset('logo.png')} alt="KRKN Garage logo badge" />
           <p>krkngarage.com</p>
           <strong>{t.footer.slogan}</strong>
         </div>
@@ -2319,7 +2321,7 @@ function Footer({
     <footer className="site-footer">
       <div className="container footer-grid">
         <div className="footer-brand">
-          <img src="/logo.png" alt="KRKN Garage logo" />
+          <img src={publicAsset('logo.png')} alt="KRKN Garage logo" />
           <p>{t.footer.slogan}</p>
           <span>krkngarage.com</span>
         </div>
