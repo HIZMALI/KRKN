@@ -172,6 +172,17 @@ type Translation = {
     cartMessage: string;
     newsletterSuccess: string;
     sale: string;
+    close: string;
+    openMenu: string;
+    closeMenu: string;
+    accountTitle: string;
+    accountAction: string;
+    projectBrief: string;
+    requestSimilarBuild: string;
+    wishlistAdded: string;
+    wishlistRemoved: string;
+    noProducts: string;
+    legalMessage: string;
   };
   categoryLabels: Record<CategoryId, string>;
   categoryDescriptions: Record<CategoryId, string>;
@@ -307,6 +318,17 @@ const translations: Record<Language, Translation> = {
       cartMessage: 'Added to your temporary cart.',
       newsletterSuccess: 'You are on the KRKN Garage update list.',
       sale: 'Sale',
+      close: 'Close',
+      openMenu: 'Open menu',
+      closeMenu: 'Close menu',
+      accountTitle: 'KRKN Account',
+      accountAction: 'Request Account Access',
+      projectBrief: 'Project Details',
+      requestSimilarBuild: 'Request Similar Build',
+      wishlistAdded: 'Saved to wishlist.',
+      wishlistRemoved: 'Removed from wishlist.',
+      noProducts: 'No matching parts yet. Adjust filters or request a fitment check.',
+      legalMessage: 'Policy details are ready for future checkout integration.',
     },
     categoryLabels: {
       performance: 'Performance',
@@ -567,9 +589,9 @@ const translations: Record<Language, Translation> = {
       submitSuccess:
         'Quote request received. This demo keeps the request on-screen and is ready for backend integration.',
       cards: [
-        { label: 'WhatsApp', value: '+90 555 000 00 00' },
+        { label: 'WhatsApp', value: '+1 555 000 0000' },
         { label: 'Email', value: 'info@krkngarage.com' },
-        { label: 'Location', value: 'Turkey' },
+        { label: 'Location', value: 'USA' },
         { label: 'Instagram', value: '@krkngarage' },
       ],
     },
@@ -685,6 +707,17 @@ const translations: Record<Language, Translation> = {
       cartMessage: 'Añadido a tu carrito temporal.',
       newsletterSuccess: 'Ya estás en la lista de novedades de KRKN Garage.',
       sale: 'Oferta',
+      close: 'Cerrar',
+      openMenu: 'Abrir menu',
+      closeMenu: 'Cerrar menu',
+      accountTitle: 'Cuenta KRKN',
+      accountAction: 'Solicitar acceso',
+      projectBrief: 'Detalles del proyecto',
+      requestSimilarBuild: 'Solicitar proyecto similar',
+      wishlistAdded: 'Guardado en favoritos.',
+      wishlistRemoved: 'Eliminado de favoritos.',
+      noProducts: 'No hay piezas que coincidan. Ajusta los filtros o solicita una verificacion de compatibilidad.',
+      legalMessage: 'La informacion legal esta lista para una futura integracion de checkout.',
     },
     categoryLabels: {
       performance: 'Rendimiento',
@@ -945,9 +978,9 @@ const translations: Record<Language, Translation> = {
       submitSuccess:
         'Solicitud recibida. Esta demo mantiene la solicitud en pantalla y está lista para integración backend.',
       cards: [
-        { label: 'WhatsApp', value: '+90 555 000 00 00' },
+        { label: 'WhatsApp', value: '+1 555 000 0000' },
         { label: 'Email', value: 'info@krkngarage.com' },
-        { label: 'Ubicación', value: 'Turquía' },
+        { label: 'Ubicación', value: 'EE. UU.' },
         { label: 'Instagram', value: '@krkngarage' },
       ],
     },
@@ -1207,6 +1240,7 @@ function App() {
   };
 
   const toggleWishlist = (productId: string) => {
+    const isSaved = wishlist.has(productId);
     setWishlist((current) => {
       const next = new Set(current);
       if (next.has(productId)) {
@@ -1216,6 +1250,20 @@ function App() {
       }
       return next;
     });
+    showToast(isSaved ? t.common.wishlistRemoved : t.common.wishlistAdded);
+  };
+
+  const showCategory = (category: CategoryId | 'all') => {
+    setActiveCategory(category);
+    setQuery('');
+    setBrandFilter('all');
+    setVehicleFilter('all');
+
+    const nextProduct =
+      category === 'all' ? products[0] : products.find((product) => product.category === category);
+    if (nextProduct) {
+      setSelectedProductId(nextProduct.id);
+    }
   };
 
   const selectProduct = (productId: string) => {
@@ -1277,7 +1325,7 @@ function App() {
           selectedProduct={selectedProduct}
           selectProduct={selectProduct}
         />
-        <Categories t={t} />
+        <Categories t={t} showCategory={showCategory} />
         <Projects t={t} />
         <WhyChoose t={t} />
         <ProcessSection t={t} />
@@ -1286,7 +1334,13 @@ function App() {
         <Contact t={t} handleQuoteSubmit={handleQuoteSubmit} quoteStatus={quoteStatus} />
       </main>
 
-      <Footer t={t} handleNewsletterSubmit={handleNewsletterSubmit} newsletterStatus={newsletterStatus} />
+      <Footer
+        t={t}
+        handleNewsletterSubmit={handleNewsletterSubmit}
+        newsletterStatus={newsletterStatus}
+        showCategory={showCategory}
+        showToast={showToast}
+      />
 
       <div className={`toast ${toast ? 'toast-visible' : ''}`} role="status" aria-live="polite">
         <CheckCircle2 size={18} />
@@ -1315,6 +1369,7 @@ function Header({
   showToast: (message: string) => void;
   t: Translation;
 }) {
+  const [isAccountOpen, setIsAccountOpen] = useState(false);
   const links = [
     { href: '#home', label: t.nav.home },
     { href: '#services', label: t.nav.services },
@@ -1331,7 +1386,7 @@ function Header({
     <header className="site-header">
       <a href="#home" className="brand" aria-label="KRKN Garage home" onClick={closeMenu}>
         <img src="/logo.png" alt="KRKN Garage logo" />
-        <span>krkngarage.com</span>
+        <span>KRKN Garage</span>
       </a>
 
       <nav className="desktop-nav" aria-label="Primary navigation">
@@ -1361,7 +1416,7 @@ function Header({
           className="icon-button account-button"
           type="button"
           aria-label={t.nav.account}
-          onClick={() => showToast(t.common.accountMessage)}
+          onClick={() => setIsAccountOpen(true)}
         >
           <UserRound size={18} />
         </button>
@@ -1371,7 +1426,7 @@ function Header({
         <button
           className="mobile-toggle"
           type="button"
-          aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
+          aria-label={isMenuOpen ? t.common.closeMenu : t.common.openMenu}
           aria-expanded={isMenuOpen}
           onClick={() => setIsMenuOpen(!isMenuOpen)}
         >
@@ -1389,6 +1444,27 @@ function Header({
           {t.nav.consultation}
         </a>
       </div>
+
+      {isAccountOpen && (
+        <div className="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="account-title">
+          <div className="modal-card account-modal">
+            <button
+              type="button"
+              className="modal-close"
+              aria-label={t.common.close}
+              onClick={() => setIsAccountOpen(false)}
+            >
+              <X size={18} />
+            </button>
+            <UserRound size={26} />
+            <h2 id="account-title">{t.common.accountTitle}</h2>
+            <p>{t.common.accountMessage}</p>
+            <a className="primary-button" href="#contact" onClick={() => setIsAccountOpen(false)}>
+              {t.common.accountAction}
+            </a>
+          </div>
+        </div>
+      )}
     </header>
   );
 }
@@ -1478,6 +1554,9 @@ function SectionIntro({
 }
 
 function Services({ t }: { t: Translation }) {
+  const [activeServiceIndex, setActiveServiceIndex] = useState(0);
+  const activeService = t.services[activeServiceIndex];
+
   return (
     <section className="section-band" id="services">
       <div className="container">
@@ -1490,20 +1569,41 @@ function Services({ t }: { t: Translation }) {
           {t.services.map((service, index) => {
             const Icon = serviceIcons[index] ?? Wrench;
             return (
-              <article className="service-card" key={service.title}>
+              <article
+                className={`service-card ${activeServiceIndex === index ? 'service-card-active' : ''}`}
+                key={service.title}
+              >
                 <div className="card-icon">
                   <Icon size={24} />
                 </div>
                 <h3>{service.title}</h3>
                 <p>{service.description}</p>
-                <a href="#contact" className="text-link">
+                <button
+                  type="button"
+                  className="text-link service-learn-button"
+                  aria-expanded={activeServiceIndex === index}
+                  aria-controls="service-detail"
+                  onClick={() => setActiveServiceIndex(index)}
+                >
                   {t.common.learnMore}
                   <ChevronRight size={16} />
-                </a>
+                </button>
               </article>
             );
           })}
         </div>
+        {activeService && (
+          <div className="service-detail-strip" id="service-detail" aria-live="polite">
+            <div>
+              <span>{t.sectionLabels.servicesEyebrow}</span>
+              <h3>{activeService.title}</h3>
+              <p>{activeService.description}</p>
+            </div>
+            <a href="#contact" className="secondary-button">
+              {t.common.requestQuote}
+            </a>
+          </div>
+        )}
       </div>
     </section>
   );
@@ -1626,7 +1726,7 @@ function Shop({
           body={t.sectionLabels.shopBody}
         />
 
-        <div className="shop-controls" aria-label="Shop filters">
+        <div className="shop-controls" id="shop-products" aria-label="Shop filters">
           <label className="search-control">
             <Search size={18} />
             <span className="sr-only">{t.common.searchPlaceholder}</span>
@@ -1680,21 +1780,31 @@ function Shop({
           ))}
         </div>
 
-        <div className="product-grid">
-          {featuredProducts.map((product) => (
-            <ProductCard
-              key={product.id}
-              product={product}
-              language={language}
-              t={t}
-              isFavorite={wishlist.has(product.id)}
-              inCart={Boolean(cart[product.id])}
-              onFavorite={() => toggleWishlist(product.id)}
-              onAdd={() => addToCart(product)}
-              onView={() => selectProduct(product.id)}
-            />
-          ))}
-        </div>
+        {featuredProducts.length > 0 ? (
+          <div className="product-grid">
+            {featuredProducts.map((product) => (
+              <ProductCard
+                key={product.id}
+                product={product}
+                language={language}
+                t={t}
+                isFavorite={wishlist.has(product.id)}
+                inCart={Boolean(cart[product.id])}
+                onFavorite={() => toggleWishlist(product.id)}
+                onAdd={() => addToCart(product)}
+                onView={() => selectProduct(product.id)}
+              />
+            ))}
+          </div>
+        ) : (
+          <div className="empty-state">
+            <Search size={22} />
+            <p>{t.common.noProducts}</p>
+            <a className="secondary-button" href="#contact">
+              {t.common.requestFitment}
+            </a>
+          </div>
+        )}
 
         <div className="shop-bottom">
           <ProductDetail
@@ -1708,7 +1818,7 @@ function Shop({
         </div>
 
         <div className="centered-action">
-          <a className="primary-button" href="#shop">
+          <a className="primary-button" href="#shop-products">
             {t.common.visitShop}
             <ShoppingBag size={18} />
           </a>
@@ -1865,7 +1975,13 @@ function CartPanel({
   );
 }
 
-function Categories({ t }: { t: Translation }) {
+function Categories({
+  t,
+  showCategory,
+}: {
+  t: Translation;
+  showCategory: (category: CategoryId) => void;
+}) {
   return (
     <section className="section-band categories-section">
       <div className="container">
@@ -1875,7 +1991,12 @@ function Categories({ t }: { t: Translation }) {
         />
         <div className="category-grid">
           {categoryIds.map((category) => (
-            <a className="category-card" href="#shop" key={category}>
+            <a
+              className="category-card"
+              href="#shop-products"
+              key={category}
+              onClick={() => showCategory(category)}
+            >
               <span>{t.categoryLabels[category]}</span>
               <p>{t.categoryDescriptions[category]}</p>
               <ChevronRight size={20} />
@@ -1888,6 +2009,8 @@ function Categories({ t }: { t: Translation }) {
 }
 
 function Projects({ t }: { t: Translation }) {
+  const [activeProject, setActiveProject] = useState<Project | null>(null);
+
   return (
     <section className="section-band" id="projects">
       <div className="container">
@@ -1909,15 +2032,46 @@ function Projects({ t }: { t: Translation }) {
                     <span key={tag}>{tag}</span>
                   ))}
                 </div>
-                <a href="#contact" className="text-link">
+                <button type="button" className="text-link" onClick={() => setActiveProject(project)}>
                   {t.common.viewProject}
                   <ChevronRight size={16} />
-                </a>
+                </button>
               </div>
             </article>
           ))}
         </div>
       </div>
+
+      {activeProject && (
+        <div className="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="project-title">
+          <div className="modal-card project-modal">
+            <button
+              type="button"
+              className="modal-close"
+              aria-label={t.common.close}
+              onClick={() => setActiveProject(null)}
+            >
+              <X size={18} />
+            </button>
+            <span className="detail-kicker">{t.common.projectBrief}</span>
+            <h2 id="project-title">{activeProject.title}</h2>
+            <p>{activeProject.services}</p>
+            <div className="tag-row">
+              {activeProject.tags.map((tag) => (
+                <span key={tag}>{tag}</span>
+              ))}
+            </div>
+            <div className="modal-actions">
+              <a className="primary-button" href="#contact" onClick={() => setActiveProject(null)}>
+                {t.common.requestSimilarBuild}
+              </a>
+              <button type="button" className="secondary-button" onClick={() => setActiveProject(null)}>
+                {t.common.close}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
@@ -2042,8 +2196,21 @@ function Contact({
             {t.contact.cards.map((card, index) => {
               const icons = [Phone, Mail, MapPin, Instagram];
               const Icon = icons[index] ?? Phone;
+              const hrefs = [
+                'tel:+15550000000',
+                'mailto:info@krkngarage.com',
+                'https://www.google.com/maps/search/?api=1&query=USA',
+                'https://www.instagram.com/krkngarage',
+              ];
+              const isExternal = hrefs[index]?.startsWith('https://');
               return (
-                <a className="contact-card" href={index === 1 ? 'mailto:info@krkngarage.com' : '#contact'} key={card.label}>
+                <a
+                  className="contact-card"
+                  href={hrefs[index] ?? '#contact'}
+                  target={isExternal ? '_blank' : undefined}
+                  rel={isExternal ? 'noreferrer' : undefined}
+                  key={card.label}
+                >
                   <Icon size={21} />
                   <span>{card.label}</span>
                   <strong>{card.value}</strong>
@@ -2064,7 +2231,7 @@ function Contact({
             <FormField label={t.contact.fields.year} name="year" inputMode="numeric" />
             <FormField label={t.contact.fields.engine} name="engine" />
           </div>
-          <label className="field full-field">
+          <label className="field full-field select-field">
             <span>{t.contact.fields.service}</span>
             <select name="service" required defaultValue="">
               <option value="" disabled>
@@ -2130,10 +2297,14 @@ function Footer({
   t,
   handleNewsletterSubmit,
   newsletterStatus,
+  showCategory,
+  showToast,
 }: {
   t: Translation;
   handleNewsletterSubmit: (event: FormEvent<HTMLFormElement>) => void;
   newsletterStatus: string;
+  showCategory: (category: CategoryId) => void;
+  showToast: (message: string) => void;
 }) {
   const footerLinks = [
     { label: t.nav.home, href: '#home' },
@@ -2166,7 +2337,7 @@ function Footer({
           <h2>{t.footer.shopCategories}</h2>
           <div className="footer-links">
             {categoryIds.slice(0, 8).map((category) => (
-              <a href="#shop" key={category}>
+              <a href="#shop-products" key={category} onClick={() => showCategory(category)}>
                 {t.categoryLabels[category]}
               </a>
             ))}
@@ -2190,9 +2361,9 @@ function Footer({
         <p>{t.footer.copyright}</p>
         <div>
           {t.footer.legal.map((item) => (
-            <a href="#home" key={item}>
+            <button type="button" key={item} onClick={() => showToast(t.common.legalMessage)}>
               {item}
-            </a>
+            </button>
           ))}
         </div>
       </div>
