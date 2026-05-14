@@ -6,6 +6,8 @@
   "scripts": {
     "dev": "vite --host 127.0.0.1",
     "build": "tsc --noEmit && vite build",
+    "build:github": "tsc --noEmit && vite build --outDir docs",
+    "build:server": "tsc --noEmit && vite build --base / --outDir server-dist",
     "preview": "vite preview --host 127.0.0.1"
   },
   "dependencies": {
