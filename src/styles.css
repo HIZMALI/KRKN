@@ -124,7 +124,7 @@ img {
   position: sticky;
   top: 14px;
   z-index: 30;
-  width: min(1220px, calc(100% - 28px));
+  width: min(1320px, calc(100% - 28px));
   margin: 14px auto 0;
   min-height: 72px;
   display: flex;
@@ -143,7 +143,8 @@ img {
   display: inline-flex;
   align-items: center;
   gap: 12px;
-  min-width: 194px;
+  flex: 0 0 282px;
+  min-width: 282px;
 }
 
 .brand img {
@@ -597,6 +598,10 @@ img {
   gap: 16px;
 }
 
+.services-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
 .service-card,
 .package-card,
 .product-card,
@@ -622,6 +627,27 @@ img {
     transform 180ms ease,
     border-color 180ms ease,
     background 180ms ease;
+}
+
+.service-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 16px;
+}
+
+.service-items span,
+.service-detail-list span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  padding: 5px 9px;
+  color: var(--muted-strong);
+  background: rgba(255, 255, 255, 0.055);
+  border: 1px solid rgba(255, 255, 255, 0.095);
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 800;
 }
 
 .service-card:hover,
@@ -724,6 +750,20 @@ img {
   line-height: 1.6;
 }
 
+.service-detail-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.service-detail-strip small {
+  display: block;
+  margin-top: 14px;
+  color: var(--muted-strong);
+  line-height: 1.55;
+}
+
 .performance-section {
   background: linear-gradient(180deg, rgba(239, 35, 60, 0.06), transparent);
 }
@@ -822,6 +862,313 @@ img {
 .gain-row strong {
   color: #fff;
   text-align: right;
+}
+
+.dyno-section {
+  background:
+    linear-gradient(180deg, rgba(239, 35, 60, 0.075), rgba(255, 255, 255, 0.02)),
+    radial-gradient(circle at 82% 28%, rgba(239, 35, 60, 0.18), transparent 28rem);
+}
+
+.dyno-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.92fr) minmax(420px, 1.08fr);
+  gap: 30px;
+  align-items: center;
+}
+
+.dyno-card-grid,
+.media-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.dyno-info-card {
+  min-height: 190px;
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.03)),
+    rgba(9, 10, 12, 0.86);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.22);
+}
+
+.dyno-info-card svg {
+  color: var(--red);
+}
+
+.dyno-info-card h3 {
+  margin: 14px 0 8px;
+  color: #fff;
+}
+
+.dyno-info-card p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.dyno-visual {
+  position: relative;
+  padding: 20px;
+  overflow: hidden;
+  border: 1px solid rgba(239, 35, 60, 0.34);
+  border-radius: var(--radius);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.032)),
+    #08090b;
+  box-shadow: var(--shadow);
+}
+
+.dyno-room {
+  position: relative;
+  min-height: 178px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background:
+    linear-gradient(90deg, transparent 0 10%, rgba(255, 255, 255, 0.045) 10% 10.5%, transparent 10.5% 20%),
+    linear-gradient(180deg, #15181f, #08090b 72%);
+}
+
+.dyno-room::before {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: 62px;
+  background:
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.07) 0 2px, transparent 2px 24px),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.015));
+}
+
+.rolling-road {
+  position: absolute;
+  left: 50%;
+  bottom: 28px;
+  display: flex;
+  gap: 56px;
+  transform: translateX(-50%);
+}
+
+.rolling-road span {
+  width: 78px;
+  height: 22px;
+  border-radius: 999px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.02)),
+    #060607;
+  border: 1px solid var(--line-strong);
+}
+
+.dyno-car {
+  position: absolute;
+  left: 50%;
+  bottom: 52px;
+  width: 180px;
+  height: 82px;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  border-radius: var(--radius);
+  background:
+    linear-gradient(135deg, rgba(239, 35, 60, 0.34), transparent 46%),
+    linear-gradient(180deg, #272a31, #08090b);
+  border: 1px solid rgba(239, 35, 60, 0.28);
+  transform: translateX(-50%);
+  box-shadow: 0 20px 44px rgba(0, 0, 0, 0.38);
+}
+
+.dyno-chart {
+  margin-top: 16px;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: rgba(0, 0, 0, 0.24);
+}
+
+.chart-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.chart-header span {
+  color: #fff;
+  font-weight: 950;
+}
+
+.chart-header strong {
+  color: var(--muted);
+  font-size: 0.76rem;
+  text-align: right;
+}
+
+.dyno-chart svg {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.chart-grid-line {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.09);
+  stroke-width: 1;
+}
+
+.power-curve,
+.torque-curve {
+  fill: none;
+  stroke-linecap: round;
+  stroke-width: 6;
+}
+
+.power-curve {
+  stroke: url("#powerLine");
+  filter: drop-shadow(0 0 10px rgba(239, 35, 60, 0.32));
+}
+
+.torque-curve {
+  stroke: rgba(223, 228, 235, 0.64);
+  stroke-width: 4;
+}
+
+.dyno-metrics {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.dyno-metrics div {
+  min-height: 88px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.045);
+}
+
+.dyno-metrics strong {
+  display: block;
+  color: #fff;
+  font-size: 1.12rem;
+}
+
+.dyno-metrics span {
+  display: block;
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 0.82rem;
+  line-height: 1.35;
+}
+
+.media-section {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.018), rgba(239, 35, 60, 0.055)),
+    #050506;
+}
+
+.media-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.motion-card {
+  position: relative;
+  min-height: 320px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background:
+    linear-gradient(135deg, rgba(239, 35, 60, 0.18), transparent 42%),
+    linear-gradient(180deg, #22262e, #07080a);
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.28);
+}
+
+.motion-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--motion-image);
+  background-size: cover;
+  background-position: center;
+  opacity: 0.42;
+  filter: saturate(0.9) contrast(1.08);
+}
+
+.motion-card-1 {
+  --motion-image: url("krkn-hero-garage.png");
+}
+
+.motion-card-2 {
+  --motion-image: url("krkn-hero-garage.png");
+}
+
+.motion-card-3 {
+  --motion-image: url("krkn-hero-garage.png");
+}
+
+.motion-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, transparent 18%, rgba(0, 0, 0, 0.8)),
+    radial-gradient(circle at 72% 24%, rgba(239, 35, 60, 0.24), transparent 18rem);
+}
+
+.play-button {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 52px;
+  height: 52px;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  background: rgba(8, 9, 11, 0.64);
+  cursor: pointer;
+  transition:
+    background 180ms ease,
+    border-color 180ms ease,
+    transform 180ms ease;
+}
+
+.play-button:hover {
+  border-color: rgba(239, 35, 60, 0.54);
+  background: rgba(239, 35, 60, 0.24);
+  transform: scale(1.04);
+}
+
+.play-button span {
+  width: 0;
+  height: 0;
+  margin-left: 3px;
+  border-top: 9px solid transparent;
+  border-bottom: 9px solid transparent;
+  border-left: 14px solid currentColor;
+}
+
+.motion-copy {
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  bottom: 20px;
+}
+
+.motion-copy h3 {
+  margin: 0 0 8px;
+  color: #fff;
+  font-size: 1.35rem;
+}
+
+.motion-copy p {
+  margin: 0;
+  color: var(--muted-strong);
+  line-height: 1.5;
 }
 
 .shop-section {
@@ -1040,10 +1387,27 @@ img {
 }
 
 .visual-care,
-.visual-shirt {
+.visual-shirt,
+.visual-ppf,
+.visual-detailing,
+.visual-dyno {
   background:
     linear-gradient(135deg, rgba(223, 228, 235, 0.16), transparent 48%),
     linear-gradient(180deg, #252830, #090a0d);
+}
+
+.visual-ppf,
+.visual-detailing {
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.22), transparent 46%),
+    linear-gradient(180deg, #292c33, #08090a);
+}
+
+.visual-dyno {
+  background:
+    linear-gradient(135deg, rgba(239, 35, 60, 0.24), transparent 44%),
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.08) 0 2px, transparent 2px 18px),
+    linear-gradient(180deg, #24272e, #060708);
 }
 
 .sale-badge {
@@ -1299,7 +1663,7 @@ img {
   color: rgba(255, 255, 255, 0.82);
   background-image:
     linear-gradient(135deg, rgba(239, 35, 60, 0.3), rgba(0, 0, 0, 0.52)),
-    url("/assets/krkn-hero-garage.png");
+    url("krkn-hero-garage.png");
   background-size: cover;
   background-position: center;
 }
@@ -1724,6 +2088,7 @@ img {
 
   .hero-grid,
   .gains-layout,
+  .dyno-layout,
   .why-layout,
   .about-layout,
   .contact-layout {
@@ -1735,6 +2100,7 @@ img {
   }
 
   .services-grid,
+  .media-grid,
   .projects-grid,
   .testimonial-grid,
   .product-grid {
@@ -1760,6 +2126,7 @@ img {
   }
 
   .brand {
+    flex: 0 1 auto;
     min-width: 0;
   }
 
@@ -1812,6 +2179,7 @@ img {
   }
 
   .shop-controls,
+  .dyno-metrics,
   .shop-bottom,
   .footer-grid {
     grid-template-columns: 1fr;
@@ -1860,6 +2228,8 @@ img {
 
   .hero-stat-panel,
   .services-grid,
+  .dyno-card-grid,
+  .media-grid,
   .package-grid,
   .projects-grid,
   .testimonial-grid,
