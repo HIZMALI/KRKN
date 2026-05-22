@@ -156,15 +156,15 @@ img {
   display: inline-flex;
   align-items: center;
   gap: 12px;
-  flex: 0 0 282px;
-  min-width: 282px;
+  flex: 0 0 314px;
+  min-width: 314px;
 }
 
 .brand img {
-  width: 112px;
-  height: 42px;
-  max-width: 112px;
-  max-height: 42px;
+  width: 128px;
+  height: 48px;
+  max-width: 128px;
+  max-height: 48px;
   object-fit: contain;
   padding: 5px 7px;
   background: linear-gradient(180deg, #f6f5f1, #dfe2e7);
@@ -602,6 +602,122 @@ img {
   line-height: 1.75;
 }
 
+.brand-essence-section {
+  background:
+    radial-gradient(circle at 16% 22%, rgba(239, 35, 60, 0.18), transparent 22rem),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(239, 35, 60, 0.035));
+}
+
+.brand-essence-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.86fr) minmax(420px, 1.14fr);
+  gap: 42px;
+  align-items: center;
+}
+
+.brand-essence-copy {
+  position: relative;
+  padding: 34px 0;
+}
+
+.brand-essence-copy::before {
+  content: "";
+  position: absolute;
+  left: -22px;
+  top: 42px;
+  bottom: 42px;
+  width: 2px;
+  background: linear-gradient(180deg, transparent, var(--red), transparent);
+  box-shadow: 0 0 22px rgba(239, 35, 60, 0.36);
+}
+
+.brand-essence-copy h2 {
+  margin: 0;
+  color: #fff;
+  font-size: 3.1rem;
+  line-height: 1.02;
+  text-wrap: balance;
+}
+
+.brand-essence-copy p:not(.eyebrow) {
+  margin: 20px 0 0;
+  color: var(--muted);
+  line-height: 1.75;
+}
+
+.brand-line {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 26px;
+}
+
+.brand-line span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  padding: 7px 11px;
+  color: var(--muted-strong);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.025)),
+    rgba(8, 9, 11, 0.76);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: 0.84rem;
+  font-weight: 850;
+}
+
+.brand-pillar-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.brand-pillar-card {
+  position: relative;
+  min-height: 276px;
+  padding: 24px;
+  overflow: hidden;
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    background 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.brand-pillar-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(135deg, rgba(239, 35, 60, 0.14), transparent 42%),
+    repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.028) 0 2px, transparent 2px 12px);
+  opacity: 0.84;
+  pointer-events: none;
+}
+
+.brand-pillar-card svg,
+.brand-pillar-card h3,
+.brand-pillar-card p {
+  position: relative;
+}
+
+.brand-pillar-card svg {
+  color: var(--red);
+}
+
+.brand-pillar-card h3 {
+  margin: 34px 0 12px;
+  color: #fff;
+  font-size: 1.28rem;
+}
+
+.brand-pillar-card p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
 .services-grid,
 .category-grid,
 .projects-grid,
@@ -626,7 +742,10 @@ img {
 .product-detail,
 .quote-form,
 .about-panel,
-.contact-card {
+.contact-card,
+.brand-pillar-card,
+.platform-card,
+.technical-card {
   border: 1px solid var(--line);
   border-radius: var(--radius);
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.032));
@@ -667,7 +786,10 @@ img {
 .service-card-active,
 .project-card:hover,
 .product-card:hover,
-.category-card:hover {
+.category-card:hover,
+.brand-pillar-card:hover,
+.platform-card:hover,
+.technical-card:hover {
   transform: translateY(-4px);
   border-color: rgba(239, 35, 60, 0.48);
   background: linear-gradient(180deg, rgba(239, 35, 60, 0.12), rgba(255, 255, 255, 0.038));
@@ -1116,15 +1238,15 @@ img {
 }
 
 .motion-card-1 {
-  --motion-image: url("krkn-hero-garage.png");
+  --motion-image: url("/assets/krkn-hero-garage.png");
 }
 
 .motion-card-2 {
-  --motion-image: url("krkn-hero-garage.png");
+  --motion-image: url("/assets/krkn-hero-garage.png");
 }
 
 .motion-card-3 {
-  --motion-image: url("krkn-hero-garage.png");
+  --motion-image: url("/assets/krkn-hero-garage.png");
 }
 
 .motion-overlay {
@@ -1186,6 +1308,162 @@ img {
   margin: 0;
   color: var(--muted-strong);
   line-height: 1.5;
+}
+
+.platform-section {
+  background:
+    radial-gradient(circle at 78% 18%, rgba(239, 35, 60, 0.16), transparent 23rem),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.018), rgba(255, 255, 255, 0.035));
+}
+
+.platform-controls {
+  display: grid;
+  grid-template-columns: minmax(240px, 360px) minmax(0, 1fr);
+  gap: 14px;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.platform-filter {
+  margin: 0;
+  padding-bottom: 0;
+}
+
+.platform-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.platform-card {
+  position: relative;
+  min-height: 332px;
+  overflow: hidden;
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    background 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.platform-visual {
+  position: relative;
+  min-height: 126px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  color: rgba(255, 255, 255, 0.86);
+  background:
+    linear-gradient(135deg, rgba(239, 35, 60, 0.28), transparent 48%),
+    linear-gradient(180deg, #252831, #08090b);
+  transition:
+    transform 320ms ease,
+    filter 320ms ease;
+}
+
+.platform-visual::before {
+  content: "";
+  position: absolute;
+  inset: 18px 24px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius);
+}
+
+.platform-visual::after {
+  content: "";
+  position: absolute;
+  left: 16%;
+  right: 16%;
+  bottom: 18px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(239, 35, 60, 0.8), transparent);
+  box-shadow: 0 0 20px rgba(239, 35, 60, 0.38);
+}
+
+.platform-visual svg {
+  position: relative;
+  z-index: 1;
+  filter: drop-shadow(0 16px 24px rgba(0, 0, 0, 0.45));
+}
+
+.platform-visual-2 {
+  background:
+    linear-gradient(135deg, rgba(223, 228, 235, 0.18), transparent 46%),
+    linear-gradient(180deg, #262a31, #07080a);
+}
+
+.platform-visual-3 {
+  background:
+    radial-gradient(circle at 78% 24%, rgba(239, 35, 60, 0.22), transparent 15rem),
+    linear-gradient(180deg, #292c33, #060708);
+}
+
+.platform-visual-4 {
+  background:
+    repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.07) 0 2px, transparent 2px 14px),
+    linear-gradient(180deg, #2b2f37, #050506);
+}
+
+.platform-visual-5 {
+  background:
+    linear-gradient(135deg, rgba(247, 185, 85, 0.18), transparent 44%),
+    linear-gradient(180deg, #252a31, #07080a);
+}
+
+.platform-visual-6 {
+  background:
+    linear-gradient(135deg, rgba(67, 209, 122, 0.12), transparent 42%),
+    linear-gradient(180deg, #24272e, #060708);
+}
+
+.platform-card:hover .platform-visual {
+  transform: scale(1.025);
+  filter: saturate(1.1) contrast(1.06);
+}
+
+.platform-body {
+  padding: 18px;
+}
+
+.platform-body > span,
+.technical-card > span {
+  color: var(--red);
+  font-size: 0.75rem;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.platform-body h3 {
+  min-height: 48px;
+  margin: 10px 0 12px;
+  color: #fff;
+  line-height: 1.18;
+}
+
+.tag-row small,
+.product-tags span,
+.product-tags small {
+  display: inline-flex;
+  align-items: center;
+  min-height: 27px;
+  padding: 5px 8px;
+  color: var(--muted-strong);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 850;
+}
+
+.platform-note {
+  max-width: 900px;
+  margin: 24px 0 0;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.platform-modal p {
+  color: var(--muted);
 }
 
 .shop-section {
@@ -1450,6 +1728,46 @@ img {
     linear-gradient(180deg, #2a2d34, #050506);
 }
 
+.visual-turbo {
+  background:
+    radial-gradient(circle at 68% 30%, rgba(239, 35, 60, 0.24), transparent 15rem),
+    linear-gradient(135deg, rgba(223, 228, 235, 0.18), transparent 48%),
+    linear-gradient(180deg, #262a31, #07080a);
+}
+
+.visual-lighting {
+  background:
+    linear-gradient(115deg, transparent 0 38%, rgba(239, 35, 60, 0.36) 44%, transparent 58%),
+    linear-gradient(180deg, #222630, #060708);
+}
+
+.visual-interior {
+  background:
+    linear-gradient(135deg, rgba(223, 228, 235, 0.14), transparent 48%),
+    radial-gradient(circle at 70% 22%, rgba(239, 35, 60, 0.18), transparent 14rem),
+    linear-gradient(180deg, #24272d, #07080a);
+}
+
+.visual-electronics {
+  background:
+    repeating-linear-gradient(90deg, rgba(239, 35, 60, 0.13) 0 1px, transparent 1px 18px),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.12), transparent 48%),
+    linear-gradient(180deg, #20242b, #060708);
+}
+
+.visual-track {
+  background:
+    repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.08) 0 3px, transparent 3px 15px),
+    linear-gradient(135deg, rgba(247, 185, 85, 0.2), transparent 48%),
+    linear-gradient(180deg, #252a31, #050506);
+}
+
+.visual-suv {
+  background:
+    linear-gradient(135deg, rgba(67, 209, 122, 0.12), transparent 48%),
+    linear-gradient(180deg, #24282f, #060708);
+}
+
 .sale-badge {
   position: absolute;
   left: 12px;
@@ -1521,6 +1839,18 @@ img {
 .product-card p {
   min-height: 78px;
   margin-bottom: 16px;
+}
+
+.product-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  min-height: 31px;
+  margin: 0 0 14px;
+}
+
+.detail-tags {
+  margin: 16px 0 20px;
 }
 
 .product-meta,
@@ -1703,7 +2033,7 @@ img {
   color: rgba(255, 255, 255, 0.82);
   background-image:
     linear-gradient(135deg, rgba(239, 35, 60, 0.3), rgba(0, 0, 0, 0.52)),
-    url("krkn-hero-garage.png");
+    url("/assets/krkn-hero-garage.png");
   background-size: cover;
   background-position: center;
 }
@@ -1786,6 +2116,46 @@ img {
   display: block;
   margin-top: 18px;
   color: #fff;
+}
+
+.technical-section {
+  background:
+    radial-gradient(circle at 22% 18%, rgba(223, 228, 235, 0.08), transparent 22rem),
+    linear-gradient(180deg, rgba(239, 35, 60, 0.04), rgba(255, 255, 255, 0.018));
+}
+
+.technical-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.technical-card {
+  min-height: 260px;
+  padding: 22px;
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    background 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.technical-card h3 {
+  min-height: 58px;
+  margin: 12px 0 10px;
+  color: #fff;
+  line-height: 1.2;
+}
+
+.technical-card p {
+  min-height: 96px;
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.58;
+}
+
+.technical-modal p {
+  color: var(--muted);
 }
 
 .about-layout,
@@ -1955,8 +2325,8 @@ img {
 }
 
 .footer-brand img {
-  width: 132px;
-  max-height: 74px;
+  width: 150px;
+  max-height: 82px;
   object-fit: contain;
   padding: 9px;
   background: linear-gradient(180deg, #f6f5f1, #dfe2e7);
@@ -2204,7 +2574,10 @@ img {
 .icon-button,
 .favorite-button,
 .language-switcher button,
-.category-filter button {
+.category-filter button,
+.brand-pillar-card,
+.platform-card,
+.technical-card {
   will-change: transform;
 }
 
@@ -2227,7 +2600,8 @@ img {
 }
 
 .project-visual,
-.product-visual {
+.product-visual,
+.platform-visual {
   transition:
     transform 320ms ease,
     filter 320ms ease;
@@ -2270,6 +2644,9 @@ img {
   .motion-card,
   .product-card,
   .category-card,
+  .brand-pillar-card,
+  .platform-card,
+  .technical-card,
   .project-card,
   .why-item,
   .process-step,
@@ -2311,6 +2688,8 @@ img {
   .hero-grid,
   .gains-layout,
   .dyno-layout,
+  .brand-essence-layout,
+  .platform-controls,
   .why-layout,
   .about-layout,
   .contact-layout {
@@ -2325,7 +2704,9 @@ img {
   .media-grid,
   .projects-grid,
   .testimonial-grid,
-  .product-grid {
+  .product-grid,
+  .platform-grid,
+  .technical-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -2403,6 +2784,7 @@ img {
   .shop-controls,
   .dyno-metrics,
   .shop-bottom,
+  .brand-pillar-grid,
   .footer-grid {
     grid-template-columns: 1fr;
   }
@@ -2427,8 +2809,10 @@ img {
   }
 
   .brand img {
-    width: 74px;
-    height: 38px;
+    width: 88px;
+    height: 40px;
+    max-width: 88px;
+    max-height: 40px;
     padding: 4px;
   }
 
@@ -2455,10 +2839,12 @@ img {
   .package-grid,
   .projects-grid,
   .testimonial-grid,
-  .process-grid,
-  .product-grid,
-  .category-grid,
-  .why-grid,
+    .process-grid,
+    .product-grid,
+    .platform-grid,
+    .technical-grid,
+    .category-grid,
+    .why-grid,
   .about-points,
   .form-grid {
     grid-template-columns: 1fr;
