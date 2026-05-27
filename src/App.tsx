@@ -8,6 +8,7 @@ import {
   CircleDollarSign,
   ClipboardCheck,
   Cpu,
+  Film,
   Filter,
   Gauge,
   Heart,
@@ -18,6 +19,7 @@ import {
   Menu,
   Package,
   Phone,
+  Play,
   Search,
   Settings,
   ShieldCheck,
@@ -118,6 +120,7 @@ const tagTranslations: Record<string, string> = {
   muffler: 'Muffler',
   headers: 'Headers',
   engine: 'Motor',
+  supercharger: 'Supercharger',
   intercooler: 'Intercooler',
   cooling: 'Enfriamiento',
   turbo: 'Turbo',
@@ -141,6 +144,7 @@ const tagTranslations: Record<string, string> = {
   wing: 'Wing',
   spoiler: 'Spoiler',
   lighting: 'Iluminación',
+  headlights: 'Faros',
   taillights: 'Taillights',
   interior: 'Interior',
   'steering wheel': 'Volante',
@@ -159,6 +163,7 @@ const tagTranslations: Record<string, string> = {
   'lift kit': 'Lift kit',
   truck: 'Truck',
   offroad: 'Offroad',
+  'roof rack': 'Roof rack',
   wheels: 'Ruedas',
   suv: 'SUV',
 };
@@ -307,8 +312,9 @@ type Translation = {
     cards: { title: string; body: string }[];
   };
   media: {
-    clips: { title: string; path: string; label: string }[];
+    clips: { title: string; poster: string; label: string; meta: string }[];
     playLabel: string;
+    closeLabel: string;
   };
   why: string[];
   process: { step: string; title: string; description: string }[];
@@ -344,22 +350,19 @@ const publicAsset = (path: string) => `${import.meta.env.BASE_URL}${path.replace
 
 const imageAsset = (name: string) => `assets/images/${name}`;
 
-const commonsImage = (fileName: string) =>
-  `https://commons.wikimedia.org/wiki/Special:FilePath/${encodeURIComponent(fileName)}?width=1400`;
-
 const imageSource = (path: string) => (path.startsWith('http') ? path : publicAsset(path));
+
+const vehicleAsset = (name: string) => imageAsset(`vehicles/${name}`);
+
+const productAsset = (name: string) => imageAsset(`products/${name}`);
+
+const motionAsset = (name: string) => imageAsset(`motion/${name}`);
 
 const serviceImages = [
   imageAsset('detailing-polish.jpg'),
   imageAsset('tuning-engine.jpg'),
   imageAsset('carbon-body.jpg'),
   imageAsset('garage-industrial.jpg'),
-];
-
-const motionImages = [
-  imageAsset('detailing-polish.jpg'),
-  imageAsset('tuning-engine.jpg'),
-  imageAsset('exhaust-close.jpg'),
 ];
 
 const projectImages = [
@@ -383,13 +386,13 @@ const technicalImages = [
 ];
 
 const productImageByCategory: Record<CategoryId, string> = {
-  exhaust: imageAsset('exhaust-close.jpg'),
-  intake: imageAsset('tuning-engine.jpg'),
-  performance: imageAsset('turbo-engine.jpg'),
-  suspension: imageAsset('suv-offroad.jpg'),
-  brakes: imageAsset('brake-wheel.jpg'),
-  carbon: imageAsset('carbon-body.jpg'),
-  'body-kit': imageAsset('carbon-exhaust.jpg'),
+  exhaust: productAsset('part-catback-exhaust.jpg'),
+  intake: productAsset('part-cold-air-intake.jpg'),
+  performance: productAsset('part-turbocharger.jpg'),
+  suspension: productAsset('part-coilovers.jpg'),
+  brakes: productAsset('part-carbon-ceramic-brake.jpg'),
+  carbon: productAsset('part-carbon-hood.jpg'),
+  'body-kit': productAsset('part-widebody.jpg'),
   wheels: imageAsset('brake-wheel.jpg'),
   lighting: imageAsset('lighting-garage.jpg'),
   interior: imageAsset('interior-racing.jpg'),
@@ -402,52 +405,55 @@ const productImageByCategory: Record<CategoryId, string> = {
 };
 
 const productImageById: Record<string, string> = {
-  'premium-catback-exhaust': imageAsset('carbon-exhaust.jpg'),
-  'performance-downpipe': imageAsset('exhaust-close.jpg'),
-  'cold-air-intake': imageAsset('tuning-engine.jpg'),
-  'carbon-front-lip': imageAsset('carbon-body.jpg'),
-  'gloss-black-side-skirts': imageAsset('carbon-body.jpg'),
-  'rear-diffuser-kit': imageAsset('carbon-exhaust.jpg'),
-  'performance-spoiler': imageAsset('carbon-body.jpg'),
-  'aero-splitter-package': imageAsset('carbon-body.jpg'),
-  'widebody-conversion-kit': imageAsset('carbon-body.jpg'),
+  'premium-catback-exhaust': productAsset('part-catback-exhaust.jpg'),
+  'performance-downpipe': productAsset('part-downpipe.jpg'),
+  'cold-air-intake': productAsset('part-cold-air-intake.jpg'),
+  'carbon-front-lip': productAsset('part-front-splitter.jpg'),
+  'gloss-black-side-skirts': productAsset('part-side-skirts.jpg'),
+  'rear-diffuser-kit': productAsset('part-rear-diffuser.jpg'),
+  'performance-spoiler': productAsset('part-gt-wing.jpg'),
+  'aero-splitter-package': productAsset('part-front-splitter.jpg'),
+  'widebody-conversion-kit': productAsset('part-widebody.jpg'),
   'carbon-mirror-caps': imageAsset('carbon-body.jpg'),
-  'complete-body-kit-package': imageAsset('carbon-body.jpg'),
+  'complete-body-kit-package': productAsset('part-widebody.jpg'),
   'ceramic-coating-kit': imageAsset('detailing-polish.jpg'),
   'ppf-protection-package': imageAsset('detailing-buff.jpg'),
   'stage-1-remap': imageAsset('tuning-engine.jpg'),
-  'sport-suspension-kit': imageAsset('brake-wheel.jpg'),
+  'sport-suspension-kit': productAsset('part-coilovers.jpg'),
   'big-brake-kit': imageAsset('brake-wheel.jpg'),
   'forged-wheels': imageAsset('brake-wheel.jpg'),
   'vip-detailing-package': imageAsset('detailing-polish.jpg'),
-  'dyno-test-session': imageAsset('tuning-engine.jpg'),
-  'valvetronic-exhaust': imageAsset('carbon-exhaust.jpg'),
-  'headers-package': imageAsset('exhaust-close.jpg'),
-  'hybrid-turbo-kit': imageAsset('turbo-engine.jpg'),
-  'front-mount-intercooler': imageAsset('turbo-engine.jpg'),
-  'charge-pipe-kit': imageAsset('tuning-engine.jpg'),
+  'dyno-test-session': motionAsset('video-dyno-preview.jpg'),
+  'valvetronic-exhaust': productAsset('part-catback-exhaust.jpg'),
+  'headers-package': productAsset('part-downpipe.jpg'),
+  'hybrid-turbo-kit': productAsset('part-turbocharger.jpg'),
+  'supercharger-kit': productAsset('part-supercharger.jpg'),
+  'front-mount-intercooler': productAsset('part-intercooler.jpg'),
+  'charge-pipe-kit': productAsset('part-cold-air-intake.jpg'),
   'blow-off-valve': imageAsset('turbo-engine.jpg'),
   'tcu-tune-package': imageAsset('tuning-engine.jpg'),
-  'coilover-kit': imageAsset('brake-wheel.jpg'),
-  'air-suspension-kit': imageAsset('suv-offroad.jpg'),
-  'carbon-ceramic-brakes': imageAsset('brake-wheel.jpg'),
+  'coilover-kit': productAsset('part-coilovers.jpg'),
+  'air-suspension-kit': productAsset('part-air-suspension.jpg'),
+  'carbon-ceramic-brakes': productAsset('part-carbon-ceramic-brake.jpg'),
   'slotted-rotors': imageAsset('brake-wheel.jpg'),
   'drag-pack-wheels': imageAsset('brake-wheel.jpg'),
   'performance-tires': imageAsset('brake-wheel.jpg'),
-  'carbon-fiber-hood': imageAsset('carbon-body.jpg'),
-  'gt-wing-package': imageAsset('carbon-body.jpg'),
+  'carbon-fiber-hood': productAsset('part-carbon-hood.jpg'),
+  'gt-wing-package': productAsset('part-gt-wing.jpg'),
+  'led-headlights': productAsset('part-led-headlight.jpg'),
   'smoked-taillights': imageAsset('lighting-garage.jpg'),
   'ambient-lighting-kit': imageAsset('interior-racing.jpg'),
   'carbon-steering-wheel': imageAsset('interior-racing.jpg'),
-  'bucket-seat-package': imageAsset('interior-racing.jpg'),
+  'bucket-seat-package': productAsset('part-bucket-seats.jpg'),
   'carplay-module': imageAsset('interior-racing.jpg'),
   'ecu-unlock': imageAsset('tuning-engine.jpg'),
   'window-tint-package': imageAsset('detailing-buff.jpg'),
-  'vinyl-wrap-package': imageAsset('detailing-buff.jpg'),
-  'roll-cage-package': imageAsset('track-motion.jpg'),
+  'vinyl-wrap-package': productAsset('part-widebody.jpg'),
+  'roll-cage-package': productAsset('part-roll-cage.jpg'),
   'lightweight-battery': imageAsset('track-motion.jpg'),
-  'lift-kit': imageAsset('suv-offroad.jpg'),
-  'offroad-wheel-package': imageAsset('suv-offroad.jpg'),
+  'lift-kit': productAsset('part-lift-kit.jpg'),
+  'offroad-wheel-package': productAsset('part-offroad-wheels.jpg'),
+  'roof-rack-system': productAsset('part-roof-rack.jpg'),
   'krkn-eluxx-hoodie': imageAsset('garage-supercars.jpg'),
 };
 
@@ -471,7 +477,7 @@ const translations: Record<Language, Translation> = {
     services: [{ title: 'Detailing', description: 'From PPF and ceramic coating to detailed interior and exterior restoration, KRKN Eluxx Customs protects and refines every surface of your vehicle.', items: ['PPF / Paint Protection Film', 'Ceramic Coating', 'Interior Detailing', 'Exterior Detailing', 'Interior Restoration', 'Exterior Restoration', 'VIP Car Wash', 'Paint Correction', 'Premium Car Care'] }, { title: 'Tuning', description: 'Our tuning services are designed to unlock safer, sharper and more responsive performance through ECU remapping, staged upgrades and custom calibration.', items: ['ECU Remapping', 'Stage 1 Tuning', 'Stage 2 Tuning', 'Stage 3 Tuning', 'VMAX Off / Speed Limiter Removal', 'TCU / Gearbox Tuning', 'Performance Diagnostics', 'Custom Calibration'], note: 'Availability depends on vehicle model, local regulations and intended use.' }, { title: 'Aftermarket Parts', description: 'From carbon front lips and rear diffusers to complete body kit installations, KRKN Eluxx Customs helps create a sharper, more aggressive and more personalized exterior presence.', items: ['Branded Exhaust Systems', 'Air Intake Systems', 'Performance Parts', 'Carbon Fiber Exterior Parts', 'Front Lips', 'Side Skirts', 'Rear Diffusers', 'Spoilers', 'Splitters', 'Widebody Kits', 'Aero Packages', 'Professional Body Kit Installation', 'Fitment Support'] }, { title: 'Dyno Services', description: 'Our dyno service helps measure horsepower, torque and power delivery before and after tuning while supporting safer calibration decisions.', items: ['Dyno Testing', 'Before / After Power Measurement', 'Tuning Validation', 'Power Curve Analysis', 'Torque Curve Analysis', 'Performance Report', 'Safe Calibration Support'] }],
     packages: [{ title: 'Stage 1', subtitle: 'For daily drivers seeking safe and noticeable performance gains.', features: ['ECU optimization', 'Improved throttle response', 'Better torque delivery', 'No major hardware required'] }, { title: 'Stage 2', subtitle: 'For cars with hardware upgrades.', features: ['Downpipe/exhaust support', 'Intake optimization', 'Stronger torque curve', 'Advanced calibration'] }, { title: 'Stage 3', subtitle: 'For serious custom builds.', features: ['Turbo upgrade support', 'Fuel system optimization', 'Custom dyno-focused calibration', 'Project consultation'] }],
     dyno: { headline: 'Dyno-Tested Performance', description: 'Our dyno service helps measure horsepower, torque and power delivery before and after tuning. It provides a clearer view of real performance gains and supports safer calibration.', metrics: [{ value: 'HP', label: 'Horsepower measurement' }, { value: 'TQ', label: 'Torque curve analysis' }, { value: 'Before / After', label: 'Comparison report' }, { value: 'Safe', label: 'Calibration support' }], cards: [{ title: 'Dyno Testing', body: 'Measure sample estimated figures in a controlled rolling-road environment.' }, { title: 'Before / After Measurement', body: 'Compare baseline and post-tune delivery with a clearer performance view.' }, { title: 'Power Curve Analysis', body: 'Review how horsepower and torque build across the usable rev range.' }, { title: 'Performance Report', body: 'Prepare a polished report for consultation, validation and future upgrade planning.' }] },
-    media: { clips: [{ title: 'Detailing Motion', path: '/videos/detailing-motion.mp4', label: 'Paint, light and finish in motion' }, { title: 'Dyno Motion', path: '/videos/dyno-motion.mp4', label: 'Measured calibration atmosphere' }, { title: 'Exhaust & Aero Motion', path: '/videos/exhaust-motion.mp4', label: 'Sound, carbon and exterior presence' }], playLabel: 'Preview motion concept' },
+    media: { clips: [{ title: 'Detailing / PPF / Ceramic', poster: motionAsset('video-detailing-preview.jpg'), label: 'Paint correction, film prep and gloss delivery with a cinematic shop-floor feel.', meta: 'Video preview // 00:42' }, { title: 'Dyno / Tuning / Testing', poster: motionAsset('video-dyno-preview.jpg'), label: 'Rolling-road validation, power curves and calibration atmosphere.', meta: 'Video preview // 00:58' }, { title: 'Exhaust / Aero Walkaround', poster: motionAsset('video-exhaust-preview.jpg'), label: 'Sound hardware, carbon details and garage walkaround energy.', meta: 'Video preview // 00:37' }], playLabel: 'Open cinematic preview', closeLabel: 'Close preview' },
     why: ['Detailing, tuning and customization under one roof', 'Fitment-focused exterior upgrades', 'Premium aero and carbon styling', 'Professional installation', 'Dyno-supported tuning', 'Paint protection expertise', 'Installed by automotive enthusiasts', 'Bilingual customer experience'],
     process: [{ step: '01', title: 'Consultation', description: 'We understand your vehicle, goals, usage and build priorities.' }, { step: '02', title: 'Protection & Preparation', description: 'We inspect paint, interior, hardware and vehicle condition before work begins.' }, { step: '03', title: 'Install & Tune', description: 'We install selected parts, refine surfaces and calibrate performance with care.' }, { step: '04', title: 'Dyno & Delivery', description: 'We validate results where appropriate and deliver a cleaner, stronger, more personal car.' }],
     testimonials: [{ quote: 'KRKN Eluxx Customs made the car feel sharper and look dramatically cleaner. The process felt premium from start to finish.', name: 'Daniel R.' }, { quote: 'Professional team, clean installation and great communication from start to finish.', name: 'Carlos M.' }, { quote: 'The PPF and ceramic coating finish gave the car the exact protected, high-gloss look I wanted.', name: 'Emre K.' }, { quote: 'The dyno-supported consultation made the Stage 2 setup feel responsible and properly measured.', name: 'Alex T.' }],
@@ -492,7 +498,7 @@ const translations: Record<Language, Translation> = {
     services: [{ title: 'Detailing', description: 'Desde PPF y coating cerámico hasta restauración interior y exterior detallada, KRKN Eluxx Customs protege y perfecciona cada superficie de tu vehículo.', items: ['PPF / Película de protección de pintura', 'Coating cerámico', 'Detailing interior', 'Detailing exterior', 'Restauración interior', 'Restauración exterior', 'Lavado VIP', 'Corrección de pintura', 'Car care premium'] }, { title: 'Tuning', description: 'Nuestros servicios de tuning están diseñados para liberar un rendimiento más seguro, preciso y dinámico mediante reprogramación ECU, mejoras por etapas y calibración personalizada.', items: ['Reprogramación ECU', 'Stage 1', 'Stage 2', 'Stage 3', 'VMAX Off / Eliminación de limitador', 'Tuning TCU / Caja', 'Diagnóstico de rendimiento', 'Calibración personalizada'], note: 'La disponibilidad depende del modelo del vehículo, la normativa local y el uso previsto.' }, { title: 'Piezas Aftermarket', description: 'Desde front lips de carbono y difusores traseros hasta instalaciones completas de body kit, KRKN Eluxx Customs ayuda a crear una presencia exterior más agresiva, exclusiva y personalizada.', items: ['Sistemas de escape de marca', 'Air Intake Systems', 'Piezas de rendimiento', 'Piezas exteriores de carbono', 'Front Lips', 'Side Skirts', 'Difusores traseros', 'Spoilers', 'Splitters', 'Widebody Kits', 'Paquetes aero', 'Instalación profesional de body kit', 'Soporte de fitment'] }, { title: 'Servicios Dyno', description: 'Nuestro servicio dyno permite medir potencia, torque y entrega de rendimiento antes y después del tuning mientras apoya decisiones de calibración más seguras.', items: ['Prueba dyno', 'Medición antes / después', 'Validación de tuning', 'Análisis de curva de potencia', 'Análisis de curva de torque', 'Reporte de rendimiento', 'Soporte para calibración segura'] }],
     packages: [{ title: 'Stage 1', subtitle: 'Para conductores diarios que buscan ganancias seguras y notables.', features: ['Optimización ECU', 'Mejor respuesta del acelerador', 'Entrega de torque más fuerte', 'Sin hardware mayor requerido'] }, { title: 'Stage 2', subtitle: 'Para vehículos con mejoras de hardware.', features: ['Soporte para downpipe/escape', 'Optimización de admisión', 'Curva de torque más contundente', 'Calibración avanzada'] }, { title: 'Stage 3', subtitle: 'Para proyectos serios a medida.', features: ['Soporte para upgrade de turbo', 'Optimización de sistema de combustible', 'Calibración personalizada enfocada en dyno', 'Consultoría de proyecto'] }],
     dyno: { headline: 'Rendimiento probado en dyno', description: 'Nuestro servicio dyno permite medir potencia, torque y entrega de rendimiento antes y después del tuning. Ofrece una visión más clara de las ganancias reales y ayuda a una calibración más segura.', metrics: [{ value: 'HP', label: 'Medición de potencia' }, { value: 'TQ', label: 'Análisis de curva de torque' }, { value: 'Antes / Después', label: 'Reporte comparativo' }, { value: 'Seguro', label: 'Soporte de calibración' }], cards: [{ title: 'Prueba dyno', body: 'Mide cifras estimadas de muestra en un entorno rolling-road controlado.' }, { title: 'Medición antes / después', body: 'Compara entrega base y post-tuning con una visión más clara del rendimiento.' }, { title: 'Análisis de curva', body: 'Revisa cómo se construyen potencia y torque dentro del rango útil de rpm.' }, { title: 'Reporte de rendimiento', body: 'Prepara un reporte pulido para consulta, validación y planificación de upgrades.' }] },
-    media: { clips: [{ title: 'Detailing en movimiento', path: '/videos/detailing-motion.mp4', label: 'Pintura, luz y acabado en movimiento' }, { title: 'Dyno en movimiento', path: '/videos/dyno-motion.mp4', label: 'Atmósfera de calibración medida' }, { title: 'Escape y aero en movimiento', path: '/videos/exhaust-motion.mp4', label: 'Sonido, carbono y presencia exterior' }], playLabel: 'Vista previa del concepto en movimiento' },
+    media: { clips: [{ title: 'Detailing / PPF / Cerámico', poster: motionAsset('video-detailing-preview.jpg'), label: 'Corrección de pintura, preparación de film y entrega gloss con sensación cinematográfica de taller.', meta: 'Vista previa // 00:42' }, { title: 'Dyno / Tuning / Pruebas', poster: motionAsset('video-dyno-preview.jpg'), label: 'Validación en banco, curvas de potencia y atmósfera de calibración.', meta: 'Vista previa // 00:58' }, { title: 'Escape / Aero Walkaround', poster: motionAsset('video-exhaust-preview.jpg'), label: 'Hardware de sonido, detalles carbono y energía de garage walkaround.', meta: 'Vista previa // 00:37' }], playLabel: 'Abrir vista cinematográfica', closeLabel: 'Cerrar vista' },
     why: ['Detailing, tuning y personalización en un solo lugar', 'Mejoras exteriores enfocadas en el ajuste', 'Estilo aero y carbono premium', 'Instalación profesional', 'Tuning apoyado por dyno', 'Experiencia en protección de pintura', 'Instalado por entusiastas automotrices', 'Experiencia bilingüe para clientes'],
     process: [{ step: '01', title: 'Consulta', description: 'Entendemos tu vehículo, objetivos, uso y prioridades del proyecto.' }, { step: '02', title: 'Protección y preparación', description: 'Revisamos pintura, interior, hardware y estado del vehículo antes del trabajo.' }, { step: '03', title: 'Instalación y tuning', description: 'Instalamos piezas seleccionadas, refinamos superficies y calibramos con cuidado.' }, { step: '04', title: 'Dyno y entrega', description: 'Validamos resultados cuando corresponde y entregamos un coche más limpio, fuerte y personal.' }],
     testimonials: [{ quote: 'KRKN Eluxx Customs hizo que el coche se sintiera más preciso y se viera mucho más limpio. El proceso fue premium de principio a fin.', name: 'Daniel R.' }, { quote: 'Equipo profesional, instalación limpia y gran comunicación de principio a fin.', name: 'Carlos M.' }, { quote: 'El PPF y el coating cerámico dieron exactamente el acabado protegido y brillante que quería.', name: 'Emre K.' }, { quote: 'La consulta apoyada por dyno hizo que el Stage 2 se sintiera responsable y bien medido.', name: 'Alex T.' }],
@@ -526,6 +532,7 @@ const products: Product[] = [
   { id: 'valvetronic-exhaust', name: { en: 'Valvetronic Exhaust System', es: 'Sistema de Escape Valvetronic' }, description: { en: 'Switchable sound system for refined cruising and a sharper performance tone when appropriate.', es: 'Sistema de sonido con válvulas para cruising refinado y tono de rendimiento más definido cuando corresponde.' }, category: 'exhaust', price: '$1,980', badge: { en: 'Premium Installation', es: 'Instalación premium' }, stock: 'preorder', brand: 'ValveCraft', compatibility: ['BMW M3 Competition', 'Audi RS3', 'Mercedes-AMG C63 S'], tags: ['exhaust', 'sound', 'valvetronic', 'muffler'], visual: 'visual-exhaust' },
   { id: 'headers-package', name: { en: 'Performance Headers', es: 'Headers de Rendimiento' }, description: { en: 'Header package selected for sound character, flow and responsible performance use.', es: 'Paquete de headers seleccionado por carácter de sonido, flujo y uso responsable de rendimiento.' }, category: 'exhaust', price: '$1,150', stock: 'low', brand: 'FlowRace', compatibility: ['Ford Mustang Shelby GT500', 'Chevrolet Camaro ZL1', 'Dodge Challenger Hellcat'], tags: ['headers', 'exhaust', 'sound'], visual: 'visual-downpipe' },
   { id: 'hybrid-turbo-kit', name: { en: 'Hybrid Turbo Kit', es: 'Kit Hybrid Turbo' }, description: { en: 'Hardware consultation package for track-focused power builds with supporting calibration.', es: 'Paquete de consulta de hardware para builds de potencia track-focused con calibración de soporte.' }, category: 'performance', price: '$3,600', badge: { en: 'Track Ready', es: 'Track Ready' }, stock: 'preorder', brand: 'TurboLine', compatibility: ['Audi RS3', 'Volkswagen Golf R', 'BMW M2'], tags: ['turbo', 'stage 3', 'dyno', 'engine'], visual: 'visual-turbo' },
+  { id: 'supercharger-kit', name: { en: 'Supercharger Kit', es: 'Kit Supercharger' }, description: { en: 'Forced-induction consultation package for V8 and specialty platforms requiring hardware, fueling and calibration planning.', es: 'Paquete de consulta de inducción forzada para plataformas V8 y especiales que requieren planificación de hardware, fueling y calibración.' }, category: 'performance', price: '$4,900', badge: { en: 'Custom Order', es: 'Pedido custom' }, stock: 'preorder', brand: 'BoostCraft', compatibility: ['Ford Mustang Shelby GT500', 'Chevrolet Camaro ZL1', 'Dodge Challenger Hellcat'], tags: ['supercharger', 'stage 3', 'engine', 'dyno'], visual: 'visual-turbo' },
   { id: 'front-mount-intercooler', name: { en: 'Front Mount Intercooler', es: 'Intercooler Frontal' }, description: { en: 'Cooling support for tuned turbo platforms and repeatable performance delivery.', es: 'Soporte de enfriamiento para plataformas turbo tuneadas y entrega de rendimiento más consistente.' }, category: 'performance', price: '$890', stock: 'in', brand: 'AirForge', compatibility: ['Audi S3', 'VW Golf GTI', 'BMW 320i'], tags: ['intercooler', 'cooling', 'turbo'], visual: 'visual-intake' },
   { id: 'charge-pipe-kit', name: { en: 'Charge Pipe Kit', es: 'Kit Charge Pipe' }, description: { en: 'Reinforced charge pipe upgrade for tuned boost systems and cleaner airflow reliability.', es: 'Mejora de charge pipe reforzado para sistemas boost tuneados y mayor fiabilidad de flujo.' }, category: 'intake', price: '$380', stock: 'in', brand: 'AirForge', compatibility: ['BMW 320i', 'BMW M2', 'BMW M3 Competition'], tags: ['charge pipe', 'intake', 'boost'], visual: 'visual-intake' },
   { id: 'blow-off-valve', name: { en: 'Blow Off Valve', es: 'Blow Off Valve' }, description: { en: 'Boost-control sound and response upgrade selected for compatible turbo applications.', es: 'Mejora de sonido y respuesta de boost seleccionada para aplicaciones turbo compatibles.' }, category: 'performance', price: '$260', stock: 'in', brand: 'BoostCraft', compatibility: ['Audi S3', 'Volkswagen Golf R', 'Toyota GR Supra'], tags: ['boost', 'turbo', 'sound'], visual: 'visual-turbo' },
@@ -538,6 +545,7 @@ const products: Product[] = [
   { id: 'performance-tires', name: { en: 'Performance Tires', es: 'Neumáticos de Rendimiento' }, description: { en: 'Tire consultation for grip, ride quality and fitment around your wheel package.', es: 'Consulta de neumáticos para agarre, calidad de marcha y fitment de tu setup de ruedas.' }, category: 'wheels', price: '$980', stock: 'in', brand: 'Fitment Lab', compatibility: ['Universal'], tags: ['tires', 'fitment', 'grip'], visual: 'visual-wheels' },
   { id: 'carbon-fiber-hood', name: { en: 'Carbon Fiber Hood', es: 'Capó de Fibra de Carbono' }, description: { en: 'Premium carbon exterior panel for aggressive styling and a motorsport-inspired finish.', es: 'Panel exterior premium en carbono para estilo agresivo y acabado inspirado en motorsport.' }, category: 'carbon', price: '$1,650', badge: { en: 'Carbon Finish', es: 'Acabado carbono' }, stock: 'preorder', brand: 'KRKN Aero', compatibility: ['BMW M4 CSL', 'Toyota GR Supra', 'Nissan Z'], tags: ['carbon', 'hood', 'exterior'], visual: 'visual-carbon' },
   { id: 'gt-wing-package', name: { en: 'GT Wing Package', es: 'Paquete GT Wing' }, description: { en: 'Track-inspired wing package with fitment support and exterior styling consultation.', es: 'Paquete de wing inspirado en track con soporte de fitment y consulta de estilo exterior.' }, category: 'body-kit', price: '$1,320', badge: { en: 'Fitment Checked', es: 'Fitment verificado' }, stock: 'preorder', brand: 'KRKN Aero', compatibility: ['Porsche 911 GT3 RS', 'Toyota GR Supra', 'Nissan GT-R Nismo'], tags: ['wing', 'spoiler', 'aero', 'body kit'], visual: 'visual-spoiler' },
+  { id: 'led-headlights', name: { en: 'LED Headlights', es: 'Faros LED' }, description: { en: 'Premium lighting consultation for sharper front-end presence and cleaner night visibility where compatible.', es: 'Consulta premium de iluminación para una presencia frontal más definida y mejor visibilidad nocturna donde sea compatible.' }, category: 'lighting', price: '$940', badge: { en: 'OEM+ Look', es: 'Look OEM+' }, stock: 'low', brand: 'NightLine', compatibility: ['BMW 3 Series', 'Mercedes C-Class', 'Audi A4'], tags: ['lighting', 'headlights', 'exterior'], visual: 'visual-lighting' },
   { id: 'smoked-taillights', name: { en: 'Smoked Taillights', es: 'Taillights Ahumados' }, description: { en: 'Lighting upgrade for a cleaner rear profile with a premium dark exterior finish.', es: 'Mejora de iluminación para un perfil trasero más limpio con acabado exterior oscuro premium.' }, category: 'lighting', price: '$480', badge: { en: 'New Arrival', es: 'Nuevo' }, stock: 'in', brand: 'NightLine', compatibility: ['BMW 3 Series', 'Audi A4', 'VW Golf GTI'], tags: ['lighting', 'taillights', 'exterior'], visual: 'visual-lighting' },
   { id: 'ambient-lighting-kit', name: { en: 'Ambient Lighting Kit', es: 'Kit Ambient Lighting' }, description: { en: 'Interior lighting upgrade for a refined cabin mood without an aftermarket-looking finish.', es: 'Mejora de iluminación interior para un ambiente refinado sin acabado aftermarket excesivo.' }, category: 'lighting', price: '$360', stock: 'in', brand: 'NightLine', compatibility: ['Universal'], tags: ['lighting', 'interior'], visual: 'visual-lighting' },
   { id: 'carbon-steering-wheel', name: { en: 'Carbon Steering Wheel', es: 'Volante de Carbono' }, description: { en: 'Carbon and leather steering wheel upgrade for a more focused cockpit feel.', es: 'Mejora de volante en carbono y cuero para una cabina más enfocada.' }, category: 'interior', price: '$780', badge: { en: 'Carbon Finish', es: 'Acabado carbono' }, stock: 'low', brand: 'CabinCraft', compatibility: ['BMW M3 Competition', 'Audi RS3', 'Mercedes-AMG C63 S'], tags: ['interior', 'carbon', 'steering wheel'], visual: 'visual-interior' },
@@ -550,27 +558,36 @@ const products: Product[] = [
   { id: 'lightweight-battery', name: { en: 'Lightweight Battery', es: 'Batería Ligera' }, description: { en: 'Weight reduction component for performance builds with proper charging compatibility.', es: 'Componente de reducción de peso para builds de rendimiento con compatibilidad de carga adecuada.' }, category: 'track-drag', price: '$430', stock: 'in', brand: 'TrackSpec', compatibility: ['Universal'], tags: ['weight', 'track', 'battery'], visual: 'visual-track' },
   { id: 'lift-kit', name: { en: 'SUV / Truck Lift Kit', es: 'Lift Kit SUV / Truck' }, description: { en: 'SUV and truck stance package for offroad presence, clearance and wheel fitment.', es: 'Paquete de stance para SUV y truck con presencia offroad, clearance y fitment de ruedas.' }, category: 'suv-truck', price: '$1,450', stock: 'preorder', brand: 'RidgeSpec', compatibility: ['Ram 1500 TRX', 'Range Rover SV', 'Mercedes-AMG G63'], tags: ['lift kit', 'truck', 'offroad'], visual: 'visual-suv' },
   { id: 'offroad-wheel-package', name: { en: 'Offroad Wheel Package', es: 'Paquete de Ruedas Offroad' }, description: { en: 'Wheel and tire setup for aggressive SUV/truck fitment and rugged exterior presence.', es: 'Setup de ruedas y neumáticos para fitment agresivo SUV/truck y presencia exterior robusta.' }, category: 'suv-truck', price: '$1,980', badge: { en: 'Fitment Checked', es: 'Fitment verificado' }, stock: 'low', brand: 'RidgeSpec', compatibility: ['Ram 1500 TRX', 'Jeep Grand Cherokee Trackhawk', 'Cadillac Escalade-V'], tags: ['offroad', 'wheels', 'suv'], visual: 'visual-suv' },
+  { id: 'roof-rack-system', name: { en: 'Roof Rack System', es: 'Sistema Roof Rack' }, description: { en: 'Utility rack package for SUV/truck builds that need cargo function without losing premium exterior balance.', es: 'Paquete de rack utilitario para builds SUV/truck que necesitan función de carga sin perder balance exterior premium.' }, category: 'suv-truck', price: '$780', stock: 'in', brand: 'RidgeSpec', compatibility: ['Mercedes-AMG G63', 'Range Rover SV', 'Porsche Cayenne Turbo GT'], tags: ['roof rack', 'suv', 'truck', 'offroad'], visual: 'visual-suv' },
   { id: 'krkn-eluxx-hoodie', name: { en: 'KRKN Eluxx Customs Hoodie', es: 'Hoodie KRKN Eluxx Customs' }, description: { en: 'Premium heavyweight customs hoodie with restrained motorsport styling.', es: 'Hoodie premium de alto gramaje con estilo motorsport sobrio.' }, category: 'merchandise', price: '$68', stock: 'in', brand: 'KRKN Eluxx Customs', compatibility: ['Universal'], visual: 'visual-shirt' },
 ];
 
 const gainRows = [
-  { car: 'Porsche 911 Turbo S', hp: '+70 HP', torque: '+100 Nm', badge: 'Stage 1', image: commonsImage('2013 Porsche 911 Turbo S.jpg') },
-  { car: 'BMW M5 Competition', hp: '+80 HP', torque: '+120 Nm', badge: 'Dyno Tested', image: commonsImage('2021 BMW M5 Competition Red FOS22.jpg') },
-  { car: 'BMW M3 CS', hp: '+65 HP', torque: '+90 Nm', badge: 'Stage 1', image: commonsImage('2023 BMW M3 CS.jpg') },
-  { car: 'Lamborghini Huracan', hp: '+50 HP', torque: '+60 Nm', badge: 'Stage 1', image: commonsImage('Lamborghini Huracan, BAS 24, Brussels (P1170508-RR).jpg') },
-  { car: 'Ferrari 488', hp: '+75 HP', torque: '+110 Nm', badge: 'Stage 2', image: commonsImage('2017 Ferrari 488 GTB 70th Anniversary.jpg') },
-  { car: 'Mercedes-AMG E63', hp: '+85 HP', torque: '+130 Nm', badge: 'Dyno Tested', image: commonsImage('Mercedes-AMG E63 S 4MATIC+ (W213).jpg') },
+  { car: 'Porsche 911 Turbo S', hp: '+70 HP', torque: '+100 Nm', badge: 'Stage 1', image: vehicleAsset('vehicle-porsche-911-turbo-s.jpg') },
+  { car: 'BMW M5 Competition', hp: '+80 HP', torque: '+120 Nm', badge: 'Dyno Tested', image: vehicleAsset('vehicle-bmw-m5-competition.jpg') },
+  { car: 'BMW M3 CS', hp: '+65 HP', torque: '+90 Nm', badge: 'Stage 1', image: vehicleAsset('vehicle-bmw-m3-cs.jpg') },
+  { car: 'Lamborghini Huracan', hp: '+50 HP', torque: '+60 Nm', badge: 'Stage 1', image: vehicleAsset('vehicle-lamborghini-huracan.jpg') },
+  { car: 'Ferrari 488', hp: '+75 HP', torque: '+110 Nm', badge: 'Stage 2', image: vehicleAsset('vehicle-ferrari-488.jpg') },
+  { car: 'Mercedes-AMG E63', hp: '+85 HP', torque: '+130 Nm', badge: 'Dyno Tested', image: vehicleAsset('vehicle-mercedes-amg-e63.jpg') },
 ];
 
 const vehicleImageForPlatform = (platform: VehiclePlatform, fallback?: string) => {
   const name = platform.name.toLowerCase();
 
   if (name.includes('porsche 911 turbo s')) return gainRows[0].image;
+  if (name.includes('porsche 911') || name.includes('porsche carrera')) return gainRows[0].image;
   if (name.includes('bmw m5 competition')) return gainRows[1].image;
-  if (name.includes('bmw m3 cs')) return gainRows[2].image;
+  if (name.includes('bmw m3') || name.includes('bmw m4') || name.includes('bmw m2')) return gainRows[2].image;
   if (name.includes('hurac')) return gainRows[3].image;
+  if (name.includes('urus')) return imageAsset('suv-offroad.jpg');
+  if (name.includes('lamborghini')) return imageAsset('hero-garage.jpg');
   if (name.includes('ferrari 488')) return gainRows[4].image;
-  if (name.includes('mercedes-amg e63')) return gainRows[5].image;
+  if (name.includes('ferrari')) return imageAsset('garage-supercars.jpg');
+  if (name.includes('mercedes-amg e63') || name.includes('mercedes-amg c63') || name.includes('mercedes-amg a45')) return gainRows[5].image;
+  if (name.includes('audi')) return imageAsset('supercar-lineup.jpg');
+  if (name.includes('volkswagen') || name.includes('golf') || name.includes('civic') || name.includes('cupra')) return imageAsset('track-motion.jpg');
+  if (name.includes('corvette') || name.includes('mustang') || name.includes('camaro') || name.includes('hellcat') || name.includes('cadillac')) return imageAsset('supercar-street.jpg');
+  if (name.includes('suv') || name.includes('ram') || name.includes('range rover') || name.includes('g63') || name.includes('urus') || name.includes('trackhawk') || name.includes('cayenne')) return imageAsset('suv-offroad.jpg');
 
   return fallback ?? imageAsset('garage-luxury-dark.jpg');
 };
@@ -852,6 +869,7 @@ function App() {
       <main>
         <Hero t={t} />
         <BrandEssence language={language} />
+        <BuildEditorial language={language} />
         <Services t={t} />
         <PerformancePackages t={t} />
         <TuningPotential t={t} />
@@ -1146,6 +1164,49 @@ function BrandEssence({ language }: { language: Language }) {
   );
 }
 
+function BuildEditorial({ language }: { language: Language }) {
+  const copy = {
+    eyebrow: language === 'en' ? 'Studio View' : 'Vista de estudio',
+    title:
+      language === 'en'
+        ? 'Images, parts and process now work like a custom shop, not a catalog shell.'
+        : 'Imágenes, piezas y proceso ahora funcionan como un customs shop, no como una plantilla.',
+    body:
+      language === 'en'
+        ? 'The page pairs exact exotic platforms with part-specific hardware visuals, cinematic preview cards and darker editorial transitions so every section feels tied to real builds.'
+        : 'La página combina plataformas exóticas exactas con hardware visual específico, previews cinematográficos y transiciones editoriales oscuras para que cada sección se sienta ligada a builds reales.',
+    feature: language === 'en' ? 'Vehicle spotlight' : 'Spotlight de vehículo',
+    hardware: language === 'en' ? 'Hardware detail' : 'Detalle de hardware',
+    motion: language === 'en' ? 'Motion preview' : 'Preview en movimiento',
+  };
+
+  return (
+    <section className="section-band editorial-section">
+      <div className="container editorial-layout">
+        <div className="editorial-copy">
+          <p className="eyebrow">{copy.eyebrow}</p>
+          <h2>{copy.title}</h2>
+          <p>{copy.body}</p>
+        </div>
+        <div className="editorial-mosaic" aria-label={copy.eyebrow}>
+          <figure className="editorial-tile editorial-tile-large">
+            <img src={publicAsset(vehicleAsset('vehicle-lamborghini-huracan.jpg'))} alt="Lamborghini Huracan" loading="lazy" onError={fallbackImage} />
+            <figcaption>{copy.feature}</figcaption>
+          </figure>
+          <figure className="editorial-tile">
+            <img src={publicAsset(productAsset('part-turbocharger.jpg'))} alt="Turbocharger hardware" loading="lazy" onError={fallbackImage} />
+            <figcaption>{copy.hardware}</figcaption>
+          </figure>
+          <figure className="editorial-tile">
+            <img src={publicAsset(motionAsset('video-dyno-preview.jpg'))} alt="Dyno testing preview" loading="lazy" onError={fallbackImage} />
+            <figcaption>{copy.motion}</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function Services({ t }: { t: Translation }) {
   const [activeServiceIndex, setActiveServiceIndex] = useState(0);
   const activeService = t.services[activeServiceIndex];
@@ -1350,6 +1411,9 @@ function DynoSection({ t }: { t: Translation }) {
 }
 
 function MediaSection({ t }: { t: Translation }) {
+  const [activeClipIndex, setActiveClipIndex] = useState<number | null>(null);
+  const activeClip = activeClipIndex === null ? null : t.media.clips[activeClipIndex];
+
   return (
     <section className="section-band media-section">
       <div className="container">
@@ -1362,13 +1426,21 @@ function MediaSection({ t }: { t: Translation }) {
           {t.media.clips.map((clip, index) => (
             <article
               className={`motion-card motion-card-${index + 1}`}
-              data-video-src={publicAsset(clip.path)}
-              key={clip.path}
+              key={clip.title}
             >
-              <img src={publicAsset(motionImages[index] ?? motionImages[0])} alt="" loading="lazy" onError={fallbackImage} />
+              <img src={imageSource(clip.poster)} alt="" loading="lazy" onError={fallbackImage} />
               <div className="motion-overlay" />
-              <button type="button" className="play-button" aria-label={`${t.media.playLabel}: ${clip.title}`}>
-                <span />
+              <div className="motion-meta">
+                <Film size={15} />
+                <span>{clip.meta}</span>
+              </div>
+              <button
+                type="button"
+                className="play-button"
+                aria-label={`${t.media.playLabel}: ${clip.title}`}
+                onClick={() => setActiveClipIndex(index)}
+              >
+                <Play size={21} fill="currentColor" />
               </button>
               <div className="motion-copy">
                 <h3>{clip.title}</h3>
@@ -1378,6 +1450,34 @@ function MediaSection({ t }: { t: Translation }) {
           ))}
         </div>
       </div>
+
+      {activeClip && (
+        <div className="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="motion-preview-title">
+          <div className="modal-card motion-modal">
+            <button
+              type="button"
+              className="modal-close"
+              aria-label={t.media.closeLabel}
+              onClick={() => setActiveClipIndex(null)}
+            >
+              <X size={18} />
+            </button>
+            <div className="motion-preview-frame">
+              <img src={imageSource(activeClip.poster)} alt="" onError={fallbackImage} />
+              <div className="motion-scanline" />
+              <div className="play-button motion-modal-play" aria-hidden="true">
+                <Play size={24} fill="currentColor" />
+              </div>
+            </div>
+            <span className="detail-kicker">{activeClip.meta}</span>
+            <h2 id="motion-preview-title">{activeClip.title}</h2>
+            <p>{activeClip.label}</p>
+            <div className="motion-timeline" aria-hidden="true">
+              <span />
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
@@ -1711,7 +1811,6 @@ function ProductCard({
         >
           <Heart size={17} fill={isFavorite ? 'currentColor' : 'none'} />
         </button>
-        <Package className="product-icon" size={46} />
       </div>
       <div className="product-body">
         <span className="product-category">{t.categoryLabels[product.category]}</span>

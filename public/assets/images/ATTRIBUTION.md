@@ -1,7 +1,10 @@
 # Image Sources
 
-Vehicle performance chart images are loaded from Wikimedia Commons via stable
-`Special:FilePath` URLs. Author and license details are available on each source page:
+New vehicle and product assets added in this pass are stored locally under
+`public/assets/images/vehicles`, `public/assets/images/products`, and
+`public/assets/images/motion`.
+
+## Vehicle Performance Images
 
 - Porsche 911 Turbo S: https://commons.wikimedia.org/wiki/File:2013_Porsche_911_Turbo_S.jpg
 - BMW M5 Competition: https://commons.wikimedia.org/wiki/File:2021_BMW_M5_Competition_Red_FOS22.jpg
@@ -10,4 +13,30 @@ Vehicle performance chart images are loaded from Wikimedia Commons via stable
 - Ferrari 488: https://commons.wikimedia.org/wiki/File:2017_Ferrari_488_GTB_70th_Anniversary.jpg
 - Mercedes-AMG E63: https://commons.wikimedia.org/wiki/File:Mercedes-AMG_E63_S_4MATIC%2B_(W213).jpg
 
-Existing local KRKN visual assets in this folder are used for product/category cards.
+## Product And Motion Images
+
+- Downpipe / exhaust pipe: https://commons.wikimedia.org/wiki/File:Car_exhaust_pipe.jpg
+- Catback exhaust / exhaust preview: https://www.flickr.com/photos/99486623@N00/4099542708
+- Cold air intake: https://unsplash.com/photos/carbon-fiber-air-intake-components-are-shown-JyVtDI_1S64
+- Turbocharger: https://commons.wikimedia.org/wiki/File:Turbocharger_assembly.jpg
+- Supercharger reference: https://commons.wikimedia.org/wiki/File:2003_BMW_MINI_S_JCW.jpg
+- Intercooler reference: https://commons.wikimedia.org/wiki/File:Automobile_radiator.jpg
+- Coilovers: https://commons.wikimedia.org/wiki/File:Jeep_Liberty_Coilovers_2005.jpg
+- Air suspension / stance: https://www.flickr.com/photos/41139128@N03/6097457484
+- Carbon ceramic brake texture: https://commons.wikimedia.org/wiki/File:Carbon_ceramic_brake_surface_detail_2014_01.jpg
+- Carbon hood / exterior: https://www.flickr.com/photos/33756577@N08/8644197471
+- Front splitter: https://www.flickr.com/photos/49500824@N02/6473470613
+- Side skirts: https://www.flickr.com/photos/49500824@N02/5371418376
+- Rear diffuser: https://www.flickr.com/photos/49500824@N02/6939709603
+- GT wing: https://www.flickr.com/photos/10047629@N04/14927219558
+- Widebody kit: https://www.flickr.com/photos/62424894@N00/3318527465
+- LED headlights: https://commons.wikimedia.org/wiki/File:2014_Mercedes-Benz_E-Class_LED_Headlight.jpg
+- Bucket seats: https://commons.wikimedia.org/wiki/File:Osaka_Auto_Messe_2014_(121)_BRIDE_bucket_seats.JPG
+- Roll cage / track interior: https://www.flickr.com/photos/42931449@N07/6280074152
+- Lift kit / lifted truck: https://www.flickr.com/photos/13907834@N00/5058729376
+- Offroad wheels / tires: https://www.flickr.com/photos/53322960@N00/9664677728
+- Roof rack: https://commons.wikimedia.org/wiki/File:Land_Rover_Defender_110_(L316),_right_front_view_with_roof_rack.jpg
+- Dyno preview: https://commons.wikimedia.org/wiki/File:004_Car_dyno_testing_-_new_car_test_of_Opel_Astra_K_at_Opel_factory_in_Gliwice,_Poland.jpg
+
+Existing local KRKN visual assets in this folder are reused for hero, detailing,
+garage, interior, wheel and category fallback imagery.
