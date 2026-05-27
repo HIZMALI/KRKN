@@ -1547,6 +1547,7 @@ img {
   left: 20px;
   right: 20px;
   bottom: 20px;
+  z-index: 2;
 }
 
 .motion-copy h3 {
@@ -1559,6 +1560,24 @@ img {
   margin: 0;
   color: var(--muted-strong);
   line-height: 1.5;
+}
+
+.motion-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 16px;
+  min-height: 32px;
+  padding: 7px 11px;
+  color: #fff;
+  background: rgba(239, 35, 60, 0.2);
+  border: 1px solid rgba(239, 35, 60, 0.34);
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 950;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  backdrop-filter: blur(10px);
 }
 
 .motion-modal {
@@ -1576,12 +1595,20 @@ img {
   background: #050506;
 }
 
-.motion-preview-frame img {
+.motion-preview-frame img,
+.motion-video {
   width: 100%;
   height: 100%;
   min-height: 330px;
   object-fit: cover;
   filter: saturate(1.12) contrast(1.08);
+}
+
+.motion-video {
+  position: relative;
+  z-index: 1;
+  display: block;
+  background: #050506;
 }
 
 .motion-preview-frame::after {
@@ -1591,6 +1618,7 @@ img {
   background:
     linear-gradient(180deg, transparent 42%, rgba(0, 0, 0, 0.74)),
     radial-gradient(circle at 50% 50%, transparent 0 24%, rgba(0, 0, 0, 0.44) 62%);
+  pointer-events: none;
 }
 
 .motion-scanline {
@@ -1598,11 +1626,36 @@ img {
   left: -20%;
   right: -20%;
   top: 0;
-  z-index: 1;
+  z-index: 2;
   height: 2px;
   background: linear-gradient(90deg, transparent, rgba(239, 35, 60, 0.9), transparent);
   box-shadow: 0 0 24px rgba(239, 35, 60, 0.48);
   animation: scanline 3.2s linear infinite;
+  pointer-events: none;
+}
+
+.video-fallback {
+  position: relative;
+  min-height: 330px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  text-align: center;
+}
+
+.video-fallback img {
+  position: absolute;
+  inset: 0;
+  opacity: 0.36;
+}
+
+.video-fallback p {
+  position: relative;
+  z-index: 2;
+  width: min(340px, 82%);
+  margin: 0;
+  color: #fff;
+  font-weight: 900;
 }
 
 .motion-modal-play {

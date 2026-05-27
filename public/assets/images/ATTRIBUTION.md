@@ -1,8 +1,10 @@
-# Image Sources
+# Image And Video Sources
 
-New vehicle and product assets added in this pass are stored locally under
+Vehicle and product image assets are stored locally under
 `public/assets/images/vehicles`, `public/assets/images/products`, and
 `public/assets/images/motion`.
+
+Playable video assets are stored locally under `public/assets/videos`.
 
 ## Vehicle Performance Images
 
@@ -37,6 +39,15 @@ New vehicle and product assets added in this pass are stored locally under
 - Offroad wheels / tires: https://www.flickr.com/photos/53322960@N00/9664677728
 - Roof rack: https://commons.wikimedia.org/wiki/File:Land_Rover_Defender_110_(L316),_right_front_view_with_roof_rack.jpg
 - Dyno preview: https://commons.wikimedia.org/wiki/File:004_Car_dyno_testing_-_new_car_test_of_Opel_Astra_K_at_Opel_factory_in_Gliwice,_Poland.jpg
+
+## Playable Video Sources
+
+- krkn-detailing-motion.mp4: https://www.pexels.com/video/professional-auto-detailing-process-close-up-32010551/
+  - Direct MP4: https://videos.pexels.com/video-files/32010551/13643239_1080_1920_30fps.mp4
+- krkn-dyno-performance.mp4: https://www.pexels.com/video/luxury-black-suv-on-automotive-dyno-test-36747850/
+  - Direct MP4: https://videos.pexels.com/video-files/36747850/15573845_2160_3840_60fps.mp4
+- krkn-exhaust-walkaround.mp4: https://www.pexels.com/video/car-exhaust-5611523/
+  - Direct MP4: https://videos.pexels.com/video-files/5611523/5611523-hd_1920_1080_30fps.mp4
 
 Existing local KRKN visual assets in this folder are reused for hero, detailing,
 garage, interior, wheel and category fallback imagery.
