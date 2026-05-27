@@ -1007,39 +1007,129 @@ img {
 
 .gains-layout {
   display: grid;
-  grid-template-columns: 0.86fr 1.14fr;
+  grid-template-columns: 0.72fr 1.28fr;
   gap: 34px;
   align-items: center;
 }
 
-.gain-table {
+.gain-card-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.gain-card {
+  position: relative;
+  min-height: 286px;
+  overflow: hidden;
   border: 1px solid var(--line);
   border-radius: var(--radius);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.032)),
+    rgba(9, 10, 12, 0.88);
+  box-shadow: 0 16px 42px rgba(0, 0, 0, 0.24);
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.gain-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(239, 35, 60, 0.5);
+  box-shadow:
+    0 24px 54px rgba(0, 0, 0, 0.34),
+    0 0 30px rgba(239, 35, 60, 0.11);
+}
+
+.gain-visual {
+  position: relative;
+  height: 154px;
   overflow: hidden;
-  background: rgba(255, 255, 255, 0.04);
+  background:
+    linear-gradient(135deg, rgba(239, 35, 60, 0.16), transparent 44%),
+    linear-gradient(180deg, #22262d, #07080a);
 }
 
-.gain-row {
-  display: grid;
-  grid-template-columns: minmax(150px, 1fr) minmax(90px, 0.35fr) minmax(90px, 0.35fr);
+.gain-visual::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, transparent 18%, rgba(0, 0, 0, 0.76)),
+    radial-gradient(circle at 82% 18%, rgba(239, 35, 60, 0.2), transparent 15rem);
+  pointer-events: none;
+}
+
+.gain-visual img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(0.96) contrast(1.08);
+  transition:
+    transform 420ms ease,
+    filter 420ms ease;
+}
+
+.gain-card:hover .gain-visual img {
+  transform: scale(1.06);
+  filter: saturate(1.08) contrast(1.12);
+}
+
+.gain-visual span {
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  z-index: 2;
+  min-height: 28px;
+  display: inline-flex;
   align-items: center;
-  gap: 12px;
-  min-height: 62px;
-  padding: 14px 18px;
-  border-bottom: 1px solid var(--line);
-}
-
-.gain-row:last-child {
-  border-bottom: 0;
-}
-
-.gain-row span {
-  color: var(--muted-strong);
-}
-
-.gain-row strong {
+  padding: 6px 10px;
   color: #fff;
-  text-align: right;
+  background: rgba(239, 35, 60, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+  font-size: 0.74rem;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.gain-body {
+  padding: 18px;
+}
+
+.gain-body h3 {
+  min-height: 46px;
+  margin: 0 0 16px;
+  color: #fff;
+  line-height: 1.16;
+}
+
+.gain-metrics {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.gain-metrics strong {
+  min-height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  font-size: 1.05rem;
+  line-height: 1;
+}
+
+.gains-disclaimer {
+  grid-column: 1 / -1;
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: 0.94rem;
+  line-height: 1.6;
 }
 
 .dyno-section {
@@ -2772,6 +2862,7 @@ img {
   .section-intro,
   .service-card,
   .package-card,
+  .gain-card,
   .dyno-info-card,
   .motion-card,
   .product-card,
@@ -2989,13 +3080,8 @@ img {
     grid-template-columns: 1fr;
   }
 
-  .gain-row {
+  .gain-card-grid {
     grid-template-columns: 1fr;
-    align-items: start;
-  }
-
-  .gain-row strong {
-    text-align: left;
   }
 
   .contact-card {

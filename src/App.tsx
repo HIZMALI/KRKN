@@ -32,7 +32,7 @@ import {
   Zap,
   type LucideIcon,
 } from 'lucide-react';
-import { FormEvent, SyntheticEvent, useEffect, useMemo, useState } from 'react';
+import { FormEvent, SyntheticEvent, useEffect, useMemo, useRef, useState } from 'react';
 
 type Language = 'en' | 'es';
 
@@ -272,6 +272,7 @@ type Translation = {
     stock: string;
     compatibility: string;
     sampleResults: string;
+    gainsDisclaimer: string;
     disclaimer: string;
     cartEmpty: string;
     cartTitle: string;
@@ -343,6 +344,11 @@ const publicAsset = (path: string) => `${import.meta.env.BASE_URL}${path.replace
 
 const imageAsset = (name: string) => `assets/images/${name}`;
 
+const commonsImage = (fileName: string) =>
+  `https://commons.wikimedia.org/wiki/Special:FilePath/${encodeURIComponent(fileName)}?width=1400`;
+
+const imageSource = (path: string) => (path.startsWith('http') ? path : publicAsset(path));
+
 const serviceImages = [
   imageAsset('detailing-polish.jpg'),
   imageAsset('tuning-engine.jpg'),
@@ -395,6 +401,59 @@ const productImageByCategory: Record<CategoryId, string> = {
   merchandise: imageAsset('garage-supercars.jpg'),
 };
 
+const productImageById: Record<string, string> = {
+  'premium-catback-exhaust': imageAsset('carbon-exhaust.jpg'),
+  'performance-downpipe': imageAsset('exhaust-close.jpg'),
+  'cold-air-intake': imageAsset('tuning-engine.jpg'),
+  'carbon-front-lip': imageAsset('carbon-body.jpg'),
+  'gloss-black-side-skirts': imageAsset('carbon-body.jpg'),
+  'rear-diffuser-kit': imageAsset('carbon-exhaust.jpg'),
+  'performance-spoiler': imageAsset('carbon-body.jpg'),
+  'aero-splitter-package': imageAsset('carbon-body.jpg'),
+  'widebody-conversion-kit': imageAsset('carbon-body.jpg'),
+  'carbon-mirror-caps': imageAsset('carbon-body.jpg'),
+  'complete-body-kit-package': imageAsset('carbon-body.jpg'),
+  'ceramic-coating-kit': imageAsset('detailing-polish.jpg'),
+  'ppf-protection-package': imageAsset('detailing-buff.jpg'),
+  'stage-1-remap': imageAsset('tuning-engine.jpg'),
+  'sport-suspension-kit': imageAsset('brake-wheel.jpg'),
+  'big-brake-kit': imageAsset('brake-wheel.jpg'),
+  'forged-wheels': imageAsset('brake-wheel.jpg'),
+  'vip-detailing-package': imageAsset('detailing-polish.jpg'),
+  'dyno-test-session': imageAsset('tuning-engine.jpg'),
+  'valvetronic-exhaust': imageAsset('carbon-exhaust.jpg'),
+  'headers-package': imageAsset('exhaust-close.jpg'),
+  'hybrid-turbo-kit': imageAsset('turbo-engine.jpg'),
+  'front-mount-intercooler': imageAsset('turbo-engine.jpg'),
+  'charge-pipe-kit': imageAsset('tuning-engine.jpg'),
+  'blow-off-valve': imageAsset('turbo-engine.jpg'),
+  'tcu-tune-package': imageAsset('tuning-engine.jpg'),
+  'coilover-kit': imageAsset('brake-wheel.jpg'),
+  'air-suspension-kit': imageAsset('suv-offroad.jpg'),
+  'carbon-ceramic-brakes': imageAsset('brake-wheel.jpg'),
+  'slotted-rotors': imageAsset('brake-wheel.jpg'),
+  'drag-pack-wheels': imageAsset('brake-wheel.jpg'),
+  'performance-tires': imageAsset('brake-wheel.jpg'),
+  'carbon-fiber-hood': imageAsset('carbon-body.jpg'),
+  'gt-wing-package': imageAsset('carbon-body.jpg'),
+  'smoked-taillights': imageAsset('lighting-garage.jpg'),
+  'ambient-lighting-kit': imageAsset('interior-racing.jpg'),
+  'carbon-steering-wheel': imageAsset('interior-racing.jpg'),
+  'bucket-seat-package': imageAsset('interior-racing.jpg'),
+  'carplay-module': imageAsset('interior-racing.jpg'),
+  'ecu-unlock': imageAsset('tuning-engine.jpg'),
+  'window-tint-package': imageAsset('detailing-buff.jpg'),
+  'vinyl-wrap-package': imageAsset('detailing-buff.jpg'),
+  'roll-cage-package': imageAsset('track-motion.jpg'),
+  'lightweight-battery': imageAsset('track-motion.jpg'),
+  'lift-kit': imageAsset('suv-offroad.jpg'),
+  'offroad-wheel-package': imageAsset('suv-offroad.jpg'),
+  'krkn-eluxx-hoodie': imageAsset('garage-supercars.jpg'),
+};
+
+const productImageFor = (product: Product) =>
+  productImageById[product.id] ?? productImageByCategory[product.category];
+
 const fallbackImage = (event: SyntheticEvent<HTMLImageElement>) => {
   event.currentTarget.hidden = true;
 };
@@ -404,8 +463,8 @@ const translations: Record<Language, Translation> = {
     meta: { title: 'KRKN Eluxx Customs | Detailing, Tuning, Dyno, Body Kits & Performance Parts', description: 'Premium automotive customization company for detailing, ECU tuning, dyno services, body kits, carbon exterior parts, aftermarket performance parts and professional installation.' },
     nav: { home: 'Home', services: 'Services', performance: 'Performance', projects: 'Projects', shop: 'Shop', about: 'About', contact: 'Contact', consultation: 'Book a Consultation', cart: 'Cart', account: 'Account' },
     hero: { eyebrow: 'KRKN Eluxx Customs // Detailing, Tuning & Aftermarket Performance', headline: 'Detail. Tune. Customize.', subheadline: 'KRKN Eluxx Customs delivers premium detailing, ECU tuning, dyno services, aftermarket performance parts and professional installation for drivers who demand a sharper, cleaner and stronger vehicle.', explore: 'Explore Services', shop: 'Shop Performance Parts', quote: 'Book a Consultation', imageAlt: 'Modified performance coupe in a dark premium customization studio with red accent lighting', badges: ['Premium Detailing', 'ECU Tuning', 'Dyno Testing', 'Performance Parts', 'Professional Installation'], stats: [{ value: 'Detail', label: 'PPF, coating and restoration' }, { value: 'Tune', label: 'Stage 1-3 calibration' }, { value: 'Dyno', label: 'Power and torque validation' }, { value: 'Install', label: 'Aftermarket parts fitted cleanly' }] },
-    sectionLabels: { servicesEyebrow: 'Customization Pillars', servicesTitle: 'Detailing, tuning and aftermarket performance under one roof.', servicesBody: 'KRKN Eluxx Customs provides premium detailing, ECU tuning, dyno services, aftermarket performance parts and professional installation for automotive enthusiasts.', packagesEyebrow: 'Performance Packages', packagesTitle: 'Staged tuning with a measured, professional approach.', packagesBody: 'Every performance upgrade is matched to vehicle condition, supporting hardware, fuel quality, dyno feedback and intended use.', gainsEyebrow: 'Measured Potential', gainsTitle: 'Sample estimated performance ranges.', gainsBody: 'Use these examples as consultation starting points. Real results depend on vehicle, hardware, calibration and maintenance.', dynoEyebrow: 'Dyno Services', dynoTitle: 'Dyno-Tested Performance', dynoBody: 'Our dyno service helps measure horsepower, torque and power delivery before and after tuning. It provides a clearer view of real performance gains and supports safer calibration.', mediaEyebrow: 'Cinematic Process', mediaTitle: 'Crafted in Motion', mediaBody: 'From detailing finishes to dyno-tested performance, every KRKN Eluxx Customs project is built to be seen, heard and felt.', shopEyebrow: 'Aftermarket Performance Shop', shopTitle: 'Selected parts, care products and install-ready packages.', shopBody: 'Browse exhaust systems, air intakes, detailing products, performance parts and dyno-ready packages prepared for quote and checkout integration.', categoriesEyebrow: 'Shop Categories', categoriesTitle: 'Parts and car care organized around real build paths.', projectsEyebrow: 'Featured Customs', projectsTitle: 'Detail, protection, power and installation in one build language.', whyEyebrow: 'Why Choose KRKN Eluxx Customs', whyTitle: 'A premium customization experience from consultation to delivery.', processEyebrow: 'Process', processTitle: 'Consult, protect, tune, validate.', testimonialsEyebrow: 'Client Feedback', testimonialsTitle: 'Trusted by drivers who care about the details.', aboutEyebrow: 'About KRKN Eluxx Customs', aboutTitle: 'A premium customs house for presence, protection and power.', contactEyebrow: 'Quote Request', contactTitle: 'Tell us about your vehicle and goals.' },
-    common: { learnMore: 'Learn More', viewProject: 'View Project', viewDetails: 'View Details', addToCart: 'Add to Cart', addAgain: 'Add Again', added: 'Added', visitShop: 'Visit Shop', requestQuote: 'Request a Quote', requestFitment: 'Request Fitment Check', checkoutQuote: 'Request Checkout Link', allCategories: 'All Categories', allBrands: 'All Brands', vehiclePlaceholder: 'Vehicle compatibility', searchPlaceholder: 'Search performance parts', category: 'Category', stock: 'Stock', compatibility: 'Compatibility', sampleResults: 'Sample estimated results. Actual gains may vary.', disclaimer: 'Performance modifications may affect warranty, emissions compliance and road legality depending on vehicle, location and intended use. KRKN Eluxx Customs recommends responsible and legal use.', cartEmpty: 'Your cart is ready for parts.', cartTitle: 'Temporary Cart', cartItems: 'items', favorite: 'Add to wishlist', favorited: 'Saved to wishlist', accountMessage: 'Customer account access is ready for future login integration.', cartMessage: 'Added to your temporary cart.', newsletterSuccess: 'You are on the KRKN Eluxx Customs update list.', sale: 'Sale', close: 'Close', openMenu: 'Open menu', closeMenu: 'Close menu', accountTitle: 'KRKN Eluxx Account', accountAction: 'Request Account Access', projectBrief: 'Project Details', requestSimilarBuild: 'Request Similar Build', wishlistAdded: 'Saved to wishlist.', wishlistRemoved: 'Removed from wishlist.', noProducts: 'No matching parts found. Try another keyword or request a custom quote.', legalMessage: 'Policy details are ready for future checkout integration.' },
+    sectionLabels: { servicesEyebrow: 'Customization Pillars', servicesTitle: 'Detailing, tuning and aftermarket performance under one roof.', servicesBody: 'KRKN Eluxx Customs provides premium detailing, ECU tuning, dyno services, aftermarket performance parts and professional installation for automotive enthusiasts.', packagesEyebrow: 'Performance Packages', packagesTitle: 'Staged tuning with a measured, professional approach.', packagesBody: 'Every performance upgrade is matched to vehicle condition, supporting hardware, fuel quality, dyno feedback and intended use.', gainsEyebrow: 'Exotic Benchmarks', gainsTitle: 'Estimated Performance Gains', gainsBody: 'Sample estimated results for premium platforms. Use them as consultation starting points, not fixed promises.', dynoEyebrow: 'Dyno Services', dynoTitle: 'Dyno-Tested Performance', dynoBody: 'Our dyno service helps measure horsepower, torque and power delivery before and after tuning. It provides a clearer view of real performance gains and supports safer calibration.', mediaEyebrow: 'Cinematic Process', mediaTitle: 'Crafted in Motion', mediaBody: 'From detailing finishes to dyno-tested performance, every KRKN Eluxx Customs project is built to be seen, heard and felt.', shopEyebrow: 'Aftermarket Performance Shop', shopTitle: 'Selected parts, care products and install-ready packages.', shopBody: 'Browse exhaust systems, air intakes, detailing products, performance parts and dyno-ready packages prepared for quote and checkout integration.', categoriesEyebrow: 'Shop Categories', categoriesTitle: 'Parts and car care organized around real build paths.', projectsEyebrow: 'Featured Customs', projectsTitle: 'Detail, protection, power and installation in one build language.', whyEyebrow: 'Why Choose KRKN Eluxx Customs', whyTitle: 'A premium customization experience from consultation to delivery.', processEyebrow: 'Process', processTitle: 'Consult, protect, tune, validate.', testimonialsEyebrow: 'Client Feedback', testimonialsTitle: 'Trusted by drivers who care about the details.', aboutEyebrow: 'About KRKN Eluxx Customs', aboutTitle: 'A premium customs house for presence, protection and power.', contactEyebrow: 'Quote Request', contactTitle: 'Tell us about your vehicle and goals.' },
+    common: { learnMore: 'Learn More', viewProject: 'View Project', viewDetails: 'View Details', addToCart: 'Add to Cart', addAgain: 'Add Again', added: 'Added', visitShop: 'Visit Shop', requestQuote: 'Request a Quote', requestFitment: 'Request Fitment Check', checkoutQuote: 'Request Checkout Link', allCategories: 'All Categories', allBrands: 'All Brands', vehiclePlaceholder: 'Vehicle compatibility', searchPlaceholder: 'Search performance parts', category: 'Category', stock: 'Stock', compatibility: 'Compatibility', sampleResults: 'Sample estimated results.', gainsDisclaimer: 'Sample estimated gains. Actual results vary by vehicle condition, hardware, software, fuel quality and intended use.', disclaimer: 'Performance modifications may affect warranty, emissions compliance and road legality depending on vehicle, location and intended use. KRKN Eluxx Customs recommends responsible and legal use.', cartEmpty: 'Your cart is ready for parts.', cartTitle: 'Temporary Cart', cartItems: 'items', favorite: 'Add to wishlist', favorited: 'Saved to wishlist', accountMessage: 'Customer account access is ready for future login integration.', cartMessage: 'Added to your temporary cart.', newsletterSuccess: 'You are on the KRKN Eluxx Customs update list.', sale: 'Sale', close: 'Close', openMenu: 'Open menu', closeMenu: 'Close menu', accountTitle: 'KRKN Eluxx Account', accountAction: 'Request Account Access', projectBrief: 'Project Details', requestSimilarBuild: 'Request Similar Build', wishlistAdded: 'Saved to wishlist.', wishlistRemoved: 'Removed from wishlist.', noProducts: 'No matching parts found. Try another keyword or request a custom quote.', legalMessage: 'Policy details are ready for future checkout integration.' },
     categoryLabels: { exhaust: 'Exhaust Systems', intake: 'Air Intake Systems', performance: 'Engine / Performance', suspension: 'Suspension', brakes: 'Brakes', carbon: 'Carbon / Exterior', 'body-kit': 'Body Kits', wheels: 'Wheels / Tires', lighting: 'Lighting', interior: 'Interior', electronics: 'Electronics / Software', 'car-care': 'Car Care', detailing: 'Detailing / Protection', 'track-drag': 'Track / Drag', 'suv-truck': 'SUV / Truck', merchandise: 'Merchandise' },
     categoryDescriptions: { exhaust: 'Downpipes, midpipes, catback and valvetronic sound systems.', intake: 'Cold air intakes, charge pipes and airflow support.', performance: 'Turbo, supercharger, fueling and ECU/TCU upgrade paths.', suspension: 'Coilovers, springs, air suspension and handling hardware.', brakes: 'Big brake kits, pads, rotors and cooling support.', carbon: 'Carbon hoods, lips, mirror caps and exterior aero details.', 'body-kit': 'Fitment-focused exterior upgrades, body kits, diffusers, spoilers and aero packages.', wheels: 'Forged wheels, drag packs, tires and fitment essentials.', lighting: 'Headlights, taillights, signals and ambient lighting upgrades.', interior: 'Steering wheels, seats, harnesses and Alcantara trim.', electronics: 'Modules, dash cams, ECU unlocks and software support.', 'car-care': 'Protection, coatings and detailing supplies.', detailing: 'PPF, tint, wraps, correction and surface protection packages.', 'track-drag': 'Track-ready safety, drag setup and lightweight hardware.', 'suv-truck': 'Lift kits, offroad wheels, racks and SUV/truck exterior hardware.', merchandise: 'KRKN Eluxx Customs apparel and branded essentials.' },
     stockLabels: { in: 'In Stock', low: 'Low Stock', preorder: 'Pre-order' },
@@ -425,8 +484,8 @@ const translations: Record<Language, Translation> = {
     meta: { title: 'KRKN Eluxx Customs | Detailing, Tuning, Dyno, Body Kits y Piezas de Rendimiento', description: 'Empresa premium de personalización automotriz para detailing, reprogramación ECU, servicios dyno, body kits, piezas exteriores de carbono, piezas aftermarket de rendimiento e instalación profesional.' },
     nav: { home: 'Inicio', services: 'Servicios', performance: 'Rendimiento', projects: 'Proyectos', shop: 'Tienda', about: 'Acerca', contact: 'Contacto', consultation: 'Reservar una consulta', cart: 'Carrito', account: 'Cuenta' },
     hero: { eyebrow: 'KRKN Eluxx Customs // Detailing, Tuning y Rendimiento Aftermarket', headline: 'Detalla. Potencia. Personaliza.', subheadline: 'KRKN Eluxx Customs ofrece detailing premium, reprogramación ECU, servicios dyno, piezas aftermarket de alto rendimiento e instalación profesional para conductores que buscan un vehículo más limpio, más fuerte y más exclusivo.', explore: 'Explorar servicios', shop: 'Comprar piezas de rendimiento', quote: 'Reservar una consulta', imageAlt: 'Coupé de rendimiento modificado en un garage premium oscuro con iluminación roja', badges: ['Detailing premium', 'Reprogramación ECU', 'Pruebas dyno', 'Piezas de rendimiento', 'Instalación profesional'], stats: [{ value: 'Detalle', label: 'PPF, coating y restauración' }, { value: 'Tune', label: 'Calibración Stage 1-3' }, { value: 'Dyno', label: 'Validación de potencia y torque' }, { value: 'Instala', label: 'Piezas aftermarket con acabado limpio' }] },
-    sectionLabels: { servicesEyebrow: 'Pilares de Personalización', servicesTitle: 'Detailing, tuning y rendimiento aftermarket bajo un mismo techo.', servicesBody: 'KRKN Eluxx Customs ofrece detailing premium, reprogramación ECU, servicios dyno, piezas aftermarket de rendimiento e instalación profesional para entusiastas del automóvil.', packagesEyebrow: 'Paquetes de Rendimiento', packagesTitle: 'Tuning por etapas con un enfoque medido y profesional.', packagesBody: 'Cada mejora de rendimiento se adapta al estado del vehículo, hardware de soporte, calidad de combustible, feedback dyno y uso previsto.', gainsEyebrow: 'Potencial Medido', gainsTitle: 'Rangos estimados de rendimiento.', gainsBody: 'Usa estos ejemplos como punto de partida para la consulta. Los resultados reales dependen del vehículo, hardware, calibración y mantenimiento.', dynoEyebrow: 'Servicios Dyno', dynoTitle: 'Rendimiento probado en dyno', dynoBody: 'Nuestro servicio dyno permite medir potencia, torque y entrega de rendimiento antes y después del tuning. Ofrece una visión más clara de las ganancias reales y ayuda a una calibración más segura.', mediaEyebrow: 'Proceso Cinemático', mediaTitle: 'Creado en movimiento', mediaBody: 'Desde acabados de detailing hasta rendimiento probado en dyno, cada proyecto de KRKN Eluxx Customs está creado para verse, sentirse y escucharse.', shopEyebrow: 'Tienda Aftermarket Performance', shopTitle: 'Piezas seleccionadas, car care y paquetes listos para instalación.', shopBody: 'Explora sistemas de escape, air intakes, productos de detailing, piezas de rendimiento y paquetes dyno preparados para consulta e integración de checkout.', categoriesEyebrow: 'Categorías de Tienda', categoriesTitle: 'Piezas y car care organizados según rutas reales de proyecto.', projectsEyebrow: 'Customs Destacados', projectsTitle: 'Detalle, protección, potencia e instalación con un mismo lenguaje.', whyEyebrow: 'Por Qué Elegir KRKN Eluxx Customs', whyTitle: 'Una experiencia premium de personalización desde la consulta hasta la entrega.', processEyebrow: 'Proceso', processTitle: 'Consulta, protege, potencia, valida.', testimonialsEyebrow: 'Opiniones de Clientes', testimonialsTitle: 'Confianza de conductores que cuidan cada detalle.', aboutEyebrow: 'Acerca de KRKN Eluxx Customs', aboutTitle: 'Una casa customs premium para presencia, protección y potencia.', contactEyebrow: 'Solicitud de Presupuesto', contactTitle: 'Cuéntanos sobre tu vehículo y tus objetivos.' },
-    common: { learnMore: 'Más información', viewProject: 'Ver proyecto', viewDetails: 'Ver detalles', addToCart: 'Añadir al carrito', addAgain: 'Añadir otra vez', added: 'Añadido', visitShop: 'Visitar tienda', requestQuote: 'Solicitar presupuesto', requestFitment: 'Solicitar verificación de compatibilidad', checkoutQuote: 'Solicitar enlace de pago', allCategories: 'Todas las categorías', allBrands: 'Todas las marcas', vehiclePlaceholder: 'Compatibilidad del vehículo', searchPlaceholder: 'Buscar piezas de rendimiento', category: 'Categoría', stock: 'Stock', compatibility: 'Compatibilidad', sampleResults: 'Resultados estimados de muestra. Las ganancias reales pueden variar.', disclaimer: 'Las modificaciones de rendimiento pueden afectar la garantía, el cumplimiento de emisiones y la legalidad en carretera según el vehículo, la ubicación y el uso previsto. KRKN Eluxx Customs recomienda un uso responsable y legal.', cartEmpty: 'Tu carrito está listo para piezas.', cartTitle: 'Carrito temporal', cartItems: 'artículos', favorite: 'Añadir a favoritos', favorited: 'Guardado en favoritos', accountMessage: 'El acceso de cuenta de cliente está listo para una futura integración de login.', cartMessage: 'Añadido a tu carrito temporal.', newsletterSuccess: 'Ya estás en la lista de novedades de KRKN Eluxx Customs.', sale: 'Oferta', close: 'Cerrar', openMenu: 'Abrir menú', closeMenu: 'Cerrar menú', accountTitle: 'Cuenta KRKN Eluxx', accountAction: 'Solicitar acceso', projectBrief: 'Detalles del proyecto', requestSimilarBuild: 'Solicitar proyecto similar', wishlistAdded: 'Guardado en favoritos.', wishlistRemoved: 'Eliminado de favoritos.', noProducts: 'No se encontraron piezas compatibles. Prueba otra palabra clave o solicita un presupuesto personalizado.', legalMessage: 'La información legal está lista para una futura integración de checkout.' },
+    sectionLabels: { servicesEyebrow: 'Pilares de Personalización', servicesTitle: 'Detailing, tuning y rendimiento aftermarket bajo un mismo techo.', servicesBody: 'KRKN Eluxx Customs ofrece detailing premium, reprogramación ECU, servicios dyno, piezas aftermarket de rendimiento e instalación profesional para entusiastas del automóvil.', packagesEyebrow: 'Paquetes de Rendimiento', packagesTitle: 'Tuning por etapas con un enfoque medido y profesional.', packagesBody: 'Cada mejora de rendimiento se adapta al estado del vehículo, hardware de soporte, calidad de combustible, feedback dyno y uso previsto.', gainsEyebrow: 'Benchmarks Exóticos', gainsTitle: 'Ganancias de rendimiento estimadas', gainsBody: 'Resultados estimados de muestra para plataformas premium. Úsalos como punto de partida de consulta, no como promesas fijas.', dynoEyebrow: 'Servicios Dyno', dynoTitle: 'Rendimiento probado en dyno', dynoBody: 'Nuestro servicio dyno permite medir potencia, torque y entrega de rendimiento antes y después del tuning. Ofrece una visión más clara de las ganancias reales y ayuda a una calibración más segura.', mediaEyebrow: 'Proceso Cinemático', mediaTitle: 'Creado en movimiento', mediaBody: 'Desde acabados de detailing hasta rendimiento probado en dyno, cada proyecto de KRKN Eluxx Customs está creado para verse, sentirse y escucharse.', shopEyebrow: 'Tienda Aftermarket Performance', shopTitle: 'Piezas seleccionadas, car care y paquetes listos para instalación.', shopBody: 'Explora sistemas de escape, air intakes, productos de detailing, piezas de rendimiento y paquetes dyno preparados para consulta e integración de checkout.', categoriesEyebrow: 'Categorías de Tienda', categoriesTitle: 'Piezas y car care organizados según rutas reales de proyecto.', projectsEyebrow: 'Customs Destacados', projectsTitle: 'Detalle, protección, potencia e instalación con un mismo lenguaje.', whyEyebrow: 'Por Qué Elegir KRKN Eluxx Customs', whyTitle: 'Una experiencia premium de personalización desde la consulta hasta la entrega.', processEyebrow: 'Proceso', processTitle: 'Consulta, protege, potencia, valida.', testimonialsEyebrow: 'Opiniones de Clientes', testimonialsTitle: 'Confianza de conductores que cuidan cada detalle.', aboutEyebrow: 'Acerca de KRKN Eluxx Customs', aboutTitle: 'Una casa customs premium para presencia, protección y potencia.', contactEyebrow: 'Solicitud de Presupuesto', contactTitle: 'Cuéntanos sobre tu vehículo y tus objetivos.' },
+    common: { learnMore: 'Más información', viewProject: 'Ver proyecto', viewDetails: 'Ver detalles', addToCart: 'Añadir al carrito', addAgain: 'Añadir otra vez', added: 'Añadido', visitShop: 'Visitar tienda', requestQuote: 'Solicitar presupuesto', requestFitment: 'Solicitar verificación de compatibilidad', checkoutQuote: 'Solicitar enlace de pago', allCategories: 'Todas las categorías', allBrands: 'Todas las marcas', vehiclePlaceholder: 'Compatibilidad del vehículo', searchPlaceholder: 'Buscar piezas de rendimiento', category: 'Categoría', stock: 'Stock', compatibility: 'Compatibilidad', sampleResults: 'Resultados estimados de muestra.', gainsDisclaimer: 'Ganancias estimadas de muestra. Los resultados reales varían según el estado del vehículo, el hardware, el software, la calidad del combustible y el uso previsto.', disclaimer: 'Las modificaciones de rendimiento pueden afectar la garantía, el cumplimiento de emisiones y la legalidad en carretera según el vehículo, la ubicación y el uso previsto. KRKN Eluxx Customs recomienda un uso responsable y legal.', cartEmpty: 'Tu carrito está listo para piezas.', cartTitle: 'Carrito temporal', cartItems: 'artículos', favorite: 'Añadir a favoritos', favorited: 'Guardado en favoritos', accountMessage: 'El acceso de cuenta de cliente está listo para una futura integración de login.', cartMessage: 'Añadido a tu carrito temporal.', newsletterSuccess: 'Ya estás en la lista de novedades de KRKN Eluxx Customs.', sale: 'Oferta', close: 'Cerrar', openMenu: 'Abrir menú', closeMenu: 'Cerrar menú', accountTitle: 'Cuenta KRKN Eluxx', accountAction: 'Solicitar acceso', projectBrief: 'Detalles del proyecto', requestSimilarBuild: 'Solicitar proyecto similar', wishlistAdded: 'Guardado en favoritos.', wishlistRemoved: 'Eliminado de favoritos.', noProducts: 'No se encontraron piezas compatibles. Prueba otra palabra clave o solicita un presupuesto personalizado.', legalMessage: 'La información legal está lista para una futura integración de checkout.' },
     categoryLabels: { exhaust: 'Sistemas de escape', intake: 'Air Intake Systems', performance: 'Motor / Rendimiento', suspension: 'Suspensión', brakes: 'Frenos', carbon: 'Carbono / Exterior', 'body-kit': 'Body Kits', wheels: 'Ruedas / Neumáticos', lighting: 'Iluminación', interior: 'Interior', electronics: 'Electrónica / Software', 'car-care': 'Car Care', detailing: 'Detailing / Protección', 'track-drag': 'Track / Drag', 'suv-truck': 'SUV / Truck', merchandise: 'Merchandising' },
     categoryDescriptions: { exhaust: 'Downpipes, midpipes, catback y sistemas valvetronic.', intake: 'Air intakes, charge pipes y soporte de flujo.', performance: 'Turbo, supercharger, fueling y rutas ECU/TCU.', suspension: 'Coilovers, springs, air suspension y hardware de handling.', brakes: 'Big brake kits, pastillas, rotores y cooling support.', carbon: 'Capós, lips, mirror caps y detalles aero en carbono.', 'body-kit': 'Mejoras exteriores enfocadas en el ajuste, body kits, difusores, spoilers y paquetes aero.', wheels: 'Llantas forjadas, drag packs, neumáticos y fitment.', lighting: 'Faros, taillights, señales y ambient lighting.', interior: 'Volantes, asientos, arneses y trim Alcantara.', electronics: 'Módulos, dash cams, ECU unlock y soporte software.', 'car-care': 'Protección, coatings e insumos de detailing.', detailing: 'PPF, tint, wraps, corrección y protección de superficies.', 'track-drag': 'Seguridad track-ready, drag setup y hardware ligero.', 'suv-truck': 'Lift kits, ruedas offroad, racks y hardware SUV/truck.', merchandise: 'Ropa y esenciales de marca KRKN Eluxx Customs.' },
     stockLabels: { in: 'En stock', low: 'Stock limitado', preorder: 'Preventa' },
@@ -495,13 +554,26 @@ const products: Product[] = [
 ];
 
 const gainRows = [
-  { car: 'BMW 320i', hp: '+45 HP', torque: '+80 Nm' },
-  { car: 'VW Golf GTI', hp: '+60 HP', torque: '+95 Nm' },
-  { car: 'Audi A4 2.0 TDI', hp: '+50 HP', torque: '+100 Nm' },
-  { car: 'Mercedes C200', hp: '+40 HP', torque: '+75 Nm' },
-  { car: 'BMW 520d', hp: '+55 HP', torque: '+110 Nm' },
-  { car: 'Audi S3', hp: '+70 HP', torque: '+120 Nm' },
+  { car: 'Porsche 911 Turbo S', hp: '+70 HP', torque: '+100 Nm', badge: 'Stage 1', image: commonsImage('2013 Porsche 911 Turbo S.jpg') },
+  { car: 'BMW M5 Competition', hp: '+80 HP', torque: '+120 Nm', badge: 'Dyno Tested', image: commonsImage('2021 BMW M5 Competition Red FOS22.jpg') },
+  { car: 'BMW M3 CS', hp: '+65 HP', torque: '+90 Nm', badge: 'Stage 1', image: commonsImage('2023 BMW M3 CS.jpg') },
+  { car: 'Lamborghini Huracan', hp: '+50 HP', torque: '+60 Nm', badge: 'Stage 1', image: commonsImage('Lamborghini Huracan, BAS 24, Brussels (P1170508-RR).jpg') },
+  { car: 'Ferrari 488', hp: '+75 HP', torque: '+110 Nm', badge: 'Stage 2', image: commonsImage('2017 Ferrari 488 GTB 70th Anniversary.jpg') },
+  { car: 'Mercedes-AMG E63', hp: '+85 HP', torque: '+130 Nm', badge: 'Dyno Tested', image: commonsImage('Mercedes-AMG E63 S 4MATIC+ (W213).jpg') },
 ];
+
+const vehicleImageForPlatform = (platform: VehiclePlatform, fallback?: string) => {
+  const name = platform.name.toLowerCase();
+
+  if (name.includes('porsche 911 turbo s')) return gainRows[0].image;
+  if (name.includes('bmw m5 competition')) return gainRows[1].image;
+  if (name.includes('bmw m3 cs')) return gainRows[2].image;
+  if (name.includes('hurac')) return gainRows[3].image;
+  if (name.includes('ferrari 488')) return gainRows[4].image;
+  if (name.includes('mercedes-amg e63')) return gainRows[5].image;
+
+  return fallback ?? imageAsset('garage-luxury-dark.jpg');
+};
 
 const serviceIcons: LucideIcon[] = [Sparkles, Cpu, Package, Activity];
 
@@ -549,7 +621,7 @@ const vehicleCategories: VehicleCategory[] = [
 ];
 
 const vehiclePlatforms: VehiclePlatform[] = [
-  ...['BMW M5 Competition', 'BMW M3 Competition', 'BMW M4 CSL', 'BMW M2', 'Audi RS3', 'Audi S3', 'Audi RS5', 'Audi RS6 Avant', 'Audi RS7', 'Volkswagen Golf R', 'Mercedes-AMG A45 S', 'Mercedes-AMG C63 S', 'Mercedes-AMG E63 S', 'Cadillac CT5-V Blackwing', 'Dodge Charger Hellcat', 'Dodge Challenger Hellcat', 'Chevrolet Camaro ZL1', 'Ford Mustang Shelby GT500', 'Tesla Model S Plaid'].map((name) => ({ category: vehicleCategories[0].label, name, tags: ['ECU Tune', 'Dyno', 'Exhaust', 'Intake', 'PPF'] })),
+  ...['BMW M5 Competition', 'BMW M3 CS', 'BMW M3 Competition', 'BMW M4 CSL', 'BMW M2', 'Audi RS3', 'Audi S3', 'Audi RS5', 'Audi RS6 Avant', 'Audi RS7', 'Volkswagen Golf R', 'Mercedes-AMG A45 S', 'Mercedes-AMG C63 S', 'Mercedes-AMG E63 S', 'Cadillac CT5-V Blackwing', 'Dodge Charger Hellcat', 'Dodge Challenger Hellcat', 'Chevrolet Camaro ZL1', 'Ford Mustang Shelby GT500', 'Tesla Model S Plaid'].map((name) => ({ category: vehicleCategories[0].label, name, tags: ['ECU Tune', 'Dyno', 'Exhaust', 'Intake', 'PPF'] })),
   ...['Chevrolet Corvette C8', 'Chevrolet Corvette Z06', 'Nissan GT-R Nismo', 'Toyota GR Supra', 'Porsche 911 Turbo S', 'Porsche 911 GT3 RS', 'Audi R8'].map((name) => ({ category: vehicleCategories[1].label, name, tags: ['Dyno', 'Exhaust', 'Body Kit', 'Detailing', 'PPF'] })),
   ...['Lamborghini Huracán', 'Lamborghini Aventador', 'Ferrari 488 GTB', 'Ferrari F8 Tributo', 'Ferrari 812 Superfast', 'McLaren 720S', 'McLaren 765LT', 'Aston Martin DBS Superleggera', 'Bentley Continental GT Speed', 'Porsche Carrera GT', 'Ford GT', 'Lotus Emira', 'Alpine A110'].map((name) => ({ category: vehicleCategories[2].label, name, tags: ['Detailing', 'PPF', 'Carbon', 'Exterior', 'Dyno'] })),
   ...['Bugatti Chiron', 'Koenigsegg Jesko', 'Pagani Huayra', 'Rimac Nevera', 'Ferrari LaFerrari', 'McLaren P1'].map((name) => ({ category: vehicleCategories[3].label, name, tags: ['PPF', 'Detailing', 'Dyno', 'Carbon', 'Concierge'] })),
@@ -653,13 +725,26 @@ function App() {
   const [newsletterStatus, setNewsletterStatus] = useState('');
 
   const t = translations[language];
+  const normalPageTitleRef = useRef(t.meta.title);
 
   useEffect(() => {
     document.documentElement.lang = language;
-    document.title = t.meta.title;
+    normalPageTitleRef.current = t.meta.title;
+    if (!document.hidden) {
+      document.title = t.meta.title;
+    }
     const metaDescription = document.querySelector('meta[name="description"]');
     metaDescription?.setAttribute('content', t.meta.description);
   }, [language, t.meta.description, t.meta.title]);
+
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      document.title = document.hidden ? '!! COME BACK !!' : normalPageTitleRef.current;
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
+  }, []);
 
   useEffect(() => {
     if (!toast) return;
@@ -1180,15 +1265,24 @@ function TuningPotential({ t }: { t: Translation }) {
           />
           <p className="result-note">{t.common.sampleResults}</p>
         </div>
-        <div className="gain-table" aria-label="Sample tuning power gains">
+        <div className="gain-card-grid" aria-label="Sample estimated performance gains">
           {gainRows.map((row) => (
-            <div className="gain-row" key={row.car}>
-              <span>{row.car}</span>
-              <strong>{row.hp}</strong>
-              <strong>{row.torque}</strong>
-            </div>
+            <article className="gain-card" key={row.car}>
+              <div className="gain-visual">
+                <img src={imageSource(row.image)} alt={row.car} loading="lazy" onError={fallbackImage} />
+                <span>{row.badge}</span>
+              </div>
+              <div className="gain-body">
+                <h3>{row.car}</h3>
+                <div className="gain-metrics">
+                  <strong>{row.hp}</strong>
+                  <strong>{row.torque}</strong>
+                </div>
+              </div>
+            </article>
           ))}
         </div>
+        <p className="gains-disclaimer">{t.common.gainsDisclaimer}</p>
       </div>
     </section>
   );
@@ -1348,7 +1442,7 @@ function VehiclePlatforms({ language }: { language: Language }) {
                 <article className="platform-card" key={`${platform.category.en}-${platform.name}`}>
                   <div className={`platform-visual platform-visual-${(index % 6) + 1}`}>
                     <img
-                      src={publicAsset(platformCategory?.image ?? imageAsset('garage-luxury-dark.jpg'))}
+                      src={imageSource(vehicleImageForPlatform(platform, platformCategory?.image))}
                       alt=""
                       loading="lazy"
                       onError={fallbackImage}
@@ -1598,7 +1692,7 @@ function ProductCard({
     <article className="product-card">
       <div className={`product-visual ${product.visual}`} role="img" aria-label={product.name[language]}>
         <img
-          src={publicAsset(productImageByCategory[product.category])}
+          src={imageSource(productImageFor(product))}
           alt=""
           loading="lazy"
           onError={fallbackImage}
@@ -1666,7 +1760,7 @@ function ProductDetail({
   return (
     <article className="product-detail" id="product-detail">
       <div className={`detail-visual ${product.visual}`} role="img" aria-label={product.name[language]}>
-        <img src={publicAsset(productImageByCategory[product.category])} alt="" loading="lazy" onError={fallbackImage} />
+        <img src={imageSource(productImageFor(product))} alt="" loading="lazy" onError={fallbackImage} />
       </div>
       <div className="detail-kicker">{t.common.category}: {t.categoryLabels[product.category]}</div>
       <h3>{product.name[language]}</h3>
