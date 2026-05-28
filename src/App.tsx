@@ -359,7 +359,7 @@ const productAsset = (name: string) => imageAsset(`products/${name}`);
 
 const motionAsset = (name: string) => imageAsset(`motion/${name}`);
 
-const videoAsset = (name: string) => `assets/videos/${name}`;
+const videoAsset = (name: string) => publicAsset(`assets/videos/${name}`);
 
 const serviceImages = [
   imageAsset('detailing-polish.jpg'),
@@ -427,18 +427,18 @@ const productImageById: Record<string, string> = {
   'forged-wheels': imageAsset('brake-wheel.jpg'),
   'vip-detailing-package': imageAsset('detailing-polish.jpg'),
   'dyno-test-session': motionAsset('video-dyno-preview.jpg'),
-  'valvetronic-exhaust': productAsset('part-catback-exhaust.jpg'),
+  'valvetronic-exhaust': imageAsset('carbon-exhaust.jpg'),
   'headers-package': productAsset('part-downpipe.jpg'),
   'hybrid-turbo-kit': productAsset('part-turbocharger.jpg'),
   'supercharger-kit': productAsset('part-supercharger.jpg'),
   'front-mount-intercooler': productAsset('part-intercooler.jpg'),
   'charge-pipe-kit': productAsset('part-cold-air-intake.jpg'),
-  'blow-off-valve': imageAsset('turbo-engine.jpg'),
+  'blow-off-valve': productAsset('part-turbocharger.jpg'),
   'tcu-tune-package': imageAsset('tuning-engine.jpg'),
   'coilover-kit': productAsset('part-coilovers.jpg'),
   'air-suspension-kit': productAsset('part-air-suspension.jpg'),
   'carbon-ceramic-brakes': productAsset('part-carbon-ceramic-brake.jpg'),
-  'slotted-rotors': imageAsset('brake-wheel.jpg'),
+  'slotted-rotors': productAsset('part-carbon-ceramic-brake.jpg'),
   'drag-pack-wheels': imageAsset('brake-wheel.jpg'),
   'performance-tires': imageAsset('brake-wheel.jpg'),
   'carbon-fiber-hood': productAsset('part-carbon-hood.jpg'),
@@ -451,9 +451,9 @@ const productImageById: Record<string, string> = {
   'carplay-module': imageAsset('interior-racing.jpg'),
   'ecu-unlock': imageAsset('tuning-engine.jpg'),
   'window-tint-package': imageAsset('detailing-buff.jpg'),
-  'vinyl-wrap-package': productAsset('part-widebody.jpg'),
+  'vinyl-wrap-package': imageAsset('carbon-body.jpg'),
   'roll-cage-package': productAsset('part-roll-cage.jpg'),
-  'lightweight-battery': imageAsset('track-motion.jpg'),
+  'lightweight-battery': imageAsset('tuning-engine.jpg'),
   'lift-kit': productAsset('part-lift-kit.jpg'),
   'offroad-wheel-package': productAsset('part-offroad-wheels.jpg'),
   'roof-rack-system': productAsset('part-roof-rack.jpg'),
@@ -464,7 +464,15 @@ const productImageFor = (product: Product) =>
   productImageById[product.id] ?? productImageByCategory[product.category];
 
 const fallbackImage = (event: SyntheticEvent<HTMLImageElement>) => {
-  event.currentTarget.hidden = true;
+  const image = event.currentTarget;
+
+  if (image.dataset.fallbackApplied === 'true') {
+    image.hidden = true;
+    return;
+  }
+
+  image.dataset.fallbackApplied = 'true';
+  image.src = publicAsset(imageAsset('garage-luxury-dark.jpg'));
 };
 
 const translations: Record<Language, Translation> = {
@@ -480,7 +488,7 @@ const translations: Record<Language, Translation> = {
     services: [{ title: 'Detailing', description: 'From PPF and ceramic coating to detailed interior and exterior restoration, KRKN Eluxx Customs protects and refines every surface of your vehicle.', items: ['PPF / Paint Protection Film', 'Ceramic Coating', 'Interior Detailing', 'Exterior Detailing', 'Interior Restoration', 'Exterior Restoration', 'VIP Car Wash', 'Paint Correction', 'Premium Car Care'] }, { title: 'Tuning', description: 'Our tuning services are designed to unlock safer, sharper and more responsive performance through ECU remapping, staged upgrades and custom calibration.', items: ['ECU Remapping', 'Stage 1 Tuning', 'Stage 2 Tuning', 'Stage 3 Tuning', 'VMAX Off / Speed Limiter Removal', 'TCU / Gearbox Tuning', 'Performance Diagnostics', 'Custom Calibration'], note: 'Availability depends on vehicle model, local regulations and intended use.' }, { title: 'Aftermarket Parts', description: 'From carbon front lips and rear diffusers to complete body kit installations, KRKN Eluxx Customs helps create a sharper, more aggressive and more personalized exterior presence.', items: ['Branded Exhaust Systems', 'Air Intake Systems', 'Performance Parts', 'Carbon Fiber Exterior Parts', 'Front Lips', 'Side Skirts', 'Rear Diffusers', 'Spoilers', 'Splitters', 'Widebody Kits', 'Aero Packages', 'Professional Body Kit Installation', 'Fitment Support'] }, { title: 'Dyno Services', description: 'Our dyno service helps measure horsepower, torque and power delivery before and after tuning while supporting safer calibration decisions.', items: ['Dyno Testing', 'Before / After Power Measurement', 'Tuning Validation', 'Power Curve Analysis', 'Torque Curve Analysis', 'Performance Report', 'Safe Calibration Support'] }],
     packages: [{ title: 'Stage 1', subtitle: 'For daily drivers seeking safe and noticeable performance gains.', features: ['ECU optimization', 'Improved throttle response', 'Better torque delivery', 'No major hardware required'] }, { title: 'Stage 2', subtitle: 'For cars with hardware upgrades.', features: ['Downpipe/exhaust support', 'Intake optimization', 'Stronger torque curve', 'Advanced calibration'] }, { title: 'Stage 3', subtitle: 'For serious custom builds.', features: ['Turbo upgrade support', 'Fuel system optimization', 'Custom dyno-focused calibration', 'Project consultation'] }],
     dyno: { headline: 'Dyno-Tested Performance', description: 'Our dyno service helps measure horsepower, torque and power delivery before and after tuning. It provides a clearer view of real performance gains and supports safer calibration.', metrics: [{ value: 'HP', label: 'Horsepower measurement' }, { value: 'TQ', label: 'Torque curve analysis' }, { value: 'Before / After', label: 'Comparison report' }, { value: 'Safe', label: 'Calibration support' }], cards: [{ title: 'Dyno Testing', body: 'Measure sample estimated figures in a controlled rolling-road environment.' }, { title: 'Before / After Measurement', body: 'Compare baseline and post-tune delivery with a clearer performance view.' }, { title: 'Power Curve Analysis', body: 'Review how horsepower and torque build across the usable rev range.' }, { title: 'Performance Report', body: 'Prepare a polished report for consultation, validation and future upgrade planning.' }] },
-    media: { clips: [{ title: 'Detailing Motion', poster: motionAsset('video-detailing-preview.jpg'), video: videoAsset('krkn-detailing-motion.mp4'), label: 'Paint correction, film prep and gloss delivery with real shop-floor motion.', meta: 'Playable local MP4' }, { title: 'Dyno Performance', poster: motionAsset('video-dyno-preview.jpg'), video: videoAsset('krkn-dyno-performance.mp4'), label: 'Rolling-road validation, power testing and calibration atmosphere.', meta: 'Playable local MP4' }, { title: 'Exhaust & Body Walkaround', poster: motionAsset('video-exhaust-preview.jpg'), video: videoAsset('krkn-exhaust-walkaround.mp4'), label: 'Sound hardware, exhaust detail and cinematic vehicle walkaround energy.', meta: 'Playable local MP4' }], playLabel: 'Watch Video', closeLabel: 'Close video', unavailableLabel: 'Video unavailable. Please try again later.' },
+    media: { clips: [{ title: 'Detailing Motion', poster: motionAsset('video-detailing-preview.jpg'), video: videoAsset('krkn-detailing-motion.mp4'), label: 'Paint correction, film prep and gloss delivery with real shop-floor motion.', meta: 'Cinematic Preview' }, { title: 'Dyno Performance', poster: motionAsset('video-dyno-preview.jpg'), video: videoAsset('krkn-dyno-performance.mp4'), label: 'Rolling-road validation, power testing and calibration atmosphere.', meta: 'Play Video' }, { title: 'Exhaust & Body Walkaround', poster: motionAsset('video-exhaust-preview.jpg'), video: videoAsset('krkn-exhaust-walkaround.mp4'), label: 'Sound hardware, exhaust detail and cinematic vehicle walkaround energy.', meta: 'Watch Video' }], playLabel: 'Watch Video', closeLabel: 'Close video', unavailableLabel: 'Video unavailable. Please try again later.' },
     why: ['Detailing, tuning and customization under one roof', 'Fitment-focused exterior upgrades', 'Premium aero and carbon styling', 'Professional installation', 'Dyno-supported tuning', 'Paint protection expertise', 'Installed by automotive enthusiasts', 'Bilingual customer experience'],
     process: [{ step: '01', title: 'Consultation', description: 'We understand your vehicle, goals, usage and build priorities.' }, { step: '02', title: 'Protection & Preparation', description: 'We inspect paint, interior, hardware and vehicle condition before work begins.' }, { step: '03', title: 'Install & Tune', description: 'We install selected parts, refine surfaces and calibrate performance with care.' }, { step: '04', title: 'Dyno & Delivery', description: 'We validate results where appropriate and deliver a cleaner, stronger, more personal car.' }],
     testimonials: [{ quote: 'KRKN Eluxx Customs made the car feel sharper and look dramatically cleaner. The process felt premium from start to finish.', name: 'Daniel R.' }, { quote: 'Professional team, clean installation and great communication from start to finish.', name: 'Carlos M.' }, { quote: 'The PPF and ceramic coating finish gave the car the exact protected, high-gloss look I wanted.', name: 'Emre K.' }, { quote: 'The dyno-supported consultation made the Stage 2 setup feel responsible and properly measured.', name: 'Alex T.' }],
@@ -501,7 +509,7 @@ const translations: Record<Language, Translation> = {
     services: [{ title: 'Detailing', description: 'Desde PPF y coating cerámico hasta restauración interior y exterior detallada, KRKN Eluxx Customs protege y perfecciona cada superficie de tu vehículo.', items: ['PPF / Película de protección de pintura', 'Coating cerámico', 'Detailing interior', 'Detailing exterior', 'Restauración interior', 'Restauración exterior', 'Lavado VIP', 'Corrección de pintura', 'Car care premium'] }, { title: 'Tuning', description: 'Nuestros servicios de tuning están diseñados para liberar un rendimiento más seguro, preciso y dinámico mediante reprogramación ECU, mejoras por etapas y calibración personalizada.', items: ['Reprogramación ECU', 'Stage 1', 'Stage 2', 'Stage 3', 'VMAX Off / Eliminación de limitador', 'Tuning TCU / Caja', 'Diagnóstico de rendimiento', 'Calibración personalizada'], note: 'La disponibilidad depende del modelo del vehículo, la normativa local y el uso previsto.' }, { title: 'Piezas Aftermarket', description: 'Desde front lips de carbono y difusores traseros hasta instalaciones completas de body kit, KRKN Eluxx Customs ayuda a crear una presencia exterior más agresiva, exclusiva y personalizada.', items: ['Sistemas de escape de marca', 'Air Intake Systems', 'Piezas de rendimiento', 'Piezas exteriores de carbono', 'Front Lips', 'Side Skirts', 'Difusores traseros', 'Spoilers', 'Splitters', 'Widebody Kits', 'Paquetes aero', 'Instalación profesional de body kit', 'Soporte de fitment'] }, { title: 'Servicios Dyno', description: 'Nuestro servicio dyno permite medir potencia, torque y entrega de rendimiento antes y después del tuning mientras apoya decisiones de calibración más seguras.', items: ['Prueba dyno', 'Medición antes / después', 'Validación de tuning', 'Análisis de curva de potencia', 'Análisis de curva de torque', 'Reporte de rendimiento', 'Soporte para calibración segura'] }],
     packages: [{ title: 'Stage 1', subtitle: 'Para conductores diarios que buscan ganancias seguras y notables.', features: ['Optimización ECU', 'Mejor respuesta del acelerador', 'Entrega de torque más fuerte', 'Sin hardware mayor requerido'] }, { title: 'Stage 2', subtitle: 'Para vehículos con mejoras de hardware.', features: ['Soporte para downpipe/escape', 'Optimización de admisión', 'Curva de torque más contundente', 'Calibración avanzada'] }, { title: 'Stage 3', subtitle: 'Para proyectos serios a medida.', features: ['Soporte para upgrade de turbo', 'Optimización de sistema de combustible', 'Calibración personalizada enfocada en dyno', 'Consultoría de proyecto'] }],
     dyno: { headline: 'Rendimiento probado en dyno', description: 'Nuestro servicio dyno permite medir potencia, torque y entrega de rendimiento antes y después del tuning. Ofrece una visión más clara de las ganancias reales y ayuda a una calibración más segura.', metrics: [{ value: 'HP', label: 'Medición de potencia' }, { value: 'TQ', label: 'Análisis de curva de torque' }, { value: 'Antes / Después', label: 'Reporte comparativo' }, { value: 'Seguro', label: 'Soporte de calibración' }], cards: [{ title: 'Prueba dyno', body: 'Mide cifras estimadas de muestra en un entorno rolling-road controlado.' }, { title: 'Medición antes / después', body: 'Compara entrega base y post-tuning con una visión más clara del rendimiento.' }, { title: 'Análisis de curva', body: 'Revisa cómo se construyen potencia y torque dentro del rango útil de rpm.' }, { title: 'Reporte de rendimiento', body: 'Prepara un reporte pulido para consulta, validación y planificación de upgrades.' }] },
-    media: { clips: [{ title: 'Movimiento de detailing', poster: motionAsset('video-detailing-preview.jpg'), video: videoAsset('krkn-detailing-motion.mp4'), label: 'Corrección de pintura, preparación de film y entrega gloss con movimiento real de taller.', meta: 'MP4 local reproducible' }, { title: 'Rendimiento en dyno', poster: motionAsset('video-dyno-preview.jpg'), video: videoAsset('krkn-dyno-performance.mp4'), label: 'Validación en banco, pruebas de potencia y atmósfera de calibración.', meta: 'MP4 local reproducible' }, { title: 'Recorrido de escape y carrocería', poster: motionAsset('video-exhaust-preview.jpg'), video: videoAsset('krkn-exhaust-walkaround.mp4'), label: 'Hardware de sonido, detalle de escape y energía cinematográfica de walkaround.', meta: 'MP4 local reproducible' }], playLabel: 'Ver video', closeLabel: 'Cerrar video', unavailableLabel: 'Video no disponible. Inténtalo de nuevo más tarde.' },
+    media: { clips: [{ title: 'Movimiento de detailing', poster: motionAsset('video-detailing-preview.jpg'), video: videoAsset('krkn-detailing-motion.mp4'), label: 'Corrección de pintura, preparación de film y entrega gloss con movimiento real de taller.', meta: 'Vista cinematográfica' }, { title: 'Rendimiento en dyno', poster: motionAsset('video-dyno-preview.jpg'), video: videoAsset('krkn-dyno-performance.mp4'), label: 'Validación en banco, pruebas de potencia y atmósfera de calibración.', meta: 'Reproducir' }, { title: 'Recorrido de escape y carrocería', poster: motionAsset('video-exhaust-preview.jpg'), video: videoAsset('krkn-exhaust-walkaround.mp4'), label: 'Hardware de sonido, detalle de escape y energía cinematográfica de walkaround.', meta: 'Ver video' }], playLabel: 'Ver video', closeLabel: 'Cerrar video', unavailableLabel: 'Video no disponible. Inténtalo de nuevo más tarde.' },
     why: ['Detailing, tuning y personalización en un solo lugar', 'Mejoras exteriores enfocadas en el ajuste', 'Estilo aero y carbono premium', 'Instalación profesional', 'Tuning apoyado por dyno', 'Experiencia en protección de pintura', 'Instalado por entusiastas automotrices', 'Experiencia bilingüe para clientes'],
     process: [{ step: '01', title: 'Consulta', description: 'Entendemos tu vehículo, objetivos, uso y prioridades del proyecto.' }, { step: '02', title: 'Protección y preparación', description: 'Revisamos pintura, interior, hardware y estado del vehículo antes del trabajo.' }, { step: '03', title: 'Instalación y tuning', description: 'Instalamos piezas seleccionadas, refinamos superficies y calibramos con cuidado.' }, { step: '04', title: 'Dyno y entrega', description: 'Validamos resultados cuando corresponde y entregamos un coche más limpio, fuerte y personal.' }],
     testimonials: [{ quote: 'KRKN Eluxx Customs hizo que el coche se sintiera más preciso y se viera mucho más limpio. El proceso fue premium de principio a fin.', name: 'Daniel R.' }, { quote: 'Equipo profesional, instalación limpia y gran comunicación de principio a fin.', name: 'Carlos M.' }, { quote: 'El PPF y el coating cerámico dieron exactamente el acabado protegido y brillante que quería.', name: 'Emre K.' }, { quote: 'La consulta apoyada por dyno hizo que el Stage 2 se sintiera responsable y bien medido.', name: 'Alex T.' }],
@@ -1435,6 +1443,16 @@ function MediaSection({ t }: { t: Translation }) {
             <article
               className={`motion-card motion-card-${index + 1}`}
               key={clip.title}
+              role="button"
+              tabIndex={0}
+              aria-label={`${t.media.playLabel}: ${clip.title}`}
+              onClick={() => setActiveClipIndex(index)}
+              onKeyDown={(event) => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                  event.preventDefault();
+                  setActiveClipIndex(index);
+                }
+              }}
             >
               <img src={imageSource(clip.poster)} alt="" loading="lazy" onError={fallbackImage} />
               <div className="motion-overlay" />
@@ -1442,14 +1460,9 @@ function MediaSection({ t }: { t: Translation }) {
                 <Film size={15} />
                 <span>{clip.meta}</span>
               </div>
-              <button
-                type="button"
-                className="play-button"
-                aria-label={`${t.media.playLabel}: ${clip.title}`}
-                onClick={() => setActiveClipIndex(index)}
-              >
+              <span className="play-button" aria-hidden="true">
                 <Play size={21} fill="currentColor" />
-              </button>
+              </span>
               <div className="motion-copy">
                 <h3>{clip.title}</h3>
                 <p>{clip.label}</p>
@@ -1492,7 +1505,7 @@ function MediaSection({ t }: { t: Translation }) {
                   poster={imageSource(activeClip.poster)}
                   onError={() => setVideoError(true)}
                 >
-                  <source src={publicAsset(activeClip.video)} type="video/mp4" />
+                  <source src={activeClip.video} type="video/mp4" />
                   {t.media.unavailableLabel}
                 </video>
               )}

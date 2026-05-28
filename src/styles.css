@@ -1459,6 +1459,8 @@ img {
     linear-gradient(135deg, rgba(239, 35, 60, 0.18), transparent 42%),
     linear-gradient(180deg, #22262e, #07080a);
   box-shadow: 0 18px 48px rgba(0, 0, 0, 0.28);
+  cursor: pointer;
+  outline: none;
 }
 
 .motion-card::before {
@@ -1479,6 +1481,7 @@ img {
   height: 100%;
   object-fit: cover;
   opacity: 0.82;
+  pointer-events: none;
   transition:
     transform 520ms ease,
     filter 520ms ease;
@@ -1490,11 +1493,20 @@ img {
   background:
     linear-gradient(180deg, rgba(0, 0, 0, 0.1) 16%, rgba(0, 0, 0, 0.86)),
     radial-gradient(circle at 72% 24%, rgba(239, 35, 60, 0.24), transparent 18rem);
+  pointer-events: none;
 }
 
-.motion-card:hover > img {
+.motion-card:hover > img,
+.motion-card:focus-visible > img {
   transform: scale(1.055);
   filter: saturate(1.08) contrast(1.12);
+}
+
+.motion-card:focus-visible {
+  border-color: rgba(239, 35, 60, 0.72);
+  box-shadow:
+    0 0 0 3px rgba(239, 35, 60, 0.2),
+    0 18px 48px rgba(0, 0, 0, 0.28);
 }
 
 .play-button {
@@ -1510,6 +1522,8 @@ img {
   border-radius: 50%;
   background: rgba(8, 9, 11, 0.64);
   cursor: pointer;
+  z-index: 3;
+  pointer-events: none;
   transition:
     background 180ms ease,
     border-color 180ms ease,
@@ -1540,6 +1554,7 @@ img {
   font-weight: 950;
   text-transform: uppercase;
   backdrop-filter: blur(10px);
+  pointer-events: none;
 }
 
 .motion-copy {
@@ -1548,6 +1563,7 @@ img {
   right: 20px;
   bottom: 20px;
   z-index: 2;
+  pointer-events: none;
 }
 
 .motion-copy h3 {
@@ -1578,6 +1594,7 @@ img {
   letter-spacing: 0;
   text-transform: uppercase;
   backdrop-filter: blur(10px);
+  pointer-events: none;
 }
 
 .motion-modal {
@@ -3135,12 +3152,14 @@ img {
   background: linear-gradient(115deg, transparent 20%, rgba(255, 255, 255, 0.08) 48%, transparent 72%);
   opacity: 0;
   transform: translateX(-45%);
+  pointer-events: none;
   transition:
     opacity 240ms ease,
     transform 620ms ease;
 }
 
-.motion-card:hover::after {
+.motion-card:hover::after,
+.motion-card:focus-visible::after {
   opacity: 1;
   transform: translateX(45%);
 }
