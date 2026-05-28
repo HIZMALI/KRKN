@@ -582,22 +582,74 @@ const gainRows = [
   { car: 'Mercedes-AMG E63', hp: '+85 HP', torque: '+130 Nm', badge: 'Dyno Tested', image: vehicleAsset('vehicle-mercedes-amg-e63.jpg') },
 ];
 
+const vehiclePlatformImages: Record<string, string> = {
+  'bmw m5 competition': vehicleAsset('vehicle-bmw-m5-competition.jpg'),
+  'bmw m3 cs': vehicleAsset('vehicle-bmw-m3-cs.jpg'),
+  'bmw m3 competition': vehicleAsset('vehicle-bmw-m3-cs.jpg'),
+  'bmw m4 csl': vehicleAsset('vehicle-bmw-m4-csl.jpg'),
+  'bmw m2': vehicleAsset('vehicle-bmw-m2.jpg'),
+  'bmw x5 m competition': vehicleAsset('vehicle-bmw-x5m.jpg'),
+  'audi rs3': vehicleAsset('vehicle-audi-rs3.jpg'),
+  'audi s3': vehicleAsset('vehicle-audi-s3.jpg'),
+  'audi rs5': vehicleAsset('vehicle-audi-rs5.jpg'),
+  'audi rs6 avant': vehicleAsset('vehicle-audi-rs6-avant.jpg'),
+  'audi rs7': vehicleAsset('vehicle-audi-rs7.jpg'),
+  'audi r8': vehicleAsset('vehicle-audi-r8.jpg'),
+  'audi rsq8': vehicleAsset('vehicle-audi-rsq8.jpg'),
+  'mercedes-amg a45 s': vehicleAsset('vehicle-mercedes-amg-a45.jpg'),
+  'mercedes-amg c63 s': vehicleAsset('vehicle-mercedes-amg-c63.jpg'),
+  'mercedes-amg e63 s': vehicleAsset('vehicle-mercedes-amg-e63.jpg'),
+  'mercedes-amg gt black series': vehicleAsset('vehicle-mercedes-amg-gt-black-series.jpg'),
+  'mercedes-amg g63': vehicleAsset('vehicle-mercedes-amg-g63.jpg'),
+  'cadillac ct5-v blackwing': vehicleAsset('vehicle-cadillac-ct5v-blackwing.jpg'),
+  'cadillac escalade-v': vehicleAsset('vehicle-cadillac-escalade.jpg'),
+  'dodge charger hellcat': vehicleAsset('vehicle-dodge-charger-hellcat.jpg'),
+  'dodge challenger hellcat': vehicleAsset('vehicle-dodge-challenger-hellcat.jpg'),
+  'chevrolet camaro zl1': vehicleAsset('vehicle-chevrolet-camaro-zl1.jpg'),
+  'ford mustang shelby gt500': vehicleAsset('vehicle-ford-mustang-gt500.jpg'),
+  'ram 1500 trx': vehicleAsset('vehicle-ram-1500-trx.jpg'),
+  'jeep grand cherokee trackhawk': vehicleAsset('vehicle-jeep-trackhawk.jpg'),
+  'nissan gt-r nismo': vehicleAsset('vehicle-nissan-gtr.jpg'),
+  'toyota gr supra': vehicleAsset('vehicle-toyota-supra.jpg'),
+};
+
 const vehicleImageForPlatform = (platform: VehiclePlatform, fallback?: string) => {
   const name = platform.name.toLowerCase();
+  const exactImage = vehiclePlatformImages[name];
+
+  if (exactImage) return exactImage;
 
   if (name.includes('porsche 911 turbo s')) return gainRows[0].image;
   if (name.includes('porsche 911') || name.includes('porsche carrera')) return gainRows[0].image;
   if (name.includes('bmw m5 competition')) return gainRows[1].image;
-  if (name.includes('bmw m3') || name.includes('bmw m4') || name.includes('bmw m2')) return gainRows[2].image;
+  if (name.includes('bmw m4')) return vehicleAsset('vehicle-bmw-m4-csl.jpg');
+  if (name.includes('bmw m2')) return vehicleAsset('vehicle-bmw-m2.jpg');
+  if (name.includes('bmw m3')) return gainRows[2].image;
   if (name.includes('hurac')) return gainRows[3].image;
   if (name.includes('urus')) return imageAsset('suv-offroad.jpg');
   if (name.includes('lamborghini')) return imageAsset('hero-garage.jpg');
   if (name.includes('ferrari 488')) return gainRows[4].image;
   if (name.includes('ferrari')) return imageAsset('garage-supercars.jpg');
-  if (name.includes('mercedes-amg e63') || name.includes('mercedes-amg c63') || name.includes('mercedes-amg a45')) return gainRows[5].image;
-  if (name.includes('audi')) return imageAsset('supercar-lineup.jpg');
+  if (name.includes('mercedes-amg gt black')) return vehicleAsset('vehicle-mercedes-amg-gt-black-series.jpg');
+  if (name.includes('mercedes-amg g63')) return vehicleAsset('vehicle-mercedes-amg-g63.jpg');
+  if (name.includes('mercedes-amg e63')) return gainRows[5].image;
+  if (name.includes('mercedes-amg c63')) return vehicleAsset('vehicle-mercedes-amg-c63.jpg');
+  if (name.includes('mercedes-amg a45')) return vehicleAsset('vehicle-mercedes-amg-a45.jpg');
+  if (name.includes('audi rsq8')) return vehicleAsset('vehicle-audi-rsq8.jpg');
+  if (name.includes('audi r8')) return vehicleAsset('vehicle-audi-r8.jpg');
+  if (name.includes('audi rs7')) return vehicleAsset('vehicle-audi-rs7.jpg');
+  if (name.includes('audi rs6')) return vehicleAsset('vehicle-audi-rs6-avant.jpg');
+  if (name.includes('audi rs5')) return vehicleAsset('vehicle-audi-rs5.jpg');
+  if (name.includes('audi rs3')) return vehicleAsset('vehicle-audi-rs3.jpg');
+  if (name.includes('audi s3')) return vehicleAsset('vehicle-audi-s3.jpg');
   if (name.includes('volkswagen') || name.includes('golf') || name.includes('civic') || name.includes('cupra')) return imageAsset('track-motion.jpg');
-  if (name.includes('corvette') || name.includes('mustang') || name.includes('camaro') || name.includes('hellcat') || name.includes('cadillac')) return imageAsset('supercar-street.jpg');
+  if (name.includes('mustang')) return vehicleAsset('vehicle-ford-mustang-gt500.jpg');
+  if (name.includes('camaro')) return vehicleAsset('vehicle-chevrolet-camaro-zl1.jpg');
+  if (name.includes('charger')) return vehicleAsset('vehicle-dodge-charger-hellcat.jpg');
+  if (name.includes('challenger')) return vehicleAsset('vehicle-dodge-challenger-hellcat.jpg');
+  if (name.includes('ct5-v')) return vehicleAsset('vehicle-cadillac-ct5v-blackwing.jpg');
+  if (name.includes('escalade')) return vehicleAsset('vehicle-cadillac-escalade.jpg');
+  if (name.includes('corvette') || name.includes('hellcat') || name.includes('cadillac')) return imageAsset('supercar-street.jpg');
   if (name.includes('suv') || name.includes('ram') || name.includes('range rover') || name.includes('g63') || name.includes('urus') || name.includes('trackhawk') || name.includes('cayenne')) return imageAsset('suv-offroad.jpg');
 
   return fallback ?? imageAsset('garage-luxury-dark.jpg');
@@ -649,7 +701,7 @@ const vehicleCategories: VehicleCategory[] = [
 ];
 
 const vehiclePlatforms: VehiclePlatform[] = [
-  ...['BMW M5 Competition', 'BMW M3 CS', 'BMW M3 Competition', 'BMW M4 CSL', 'BMW M2', 'Audi RS3', 'Audi S3', 'Audi RS5', 'Audi RS6 Avant', 'Audi RS7', 'Volkswagen Golf R', 'Mercedes-AMG A45 S', 'Mercedes-AMG C63 S', 'Mercedes-AMG E63 S', 'Cadillac CT5-V Blackwing', 'Dodge Charger Hellcat', 'Dodge Challenger Hellcat', 'Chevrolet Camaro ZL1', 'Ford Mustang Shelby GT500', 'Tesla Model S Plaid'].map((name) => ({ category: vehicleCategories[0].label, name, tags: ['ECU Tune', 'Dyno', 'Exhaust', 'Intake', 'PPF'] })),
+  ...['BMW M5 Competition', 'BMW M3 CS', 'BMW M3 Competition', 'BMW M4 CSL', 'BMW M2', 'Audi RS3', 'Audi S3', 'Audi RS5', 'Audi RS6 Avant', 'Audi RS7', 'Volkswagen Golf R', 'Mercedes-AMG A45 S', 'Mercedes-AMG C63 S', 'Mercedes-AMG E63 S', 'Mercedes-AMG GT Black Series', 'Cadillac CT5-V Blackwing', 'Dodge Charger Hellcat', 'Dodge Challenger Hellcat', 'Chevrolet Camaro ZL1', 'Ford Mustang Shelby GT500', 'Tesla Model S Plaid'].map((name) => ({ category: vehicleCategories[0].label, name, tags: ['ECU Tune', 'Dyno', 'Exhaust', 'Intake', 'PPF'] })),
   ...['Chevrolet Corvette C8', 'Chevrolet Corvette Z06', 'Nissan GT-R Nismo', 'Toyota GR Supra', 'Porsche 911 Turbo S', 'Porsche 911 GT3 RS', 'Audi R8'].map((name) => ({ category: vehicleCategories[1].label, name, tags: ['Dyno', 'Exhaust', 'Body Kit', 'Detailing', 'PPF'] })),
   ...['Lamborghini Huracán', 'Lamborghini Aventador', 'Ferrari 488 GTB', 'Ferrari F8 Tributo', 'Ferrari 812 Superfast', 'McLaren 720S', 'McLaren 765LT', 'Aston Martin DBS Superleggera', 'Bentley Continental GT Speed', 'Porsche Carrera GT', 'Ford GT', 'Lotus Emira', 'Alpine A110'].map((name) => ({ category: vehicleCategories[2].label, name, tags: ['Detailing', 'PPF', 'Carbon', 'Exterior', 'Dyno'] })),
   ...['Bugatti Chiron', 'Koenigsegg Jesko', 'Pagani Huayra', 'Rimac Nevera', 'Ferrari LaFerrari', 'McLaren P1'].map((name) => ({ category: vehicleCategories[3].label, name, tags: ['PPF', 'Detailing', 'Dyno', 'Carbon', 'Concierge'] })),

@@ -15,6 +15,36 @@ Playable video assets are stored locally under `public/assets/videos`.
 - Ferrari 488: https://commons.wikimedia.org/wiki/File:2017_Ferrari_488_GTB_70th_Anniversary.jpg
 - Mercedes-AMG E63: https://commons.wikimedia.org/wiki/File:Mercedes-AMG_E63_S_4MATIC%2B_(W213).jpg
 
+## Supported Platform Vehicle Images
+
+Additional model-specific supported-platform vehicle cards use locally stored
+Wikimedia Commons imagery for the listed models:
+
+- Audi RS3: https://commons.wikimedia.org/wiki/File:Audi_RS3_8Y_1X7A6091.jpg
+- Audi S3: https://commons.wikimedia.org/wiki/File:2024_Audi_S3_8Y_Sedan_DSC_7332.jpg
+- Audi RS5: https://commons.wikimedia.org/wiki/File:Audi_RS5,_IAA_2017,_Frankfurt_(1Y7A2879).jpg
+- Audi RS6 Avant: https://commons.wikimedia.org/wiki/File:Audi_RS6_Avant_(43696097384).jpg
+- Audi RS7: https://commons.wikimedia.org/wiki/File:Audi_RS7_(99652).jpg
+- Audi R8: https://commons.wikimedia.org/wiki/Category:Audi_R8
+- Audi RSQ8: https://commons.wikimedia.org/wiki/File:Audi_RSQ8.jpg
+- BMW M2: https://commons.wikimedia.org/wiki/Category:BMW_M2_(G87)
+- BMW M4 CSL: https://commons.wikimedia.org/wiki/Category:BMW_M4_CSL_(G82)
+- BMW X5 M: https://commons.wikimedia.org/wiki/Category:BMW_X5_M_(G05)
+- Mercedes-AMG A45 S: https://commons.wikimedia.org/wiki/Category:Mercedes-AMG_A_45_S_4MATIC%2B_(W177)
+- Mercedes-AMG C63 S: https://commons.wikimedia.org/wiki/Category:Mercedes-AMG_C_63_(W205)
+- Mercedes-AMG GT Black Series: https://commons.wikimedia.org/wiki/Category:Mercedes-AMG_GT_Black_Series
+- Mercedes-AMG G63: https://commons.wikimedia.org/wiki/Category:Mercedes-AMG_G_63_(W463A)
+- Cadillac CT5-V Blackwing: https://commons.wikimedia.org/wiki/Category:Cadillac_CT5-V_Blackwing
+- Cadillac Escalade-V: https://commons.wikimedia.org/wiki/Category:Cadillac_Escalade
+- Dodge Charger Hellcat: https://commons.wikimedia.org/wiki/Category:Dodge_Charger_LX
+- Dodge Challenger Hellcat: https://commons.wikimedia.org/wiki/Category:Dodge_Challenger_(2008)
+- Chevrolet Camaro ZL1: https://commons.wikimedia.org/wiki/Category:Chevrolet_Camaro_ZL1
+- Ford Mustang Shelby GT500: https://commons.wikimedia.org/wiki/Category:Ford_Mustang_Shelby_GT500
+- Ram 1500 TRX: https://commons.wikimedia.org/wiki/Category:Ram_1500_TRX
+- Jeep Grand Cherokee Trackhawk: https://commons.wikimedia.org/wiki/Category:Jeep_Grand_Cherokee_Trackhawk
+- Nissan GT-R Nismo: https://commons.wikimedia.org/wiki/Category:Nissan_GT-R
+- Toyota GR Supra: https://commons.wikimedia.org/wiki/Category:Toyota_GR_Supra
+
 ## Product And Motion Images
 
 - Downpipe / exhaust pipe: https://commons.wikimedia.org/wiki/File:Car_exhaust_pipe.jpg
