@@ -1,0 +1,1292 @@
+{
+  "version": 1,
+  "useDefaults": false,
+  "updatedAt": "2026-07-19T21:45:09.835Z",
+  "products": [
+    {
+      "id": "premium-catback-exhaust",
+      "name": {
+        "en": "Premium Catback Exhaust System",
+        "es": "Sistema de Escape Catback Premium"
+      },
+      "description": {
+        "en": "Branded stainless exhaust package for deeper tone, cleaner flow and professional fitment.",
+        "es": "Paquete de escape de acero inoxidable de marca para sonido más profundo, mejor flujo y fitment profesional."
+      },
+      "category": "exhaust",
+      "price": "$1,240",
+      "stock": "low",
+      "brand": "FlowRace",
+      "compatibility": [
+        "VW Golf GTI",
+        "Audi S3",
+        "BMW 320i"
+      ],
+      "visual": "visual-exhaust"
+    },
+    {
+      "id": "performance-downpipe",
+      "name": {
+        "en": "Performance Downpipe",
+        "es": "Downpipe de Rendimiento"
+      },
+      "description": {
+        "en": "High-flow downpipe for Stage 2-ready exhaust response and torque support.",
+        "es": "Downpipe high-flow para respuesta de escape y soporte de torque en Stage 2."
+      },
+      "category": "exhaust",
+      "price": "$540",
+      "originalPrice": "$620",
+      "sale": true,
+      "stock": "in",
+      "brand": "TurboLine",
+      "compatibility": [
+        "Audi S3",
+        "VW Golf GTI",
+        "BMW 520d"
+      ],
+      "visual": "visual-downpipe"
+    },
+    {
+      "id": "cold-air-intake",
+      "name": {
+        "en": "Cold Air Intake Kit",
+        "es": "Kit Cold Air Intake"
+      },
+      "description": {
+        "en": "Improved airflow and sharper induction sound for tuned turbo engines.",
+        "es": "Mejor flujo de aire y sonido de admisión más definido para motores turbo tuneados."
+      },
+      "category": "intake",
+      "price": "$330",
+      "stock": "in",
+      "brand": "AirForge",
+      "compatibility": [
+        "VW Golf GTI",
+        "Audi S3",
+        "BMW 320i"
+      ],
+      "visual": "visual-intake"
+    },
+    {
+      "id": "carbon-front-lip",
+      "name": {
+        "en": "Carbon Fiber Front Lip",
+        "es": "Front Lip de Fibra de Carbono"
+      },
+      "description": {
+        "en": "Lightweight aero upgrade with a gloss carbon finish for aggressive front-end styling.",
+        "es": "Upgrade aero ligero con acabado carbono brillante para un frontal más agresivo."
+      },
+      "category": "carbon",
+      "price": "$690",
+      "originalPrice": "$820",
+      "sale": true,
+      "badge": {
+        "en": "Carbon Finish",
+        "es": "Acabado carbono"
+      },
+      "stock": "in",
+      "brand": "KRKN Aero",
+      "compatibility": [
+        "BMW 3 Series",
+        "Audi A4",
+        "Mercedes C-Class"
+      ],
+      "visual": "visual-carbon"
+    },
+    {
+      "id": "gloss-black-side-skirts",
+      "name": {
+        "en": "Gloss Black Side Skirts",
+        "es": "Side Skirts Gloss Black"
+      },
+      "description": {
+        "en": "Fitment-focused side skirt set for a lower, cleaner and more aggressive exterior profile.",
+        "es": "Set de side skirts enfocado en fitment para un perfil exterior más bajo, limpio y agresivo."
+      },
+      "category": "body-kit",
+      "price": "$520",
+      "badge": {
+        "en": "New Arrival",
+        "es": "Nuevo"
+      },
+      "stock": "in",
+      "brand": "KRKN Aero",
+      "compatibility": [
+        "BMW 3 Series",
+        "Audi A4",
+        "Mercedes C-Class"
+      ],
+      "visual": "visual-body-kit"
+    },
+    {
+      "id": "rear-diffuser-kit",
+      "name": {
+        "en": "Rear Diffuser Kit",
+        "es": "Kit de Difusor Trasero"
+      },
+      "description": {
+        "en": "Rear aero diffuser package designed to sharpen stance and complete the exhaust-area finish.",
+        "es": "Paquete de difusor aero trasero diseñado para afinar la postura y completar el acabado del escape."
+      },
+      "category": "body-kit",
+      "price": "$610",
+      "badge": {
+        "en": "Fitment Checked",
+        "es": "Fitment verificado"
+      },
+      "stock": "low",
+      "brand": "KRKN Aero",
+      "compatibility": [
+        "VW Golf GTI",
+        "Audi S3",
+        "BMW 320i"
+      ],
+      "visual": "visual-diffuser"
+    },
+    {
+      "id": "performance-spoiler",
+      "name": {
+        "en": "Performance Spoiler",
+        "es": "Spoiler de Rendimiento"
+      },
+      "description": {
+        "en": "Premium spoiler upgrade for a sharper silhouette and restrained motorsport presence.",
+        "es": "Mejora premium de spoiler para una silueta más definida y presencia motorsport sobria."
+      },
+      "category": "body-kit",
+      "price": "$430",
+      "badge": {
+        "en": "Popular",
+        "es": "Popular"
+      },
+      "stock": "in",
+      "brand": "AeroLine",
+      "compatibility": [
+        "BMW M Series",
+        "Audi S3",
+        "VW Golf GTI"
+      ],
+      "visual": "visual-spoiler"
+    },
+    {
+      "id": "aero-splitter-package",
+      "name": {
+        "en": "Aero Splitter Package",
+        "es": "Paquete Aero Splitter"
+      },
+      "description": {
+        "en": "Front splitter and hardware package for premium aero and carbon styling consultation.",
+        "es": "Paquete de splitter frontal y hardware para consulta de estilo aero y carbono premium."
+      },
+      "category": "body-kit",
+      "price": "$740",
+      "badge": {
+        "en": "PPF Ready",
+        "es": "Listo para PPF"
+      },
+      "stock": "preorder",
+      "brand": "KRKN Aero",
+      "compatibility": [
+        "Universal"
+      ],
+      "visual": "visual-splitter"
+    },
+    {
+      "id": "widebody-conversion-kit",
+      "name": {
+        "en": "Widebody Conversion Kit",
+        "es": "Kit de Conversión Widebody"
+      },
+      "description": {
+        "en": "Complete widebody styling package prepared for professional installation and fitment support.",
+        "es": "Paquete completo de estilo widebody preparado para instalación profesional y soporte de fitment."
+      },
+      "category": "body-kit",
+      "price": "$3,800",
+      "badge": {
+        "en": "Premium Installation",
+        "es": "Instalación premium"
+      },
+      "stock": "preorder",
+      "brand": "KRKN Customs",
+      "compatibility": [
+        "Project Consultation"
+      ],
+      "visual": "visual-widebody"
+    },
+    {
+      "id": "carbon-mirror-caps",
+      "name": {
+        "en": "Carbon Mirror Caps",
+        "es": "Mirror Caps de Carbono"
+      },
+      "description": {
+        "en": "Gloss carbon mirror caps for a subtle exterior upgrade with a refined OEM-plus finish.",
+        "es": "Mirror caps en carbono brillante para una mejora exterior sutil con acabado OEM-plus refinado."
+      },
+      "category": "carbon",
+      "price": "$260",
+      "badge": {
+        "en": "Carbon Finish",
+        "es": "Acabado carbono"
+      },
+      "stock": "in",
+      "brand": "KRKN Aero",
+      "compatibility": [
+        "BMW 3 Series",
+        "Audi A4",
+        "Mercedes C-Class",
+        "VW Golf GTI"
+      ],
+      "visual": "visual-carbon"
+    },
+    {
+      "id": "complete-body-kit-package",
+      "name": {
+        "en": "Complete Body Kit Package",
+        "es": "Paquete Body Kit Completo"
+      },
+      "description": {
+        "en": "Full exterior styling package with front lip, side skirts, rear diffuser and installation support.",
+        "es": "Paquete completo de estilo exterior con front lip, side skirts, difusor trasero y soporte de instalación."
+      },
+      "category": "body-kit",
+      "price": "$2,450",
+      "badge": {
+        "en": "Best Seller",
+        "es": "Más vendido"
+      },
+      "stock": "low",
+      "brand": "KRKN Customs",
+      "compatibility": [
+        "Project Consultation"
+      ],
+      "visual": "visual-body-kit"
+    },
+    {
+      "id": "ceramic-coating-kit",
+      "name": {
+        "en": "Ceramic Coating Kit",
+        "es": "Kit de Coating Cerámico"
+      },
+      "description": {
+        "en": "High-gloss paint protection kit for long-lasting depth and easier maintenance.",
+        "es": "Kit de protección de pintura con alto brillo, profundidad duradera y mantenimiento sencillo."
+      },
+      "category": "car-care",
+      "price": "$145",
+      "stock": "in",
+      "brand": "DetailPro",
+      "compatibility": [
+        "Universal"
+      ],
+      "visual": "visual-care"
+    },
+    {
+      "id": "ppf-protection-package",
+      "name": {
+        "en": "PPF Protection Package",
+        "es": "Paquete de Protección PPF"
+      },
+      "description": {
+        "en": "Paint protection film consultation package for front-end, high-impact and full-body coverage.",
+        "es": "Paquete de consulta para película de protección de pintura en frontal, zonas de impacto o cobertura completa."
+      },
+      "category": "detailing",
+      "price": "$890",
+      "stock": "preorder",
+      "brand": "KRKN Eluxx Customs",
+      "compatibility": [
+        "Universal"
+      ],
+      "visual": "visual-ppf"
+    },
+    {
+      "id": "stage-1-remap",
+      "name": {
+        "en": "Stage 1 ECU Remap Package",
+        "es": "Paquete Reprogramación ECU Stage 1"
+      },
+      "description": {
+        "en": "Daily-friendly ECU optimization for stronger torque and improved throttle response.",
+        "es": "Optimización ECU para uso diario con más torque y mejor respuesta del acelerador."
+      },
+      "category": "performance",
+      "price": "$390",
+      "stock": "in",
+      "brand": "KRKN Tune",
+      "compatibility": [
+        "BMW 320i",
+        "Audi A4",
+        "Mercedes C200",
+        "BMW 520d"
+      ],
+      "visual": "visual-ecu"
+    },
+    {
+      "id": "sport-suspension-kit",
+      "name": {
+        "en": "Sport Suspension Kit",
+        "es": "Kit de Suspensión Sport"
+      },
+      "description": {
+        "en": "Lower stance, better road feel and controlled handling for fast street cars.",
+        "es": "Menor altura, mejor tacto de carretera y control para coches de calle rápidos."
+      },
+      "category": "suspension",
+      "price": "$980",
+      "stock": "in",
+      "brand": "ApexRide",
+      "compatibility": [
+        "BMW 3 Series",
+        "Mercedes C-Class",
+        "Audi A4"
+      ],
+      "visual": "visual-suspension"
+    },
+    {
+      "id": "big-brake-kit",
+      "name": {
+        "en": "Big Brake Kit",
+        "es": "Big Brake Kit"
+      },
+      "description": {
+        "en": "Larger calipers and performance discs for stronger, more consistent stopping power.",
+        "es": "Pinzas más grandes y discos de rendimiento para frenada más fuerte y consistente."
+      },
+      "category": "brakes",
+      "price": "$2,450",
+      "stock": "preorder",
+      "brand": "StopForce",
+      "compatibility": [
+        "BMW M Series",
+        "Audi S3",
+        "VW Golf GTI"
+      ],
+      "visual": "visual-brakes"
+    },
+    {
+      "id": "forged-wheels",
+      "name": {
+        "en": "Forged Alloy Wheels",
+        "es": "Llantas Forjadas de Aleación"
+      },
+      "description": {
+        "en": "Lightweight forged wheel set with premium concave fitment options.",
+        "es": "Juego de llantas forjadas ligeras con opciones premium de fitment cóncavo."
+      },
+      "category": "wheels",
+      "price": "$1,890",
+      "originalPrice": "$2,150",
+      "sale": true,
+      "stock": "low",
+      "brand": "KRKN Forged",
+      "compatibility": [
+        "BMW 3 Series",
+        "Audi A4",
+        "Mercedes C-Class",
+        "VW Golf GTI"
+      ],
+      "visual": "visual-wheels"
+    },
+    {
+      "id": "vip-detailing-package",
+      "name": {
+        "en": "VIP Detailing Package",
+        "es": "Paquete Detailing VIP"
+      },
+      "description": {
+        "en": "Premium interior and exterior detailing session with paint refinement and delivery inspection.",
+        "es": "Sesión premium de detailing interior y exterior con refinado de pintura e inspección de entrega."
+      },
+      "category": "detailing",
+      "price": "$320",
+      "stock": "in",
+      "brand": "KRKN Eluxx Customs",
+      "compatibility": [
+        "Universal"
+      ],
+      "visual": "visual-detailing"
+    },
+    {
+      "id": "dyno-test-session",
+      "name": {
+        "en": "Dyno Test Session",
+        "es": "Sesión de Prueba Dyno"
+      },
+      "description": {
+        "en": "Rolling-road power measurement session with sample estimated HP and torque report.",
+        "es": "Sesión rolling-road de medición de potencia con reporte estimado de HP y torque."
+      },
+      "category": "performance",
+      "price": "$180",
+      "stock": "in",
+      "brand": "KRKN Dyno",
+      "compatibility": [
+        "BMW 320i",
+        "Audi S3",
+        "VW Golf GTI",
+        "Mercedes C200"
+      ],
+      "visual": "visual-dyno"
+    },
+    {
+      "id": "valvetronic-exhaust",
+      "name": {
+        "en": "Valvetronic Exhaust System",
+        "es": "Sistema de Escape Valvetronic"
+      },
+      "description": {
+        "en": "Switchable sound system for refined cruising and a sharper performance tone when appropriate.",
+        "es": "Sistema de sonido con válvulas para cruising refinado y tono de rendimiento más definido cuando corresponde."
+      },
+      "category": "exhaust",
+      "price": "$1,980",
+      "badge": {
+        "en": "Premium Installation",
+        "es": "Instalación premium"
+      },
+      "stock": "preorder",
+      "brand": "ValveCraft",
+      "compatibility": [
+        "BMW M3 Competition",
+        "Audi RS3",
+        "Mercedes-AMG C63 S"
+      ],
+      "tags": [
+        "exhaust",
+        "sound",
+        "valvetronic",
+        "muffler"
+      ],
+      "visual": "visual-exhaust"
+    },
+    {
+      "id": "headers-package",
+      "name": {
+        "en": "Performance Headers",
+        "es": "Headers de Rendimiento"
+      },
+      "description": {
+        "en": "Header package selected for sound character, flow and responsible performance use.",
+        "es": "Paquete de headers seleccionado por carácter de sonido, flujo y uso responsable de rendimiento."
+      },
+      "category": "exhaust",
+      "price": "$1,150",
+      "stock": "low",
+      "brand": "FlowRace",
+      "compatibility": [
+        "Ford Mustang Shelby GT500",
+        "Chevrolet Camaro ZL1",
+        "Dodge Challenger Hellcat"
+      ],
+      "tags": [
+        "headers",
+        "exhaust",
+        "sound"
+      ],
+      "visual": "visual-downpipe"
+    },
+    {
+      "id": "hybrid-turbo-kit",
+      "name": {
+        "en": "Hybrid Turbo Kit",
+        "es": "Kit Hybrid Turbo"
+      },
+      "description": {
+        "en": "Hardware consultation package for track-focused power builds with supporting calibration.",
+        "es": "Paquete de consulta de hardware para builds de potencia track-focused con calibración de soporte."
+      },
+      "category": "performance",
+      "price": "$3,600",
+      "badge": {
+        "en": "Track Ready",
+        "es": "Track Ready"
+      },
+      "stock": "preorder",
+      "brand": "TurboLine",
+      "compatibility": [
+        "Audi RS3",
+        "Volkswagen Golf R",
+        "BMW M2"
+      ],
+      "tags": [
+        "turbo",
+        "stage 3",
+        "dyno",
+        "engine"
+      ],
+      "visual": "visual-turbo"
+    },
+    {
+      "id": "supercharger-kit",
+      "name": {
+        "en": "Supercharger Kit",
+        "es": "Kit Supercharger"
+      },
+      "description": {
+        "en": "Forced-induction consultation package for V8 and specialty platforms requiring hardware, fueling and calibration planning.",
+        "es": "Paquete de consulta de inducción forzada para plataformas V8 y especiales que requieren planificación de hardware, fueling y calibración."
+      },
+      "category": "performance",
+      "price": "$4,900",
+      "badge": {
+        "en": "Custom Order",
+        "es": "Pedido custom"
+      },
+      "stock": "preorder",
+      "brand": "BoostCraft",
+      "compatibility": [
+        "Ford Mustang Shelby GT500",
+        "Chevrolet Camaro ZL1",
+        "Dodge Challenger Hellcat"
+      ],
+      "tags": [
+        "supercharger",
+        "stage 3",
+        "engine",
+        "dyno"
+      ],
+      "visual": "visual-turbo"
+    },
+    {
+      "id": "front-mount-intercooler",
+      "name": {
+        "en": "Front Mount Intercooler",
+        "es": "Intercooler Frontal"
+      },
+      "description": {
+        "en": "Cooling support for tuned turbo platforms and repeatable performance delivery.",
+        "es": "Soporte de enfriamiento para plataformas turbo tuneadas y entrega de rendimiento más consistente."
+      },
+      "category": "performance",
+      "price": "$890",
+      "stock": "in",
+      "brand": "AirForge",
+      "compatibility": [
+        "Audi S3",
+        "VW Golf GTI",
+        "BMW 320i"
+      ],
+      "tags": [
+        "intercooler",
+        "cooling",
+        "turbo"
+      ],
+      "visual": "visual-intake"
+    },
+    {
+      "id": "charge-pipe-kit",
+      "name": {
+        "en": "Charge Pipe Kit",
+        "es": "Kit Charge Pipe"
+      },
+      "description": {
+        "en": "Reinforced charge pipe upgrade for tuned boost systems and cleaner airflow reliability.",
+        "es": "Mejora de charge pipe reforzado para sistemas boost tuneados y mayor fiabilidad de flujo."
+      },
+      "category": "intake",
+      "price": "$380",
+      "stock": "in",
+      "brand": "AirForge",
+      "compatibility": [
+        "BMW 320i",
+        "BMW M2",
+        "BMW M3 Competition"
+      ],
+      "tags": [
+        "charge pipe",
+        "intake",
+        "boost"
+      ],
+      "visual": "visual-intake"
+    },
+    {
+      "id": "blow-off-valve",
+      "name": {
+        "en": "Blow Off Valve",
+        "es": "Blow Off Valve"
+      },
+      "description": {
+        "en": "Boost-control sound and response upgrade selected for compatible turbo applications.",
+        "es": "Mejora de sonido y respuesta de boost seleccionada para aplicaciones turbo compatibles."
+      },
+      "category": "performance",
+      "price": "$260",
+      "stock": "in",
+      "brand": "BoostCraft",
+      "compatibility": [
+        "Audi S3",
+        "Volkswagen Golf R",
+        "Toyota GR Supra"
+      ],
+      "tags": [
+        "boost",
+        "turbo",
+        "sound"
+      ],
+      "visual": "visual-turbo"
+    },
+    {
+      "id": "tcu-tune-package",
+      "name": {
+        "en": "TCU Tune Package",
+        "es": "Paquete TCU Tune"
+      },
+      "description": {
+        "en": "Transmission calibration consultation for sharper shifts and measured drivability.",
+        "es": "Consulta de calibración de transmisión para cambios más precisos y conducción medida."
+      },
+      "category": "electronics",
+      "price": "$450",
+      "badge": {
+        "en": "Dyno Supported",
+        "es": "Apoyado por dyno"
+      },
+      "stock": "in",
+      "brand": "KRKN Tune",
+      "compatibility": [
+        "BMW M5 Competition",
+        "Audi RS3",
+        "VW Golf R"
+      ],
+      "tags": [
+        "tcu",
+        "software",
+        "gearbox"
+      ],
+      "visual": "visual-ecu"
+    },
+    {
+      "id": "coilover-kit",
+      "name": {
+        "en": "Coilover Kit",
+        "es": "Kit Coilover"
+      },
+      "description": {
+        "en": "Adjustable suspension package for stance, control and fitment-focused builds.",
+        "es": "Paquete de suspensión ajustable para stance, control y builds enfocados en fitment."
+      },
+      "category": "suspension",
+      "price": "$1,240",
+      "badge": {
+        "en": "Fitment Checked",
+        "es": "Fitment verificado"
+      },
+      "stock": "in",
+      "brand": "ApexRide",
+      "compatibility": [
+        "BMW M3 Competition",
+        "Audi S3",
+        "Mercedes-AMG A45 S"
+      ],
+      "tags": [
+        "coilovers",
+        "handling",
+        "stance"
+      ],
+      "visual": "visual-suspension"
+    },
+    {
+      "id": "air-suspension-kit",
+      "name": {
+        "en": "Air Suspension Kit",
+        "es": "Kit Air Suspension"
+      },
+      "description": {
+        "en": "Premium adjustable ride-height system for show-quality exterior presence.",
+        "es": "Sistema premium de altura ajustable para una presencia exterior de show car."
+      },
+      "category": "suspension",
+      "price": "$3,200",
+      "stock": "preorder",
+      "brand": "ApexRide",
+      "compatibility": [
+        "Audi RS7",
+        "BMW M5 Competition",
+        "Mercedes-AMG E63 S"
+      ],
+      "tags": [
+        "air suspension",
+        "stance",
+        "fitment"
+      ],
+      "visual": "visual-suspension"
+    },
+    {
+      "id": "carbon-ceramic-brakes",
+      "name": {
+        "en": "Carbon Ceramic Brake Package",
+        "es": "Paquete de Frenos Carbon Ceramic"
+      },
+      "description": {
+        "en": "Premium brake consultation package for high-performance road and track-focused setups.",
+        "es": "Paquete de consulta premium de frenos para configuraciones de alto rendimiento y enfoque track."
+      },
+      "category": "brakes",
+      "price": "$6,900",
+      "badge": {
+        "en": "Premium Installation",
+        "es": "Instalación premium"
+      },
+      "stock": "preorder",
+      "brand": "StopForce",
+      "compatibility": [
+        "Porsche 911 Turbo S",
+        "BMW M5 Competition",
+        "Audi RS6 Avant"
+      ],
+      "tags": [
+        "brakes",
+        "carbon ceramic",
+        "track"
+      ],
+      "visual": "visual-brakes"
+    },
+    {
+      "id": "slotted-rotors",
+      "name": {
+        "en": "Slotted Rotors",
+        "es": "Rotores Ranurados"
+      },
+      "description": {
+        "en": "Rotor upgrade selected for stronger bite, heat management and clean street manners.",
+        "es": "Mejora de rotores seleccionada por mordida, control de calor y uso de calle limpio."
+      },
+      "category": "brakes",
+      "price": "$620",
+      "stock": "in",
+      "brand": "StopForce",
+      "compatibility": [
+        "BMW 3 Series",
+        "Audi A4",
+        "VW Golf GTI"
+      ],
+      "tags": [
+        "rotors",
+        "brakes"
+      ],
+      "visual": "visual-brakes"
+    },
+    {
+      "id": "drag-pack-wheels",
+      "name": {
+        "en": "Drag Pack Wheels",
+        "es": "Llantas Drag Pack"
+      },
+      "description": {
+        "en": "Lightweight wheel setup for drag-oriented fitment and responsible closed-course use.",
+        "es": "Setup de llantas ligeras para fitment drag y uso responsable en circuito cerrado."
+      },
+      "category": "wheels",
+      "price": "$1,680",
+      "badge": {
+        "en": "Track Ready",
+        "es": "Track Ready"
+      },
+      "stock": "low",
+      "brand": "KRKN Forged",
+      "compatibility": [
+        "Dodge Charger Hellcat",
+        "Ford Mustang Shelby GT500",
+        "Chevrolet Camaro ZL1"
+      ],
+      "tags": [
+        "wheels",
+        "drag",
+        "tires"
+      ],
+      "visual": "visual-wheels"
+    },
+    {
+      "id": "performance-tires",
+      "name": {
+        "en": "Performance Tires",
+        "es": "Neumáticos de Rendimiento"
+      },
+      "description": {
+        "en": "Tire consultation for grip, ride quality and fitment around your wheel package.",
+        "es": "Consulta de neumáticos para agarre, calidad de marcha y fitment de tu setup de ruedas."
+      },
+      "category": "wheels",
+      "price": "$980",
+      "stock": "in",
+      "brand": "Fitment Lab",
+      "compatibility": [
+        "Universal"
+      ],
+      "tags": [
+        "tires",
+        "fitment",
+        "grip"
+      ],
+      "visual": "visual-wheels"
+    },
+    {
+      "id": "carbon-fiber-hood",
+      "name": {
+        "en": "Carbon Fiber Hood",
+        "es": "Capó de Fibra de Carbono"
+      },
+      "description": {
+        "en": "Premium carbon exterior panel for aggressive styling and a motorsport-inspired finish.",
+        "es": "Panel exterior premium en carbono para estilo agresivo y acabado inspirado en motorsport."
+      },
+      "category": "carbon",
+      "price": "$1,650",
+      "badge": {
+        "en": "Carbon Finish",
+        "es": "Acabado carbono"
+      },
+      "stock": "preorder",
+      "brand": "KRKN Aero",
+      "compatibility": [
+        "BMW M4 CSL",
+        "Toyota GR Supra",
+        "Nissan Z"
+      ],
+      "tags": [
+        "carbon",
+        "hood",
+        "exterior"
+      ],
+      "visual": "visual-carbon"
+    },
+    {
+      "id": "gt-wing-package",
+      "name": {
+        "en": "GT Wing Package",
+        "es": "Paquete GT Wing"
+      },
+      "description": {
+        "en": "Track-inspired wing package with fitment support and exterior styling consultation.",
+        "es": "Paquete de wing inspirado en track con soporte de fitment y consulta de estilo exterior."
+      },
+      "category": "body-kit",
+      "price": "$1,320",
+      "badge": {
+        "en": "Fitment Checked",
+        "es": "Fitment verificado"
+      },
+      "stock": "preorder",
+      "brand": "KRKN Aero",
+      "compatibility": [
+        "Porsche 911 GT3 RS",
+        "Toyota GR Supra",
+        "Nissan GT-R Nismo"
+      ],
+      "tags": [
+        "wing",
+        "spoiler",
+        "aero",
+        "body kit"
+      ],
+      "visual": "visual-spoiler"
+    },
+    {
+      "id": "led-headlights",
+      "name": {
+        "en": "LED Headlights",
+        "es": "Faros LED"
+      },
+      "description": {
+        "en": "Premium lighting consultation for sharper front-end presence and cleaner night visibility where compatible.",
+        "es": "Consulta premium de iluminación para una presencia frontal más definida y mejor visibilidad nocturna donde sea compatible."
+      },
+      "category": "lighting",
+      "price": "$940",
+      "badge": {
+        "en": "OEM+ Look",
+        "es": "Look OEM+"
+      },
+      "stock": "low",
+      "brand": "NightLine",
+      "compatibility": [
+        "BMW 3 Series",
+        "Mercedes C-Class",
+        "Audi A4"
+      ],
+      "tags": [
+        "lighting",
+        "headlights",
+        "exterior"
+      ],
+      "visual": "visual-lighting"
+    },
+    {
+      "id": "smoked-taillights",
+      "name": {
+        "en": "Smoked Taillights",
+        "es": "Taillights Ahumados"
+      },
+      "description": {
+        "en": "Lighting upgrade for a cleaner rear profile with a premium dark exterior finish.",
+        "es": "Mejora de iluminación para un perfil trasero más limpio con acabado exterior oscuro premium."
+      },
+      "category": "lighting",
+      "price": "$480",
+      "badge": {
+        "en": "New Arrival",
+        "es": "Nuevo"
+      },
+      "stock": "in",
+      "brand": "NightLine",
+      "compatibility": [
+        "BMW 3 Series",
+        "Audi A4",
+        "VW Golf GTI"
+      ],
+      "tags": [
+        "lighting",
+        "taillights",
+        "exterior"
+      ],
+      "visual": "visual-lighting"
+    },
+    {
+      "id": "ambient-lighting-kit",
+      "name": {
+        "en": "Ambient Lighting Kit",
+        "es": "Kit Ambient Lighting"
+      },
+      "description": {
+        "en": "Interior lighting upgrade for a refined cabin mood without an aftermarket-looking finish.",
+        "es": "Mejora de iluminación interior para un ambiente refinado sin acabado aftermarket excesivo."
+      },
+      "category": "lighting",
+      "price": "$360",
+      "stock": "in",
+      "brand": "NightLine",
+      "compatibility": [
+        "Universal"
+      ],
+      "tags": [
+        "lighting",
+        "interior"
+      ],
+      "visual": "visual-lighting"
+    },
+    {
+      "id": "carbon-steering-wheel",
+      "name": {
+        "en": "Carbon Steering Wheel",
+        "es": "Volante de Carbono"
+      },
+      "description": {
+        "en": "Carbon and leather steering wheel upgrade for a more focused cockpit feel.",
+        "es": "Mejora de volante en carbono y cuero para una cabina más enfocada."
+      },
+      "category": "interior",
+      "price": "$780",
+      "badge": {
+        "en": "Carbon Finish",
+        "es": "Acabado carbono"
+      },
+      "stock": "low",
+      "brand": "CabinCraft",
+      "compatibility": [
+        "BMW M3 Competition",
+        "Audi RS3",
+        "Mercedes-AMG C63 S"
+      ],
+      "tags": [
+        "interior",
+        "carbon",
+        "steering wheel"
+      ],
+      "visual": "visual-interior"
+    },
+    {
+      "id": "bucket-seat-package",
+      "name": {
+        "en": "Bucket Seat Package",
+        "es": "Paquete Bucket Seats"
+      },
+      "description": {
+        "en": "Seat and harness consultation for track-focused interiors and responsible use.",
+        "es": "Consulta de asientos y arnés para interiores track-focused y uso responsable."
+      },
+      "category": "interior",
+      "price": "$2,200",
+      "stock": "preorder",
+      "brand": "CabinCraft",
+      "compatibility": [
+        "Porsche 911 GT3 RS",
+        "Toyota GR Supra",
+        "Honda Civic Type R"
+      ],
+      "tags": [
+        "seats",
+        "harness",
+        "track"
+      ],
+      "visual": "visual-interior"
+    },
+    {
+      "id": "carplay-module",
+      "name": {
+        "en": "CarPlay Module",
+        "es": "Módulo CarPlay"
+      },
+      "description": {
+        "en": "Modern infotainment module upgrade for cleaner daily usability.",
+        "es": "Mejora de módulo infotainment moderno para uso diario más limpio."
+      },
+      "category": "electronics",
+      "price": "$420",
+      "stock": "in",
+      "brand": "SignalLab",
+      "compatibility": [
+        "BMW 3 Series",
+        "Audi A4",
+        "Mercedes C-Class"
+      ],
+      "tags": [
+        "carplay",
+        "module",
+        "electronics"
+      ],
+      "visual": "visual-electronics"
+    },
+    {
+      "id": "ecu-unlock",
+      "name": {
+        "en": "ECU Unlock Service",
+        "es": "Servicio ECU Unlock"
+      },
+      "description": {
+        "en": "Software access consultation for supported platforms before responsible calibration work.",
+        "es": "Consulta de acceso software para plataformas compatibles antes de una calibración responsable."
+      },
+      "category": "electronics",
+      "price": "$320",
+      "badge": {
+        "en": "Dyno Supported",
+        "es": "Apoyado por dyno"
+      },
+      "stock": "in",
+      "brand": "KRKN Tune",
+      "compatibility": [
+        "BMW M3 Competition",
+        "Audi RS3",
+        "Mercedes-AMG A45 S"
+      ],
+      "tags": [
+        "ecu unlock",
+        "software",
+        "tune"
+      ],
+      "visual": "visual-ecu"
+    },
+    {
+      "id": "window-tint-package",
+      "name": {
+        "en": "Window Tint Package",
+        "es": "Paquete Window Tint"
+      },
+      "description": {
+        "en": "Premium tint consultation to sharpen exterior presence while respecting local regulations.",
+        "es": "Consulta premium de tint para reforzar la presencia exterior respetando normativa local."
+      },
+      "category": "detailing",
+      "price": "$280",
+      "stock": "in",
+      "brand": "DetailPro",
+      "compatibility": [
+        "Universal"
+      ],
+      "tags": [
+        "tint",
+        "detailing",
+        "exterior"
+      ],
+      "visual": "visual-detailing"
+    },
+    {
+      "id": "vinyl-wrap-package",
+      "name": {
+        "en": "Vinyl Wrap Package",
+        "es": "Paquete Vinyl Wrap"
+      },
+      "description": {
+        "en": "Exterior color and finish consultation for a curated, non-generic custom look.",
+        "es": "Consulta de color y acabado exterior para un look custom curado y no genérico."
+      },
+      "category": "detailing",
+      "price": "$2,900",
+      "badge": {
+        "en": "Premium Installation",
+        "es": "Instalación premium"
+      },
+      "stock": "preorder",
+      "brand": "KRKN Eluxx Customs",
+      "compatibility": [
+        "Universal"
+      ],
+      "tags": [
+        "wrap",
+        "exterior",
+        "detailing"
+      ],
+      "visual": "visual-detailing"
+    },
+    {
+      "id": "roll-cage-package",
+      "name": {
+        "en": "Roll Cage Package",
+        "es": "Paquete Roll Cage"
+      },
+      "description": {
+        "en": "Track safety consultation package for closed-course builds and intended use.",
+        "es": "Paquete de consulta de seguridad track para builds de circuito cerrado y uso previsto."
+      },
+      "category": "track-drag",
+      "price": "$2,600",
+      "badge": {
+        "en": "Track Ready",
+        "es": "Track Ready"
+      },
+      "stock": "preorder",
+      "brand": "TrackSpec",
+      "compatibility": [
+        "Toyota GR Supra",
+        "Porsche 911 GT3 RS",
+        "Honda Civic Type R"
+      ],
+      "tags": [
+        "roll cage",
+        "track",
+        "safety"
+      ],
+      "visual": "visual-track"
+    },
+    {
+      "id": "lightweight-battery",
+      "name": {
+        "en": "Lightweight Battery",
+        "es": "Batería Ligera"
+      },
+      "description": {
+        "en": "Weight reduction component for performance builds with proper charging compatibility.",
+        "es": "Componente de reducción de peso para builds de rendimiento con compatibilidad de carga adecuada."
+      },
+      "category": "track-drag",
+      "price": "$430",
+      "stock": "in",
+      "brand": "TrackSpec",
+      "compatibility": [
+        "Universal"
+      ],
+      "tags": [
+        "weight",
+        "track",
+        "battery"
+      ],
+      "visual": "visual-track"
+    },
+    {
+      "id": "lift-kit",
+      "name": {
+        "en": "SUV / Truck Lift Kit",
+        "es": "Lift Kit SUV / Truck"
+      },
+      "description": {
+        "en": "SUV and truck stance package for offroad presence, clearance and wheel fitment.",
+        "es": "Paquete de stance para SUV y truck con presencia offroad, clearance y fitment de ruedas."
+      },
+      "category": "suv-truck",
+      "price": "$1,450",
+      "stock": "preorder",
+      "brand": "RidgeSpec",
+      "compatibility": [
+        "Ram 1500 TRX",
+        "Range Rover SV",
+        "Mercedes-AMG G63"
+      ],
+      "tags": [
+        "lift kit",
+        "truck",
+        "offroad"
+      ],
+      "visual": "visual-suv"
+    },
+    {
+      "id": "offroad-wheel-package",
+      "name": {
+        "en": "Offroad Wheel Package",
+        "es": "Paquete de Ruedas Offroad"
+      },
+      "description": {
+        "en": "Wheel and tire setup for aggressive SUV/truck fitment and rugged exterior presence.",
+        "es": "Setup de ruedas y neumáticos para fitment agresivo SUV/truck y presencia exterior robusta."
+      },
+      "category": "suv-truck",
+      "price": "$1,980",
+      "badge": {
+        "en": "Fitment Checked",
+        "es": "Fitment verificado"
+      },
+      "stock": "low",
+      "brand": "RidgeSpec",
+      "compatibility": [
+        "Ram 1500 TRX",
+        "Jeep Grand Cherokee Trackhawk",
+        "Cadillac Escalade-V"
+      ],
+      "tags": [
+        "offroad",
+        "wheels",
+        "suv"
+      ],
+      "visual": "visual-suv"
+    },
+    {
+      "id": "roof-rack-system",
+      "name": {
+        "en": "Roof Rack System",
+        "es": "Sistema Roof Rack"
+      },
+      "description": {
+        "en": "Utility rack package for SUV/truck builds that need cargo function without losing premium exterior balance.",
+        "es": "Paquete de rack utilitario para builds SUV/truck que necesitan función de carga sin perder balance exterior premium."
+      },
+      "category": "suv-truck",
+      "price": "$780",
+      "stock": "in",
+      "brand": "RidgeSpec",
+      "compatibility": [
+        "Mercedes-AMG G63",
+        "Range Rover SV",
+        "Porsche Cayenne Turbo GT"
+      ],
+      "tags": [
+        "roof rack",
+        "suv",
+        "truck",
+        "offroad"
+      ],
+      "visual": "visual-suv"
+    },
+    {
+      "id": "krkn-eluxx-hoodie",
+      "name": {
+        "en": "KRKN Eluxx Customs Hoodie",
+        "es": "Hoodie KRKN Eluxx Customs"
+      },
+      "description": {
+        "en": "Premium heavyweight customs hoodie with restrained motorsport styling.",
+        "es": "Hoodie premium de alto gramaje con estilo motorsport sobrio."
+      },
+      "category": "merchandise",
+      "price": "$68",
+      "stock": "in",
+      "brand": "KRKN Eluxx Customs",
+      "compatibility": [
+        "Universal"
+      ],
+      "visual": "visual-shirt"
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+node_modules/
+dist/
+.env
+qa-server*.log
+data/*.tmp
+uploads/*
+!uploads/.gitkeep

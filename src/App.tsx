@@ -35,47 +35,8 @@ import {
   type LucideIcon,
 } from 'lucide-react';
 import { FormEvent, SyntheticEvent, useEffect, useMemo, useRef, useState } from 'react';
-
-type Language = 'en' | 'es';
-
-const categoryIds = [
-  'exhaust',
-  'intake',
-  'performance',
-  'suspension',
-  'brakes',
-  'carbon',
-  'body-kit',
-  'wheels',
-  'lighting',
-  'interior',
-  'electronics',
-  'car-care',
-  'detailing',
-  'track-drag',
-  'suv-truck',
-  'merchandise',
-] as const;
-
-type CategoryId = (typeof categoryIds)[number];
-
-type StockStatus = 'in' | 'low' | 'preorder';
-
-type Product = {
-  id: string;
-  name: Record<Language, string>;
-  description: Record<Language, string>;
-  category: CategoryId;
-  price: string;
-  originalPrice?: string;
-  sale?: boolean;
-  badge?: Record<Language, string>;
-  stock: StockStatus;
-  brand: string;
-  compatibility: string[];
-  tags?: string[];
-  visual: string;
-};
+import AdminStudio from './AdminStudio';
+import { CategoryId, Language, Product, StockStatus, catalogProductsFrom, categoryIds } from './catalog';
 
 type BrandStatement = {
   title: Record<Language, string>;
@@ -330,6 +291,8 @@ type Translation = {
     fields: Record<string, string>;
     serviceOptions: string[];
     submitSuccess: string;
+    submitError: string;
+    submitting: string;
     cards: { label: string; value: string }[];
   };
   footer: {
@@ -461,7 +424,7 @@ const productImageById: Record<string, string> = {
 };
 
 const productImageFor = (product: Product) =>
-  productImageById[product.id] ?? productImageByCategory[product.category];
+  product.image ?? productImageById[product.id] ?? productImageByCategory[product.category];
 
 const fallbackImage = (event: SyntheticEvent<HTMLImageElement>) => {
   const image = event.currentTarget;
@@ -494,7 +457,7 @@ const translations: Record<Language, Translation> = {
     testimonials: [{ quote: 'KRKN Eluxx Customs made the car feel sharper and look dramatically cleaner. The process felt premium from start to finish.', name: 'Daniel R.' }, { quote: 'Professional team, clean installation and great communication from start to finish.', name: 'Carlos M.' }, { quote: 'The PPF and ceramic coating finish gave the car the exact protected, high-gloss look I wanted.', name: 'Emre K.' }, { quote: 'The dyno-supported consultation made the Stage 2 setup feel responsible and properly measured.', name: 'Alex T.' }],
     projects: [{ title: 'BMW M Performance Detail & Stage 1 Tune', services: 'Paint correction, ceramic coating, ECU remap and dyno-supported validation.', tags: ['Detailing', 'ECU Tune', 'Stage 1', 'Dyno'], visual: 'project-m' }, { title: 'Audi S-Line Aero & Intake Setup', services: 'Cold air intake, gloss black side skirts, rear diffuser fitment and installation.', tags: ['Air Intake', 'Side Skirts', 'Diffuser', 'Fitment'], visual: 'project-audi' }, { title: 'Mercedes AMG Style Exterior Package', services: 'Front lip, rear diffuser, carbon mirror caps, exterior styling and wheel fitment.', tags: ['Body Kit', 'Carbon', 'Wheels', 'Exterior'], visual: 'project-amg' }, { title: 'VW Golf GTI Stage 2 Dyno Calibration', services: 'Downpipe, intake, ECU calibration, dyno testing and torque curve review.', tags: ['Stage 2', 'Dyno', 'ECU Tune', 'Air Intake'], visual: 'project-gti' }, { title: 'Porsche Ceramic Coating & PPF Package', services: 'PPF package, ceramic coating, premium car care and delivery inspection.', tags: ['PPF', 'Ceramic', 'Detailing', 'Protection'], visual: 'project-porsche' }, { title: 'JDM Widebody Custom Build', services: 'Widebody conversion, splitter package, spoiler installation, exhaust and project detailing.', tags: ['Widebody', 'Splitter', 'Spoiler', 'Installation'], visual: 'project-jdm' }],
     about: { body: 'KRKN Eluxx Customs was founded to bring detailing, tuning and aftermarket customization together under one premium automotive experience. From PPF, VIP detailing and interior restoration to ECU tuning, dyno testing and performance part installation, we help enthusiasts build vehicles with presence, protection and power.', points: ['Premium detailing, paint protection and restoration', 'ECU tuning supported by diagnostics and dyno validation', 'Selected aftermarket parts supply and installation', 'Bilingual consultation for enthusiast builds'] },
-    contact: { body: 'Send your vehicle details and desired service. The KRKN Eluxx Customs team can prepare a detailing, tuning, dyno, exterior styling, installation or parts quote for your build.', fields: { fullName: 'Full Name', email: 'Email', phone: 'Phone', country: 'Country', make: 'Vehicle Make', model: 'Vehicle Model', year: 'Vehicle Year', engine: 'Engine', service: 'Desired Service', message: 'Message' }, serviceOptions: ['PPF / Paint Protection Film', 'Ceramic Coating', 'VIP Detailing', 'Interior Restoration', 'Exterior Restoration', 'ECU Remapping', 'Stage 1 Tuning', 'Stage 2 Tuning', 'Stage 3 Tuning', 'VMAX Off', 'Dyno Test', 'Exhaust System', 'Air Intake', 'Aftermarket Parts', 'Parts Installation', 'Body Kit Installation', 'Carbon Exterior Parts', 'Front Lip / Diffuser', 'Spoiler Installation', 'Widebody Kit', 'Exterior Styling Package', 'Valvetronic Exhaust', 'Turbo / Supercharger Kit', 'Suspension / Fitment', 'Brake Upgrade', 'Wheels / Tires', 'Lighting Upgrade', 'Interior Upgrade', 'Track / Drag Setup', 'SUV / Truck Package', 'Custom Project'], submitSuccess: 'Quote request received. This demo keeps the request on-screen and is ready for backend integration.', cards: [{ label: 'WhatsApp', value: '+1 555 000 0000' }, { label: 'Email', value: 'info@krkngarage.com' }, { label: 'Location', value: 'USA' }, { label: 'Instagram', value: '@krkneluxxcustoms' }] },
+    contact: { body: 'Send your vehicle details and desired service. The KRKN Eluxx Customs team can prepare a detailing, tuning, dyno, exterior styling, installation or parts quote for your build.', fields: { fullName: 'Full Name', email: 'Email', phone: 'Phone', country: 'Country', make: 'Vehicle Make', model: 'Vehicle Model', year: 'Vehicle Year', engine: 'Engine', service: 'Desired Service', message: 'Message' }, serviceOptions: ['PPF / Paint Protection Film', 'Ceramic Coating', 'VIP Detailing', 'Interior Restoration', 'Exterior Restoration', 'ECU Remapping', 'Stage 1 Tuning', 'Stage 2 Tuning', 'Stage 3 Tuning', 'VMAX Off', 'Dyno Test', 'Exhaust System', 'Air Intake', 'Aftermarket Parts', 'Parts Installation', 'Body Kit Installation', 'Carbon Exterior Parts', 'Front Lip / Diffuser', 'Spoiler Installation', 'Widebody Kit', 'Exterior Styling Package', 'Valvetronic Exhaust', 'Turbo / Supercharger Kit', 'Suspension / Fitment', 'Brake Upgrade', 'Wheels / Tires', 'Lighting Upgrade', 'Interior Upgrade', 'Track / Drag Setup', 'SUV / Truck Package', 'Custom Project'], submitSuccess: 'Your consultation request has been received. The KRKN team will review your build details.', submitError: 'The request could not be sent. Please email info@krkngarage.com.', submitting: 'Sending request...', cards: [{ label: 'Online Consultation', value: 'Request a build quote' }, { label: 'Email', value: 'info@krkngarage.com' }, { label: 'Location', value: 'USA' }, { label: 'Instagram', value: '@krkneluxxcustoms' }] },
     footer: { slogan: 'Detailing. Tuning. Aftermarket Performance.', quickLinks: 'Quick Links', services: 'Services', shopCategories: 'Shop Categories', contact: 'Contact', newsletter: 'Newsletter', newsletterBody: 'Get detailing notes, tuning updates, product drops and project previews.', emailPlaceholder: 'Email address', subscribe: 'Subscribe', copyright: '© 2026 KRKN Eluxx Customs. All rights reserved.', legal: ['Privacy Policy', 'Terms & Conditions', 'Return Policy', 'Cookie Policy'] },
   },
   es: {
@@ -515,7 +478,7 @@ const translations: Record<Language, Translation> = {
     testimonials: [{ quote: 'KRKN Eluxx Customs hizo que el coche se sintiera más preciso y se viera mucho más limpio. El proceso fue premium de principio a fin.', name: 'Daniel R.' }, { quote: 'Equipo profesional, instalación limpia y gran comunicación de principio a fin.', name: 'Carlos M.' }, { quote: 'El PPF y el coating cerámico dieron exactamente el acabado protegido y brillante que quería.', name: 'Emre K.' }, { quote: 'La consulta apoyada por dyno hizo que el Stage 2 se sintiera responsable y bien medido.', name: 'Alex T.' }],
     projects: [{ title: 'BMW M Performance Detail & Stage 1 Tune', services: 'Corrección de pintura, coating cerámico, reprogramación ECU y validación dyno.', tags: ['Detailing', 'ECU Tune', 'Stage 1', 'Dyno'], visual: 'project-m' }, { title: 'Audi S-Line Aero & Intake Setup', services: 'Cold air intake, side skirts gloss black, fitment de difusor trasero e instalación.', tags: ['Air Intake', 'Side Skirts', 'Difusor', 'Fitment'], visual: 'project-audi' }, { title: 'Mercedes AMG Style Exterior Package', services: 'Front lip, difusor trasero, mirror caps de carbono, estilo exterior y fitment de ruedas.', tags: ['Body Kit', 'Carbono', 'Ruedas', 'Exterior'], visual: 'project-amg' }, { title: 'VW Golf GTI Stage 2 Dyno Calibration', services: 'Downpipe, intake, calibración ECU, prueba dyno y revisión de curva de torque.', tags: ['Stage 2', 'Dyno', 'ECU Tune', 'Air Intake'], visual: 'project-gti' }, { title: 'Porsche Ceramic Coating & PPF Package', services: 'Paquete PPF, coating cerámico, car care premium e inspección de entrega.', tags: ['PPF', 'Ceramic', 'Detailing', 'Protección'], visual: 'project-porsche' }, { title: 'JDM Widebody Custom Build', services: 'Conversión widebody, paquete splitter, instalación de spoiler, escape y detailing de proyecto.', tags: ['Widebody', 'Splitter', 'Spoiler', 'Instalación'], visual: 'project-jdm' }],
     about: { body: 'KRKN Eluxx Customs fue creada para unir detailing, tuning y personalización aftermarket en una experiencia automotriz premium. Desde PPF, detailing VIP y restauración interior hasta reprogramación ECU, pruebas dyno e instalación de piezas de rendimiento, ayudamos a los entusiastas a crear vehículos con presencia, protección y potencia.', points: ['Detailing premium, protección de pintura y restauración', 'Reprogramación ECU apoyada por diagnóstico y validación dyno', 'Suministro e instalación de piezas aftermarket seleccionadas', 'Consulta bilingüe para proyectos de entusiastas'] },
-    contact: { body: 'Envía los datos de tu vehículo y el servicio deseado. El equipo de KRKN Eluxx Customs puede preparar una cotización de detailing, tuning, dyno, estilo exterior, instalación o piezas para tu proyecto.', fields: { fullName: 'Nombre completo', email: 'Email', phone: 'Teléfono', country: 'País', make: 'Marca del vehículo', model: 'Modelo del vehículo', year: 'Año del vehículo', engine: 'Motor', service: 'Servicio deseado', message: 'Mensaje' }, serviceOptions: ['PPF / Película de protección de pintura', 'Coating cerámico', 'Detailing VIP', 'Restauración interior', 'Restauración exterior', 'Reprogramación ECU', 'Stage 1', 'Stage 2', 'Stage 3', 'VMAX Off', 'Prueba dyno', 'Sistema de escape', 'Air intake', 'Piezas aftermarket', 'Instalación de piezas', 'Instalación de body kit', 'Piezas exteriores de carbono', 'Front lip / Difusor', 'Instalación de spoiler', 'Widebody kit', 'Paquete de estilo exterior', 'Escape valvetronic', 'Kit turbo / supercharger', 'Suspensión / fitment', 'Mejora de frenos', 'Ruedas / neumáticos', 'Mejora de iluminación', 'Mejora interior', 'Setup track / drag', 'Paquete SUV / truck', 'Proyecto personalizado'], submitSuccess: 'Solicitud recibida. Esta demo mantiene la solicitud en pantalla y está lista para integración backend.', cards: [{ label: 'WhatsApp', value: '+1 555 000 0000' }, { label: 'Email', value: 'info@krkngarage.com' }, { label: 'Ubicación', value: 'EE. UU.' }, { label: 'Instagram', value: '@krkneluxxcustoms' }] },
+    contact: { body: 'Envía los datos de tu vehículo y el servicio deseado. El equipo de KRKN Eluxx Customs puede preparar una cotización de detailing, tuning, dyno, estilo exterior, instalación o piezas para tu proyecto.', fields: { fullName: 'Nombre completo', email: 'Email', phone: 'Teléfono', country: 'País', make: 'Marca del vehículo', model: 'Modelo del vehículo', year: 'Año del vehículo', engine: 'Motor', service: 'Servicio deseado', message: 'Mensaje' }, serviceOptions: ['PPF / Película de protección de pintura', 'Coating cerámico', 'Detailing VIP', 'Restauración interior', 'Restauración exterior', 'Reprogramación ECU', 'Stage 1', 'Stage 2', 'Stage 3', 'VMAX Off', 'Prueba dyno', 'Sistema de escape', 'Air intake', 'Piezas aftermarket', 'Instalación de piezas', 'Instalación de body kit', 'Piezas exteriores de carbono', 'Front lip / Difusor', 'Instalación de spoiler', 'Widebody kit', 'Paquete de estilo exterior', 'Escape valvetronic', 'Kit turbo / supercharger', 'Suspensión / fitment', 'Mejora de frenos', 'Ruedas / neumáticos', 'Mejora de iluminación', 'Mejora interior', 'Setup track / drag', 'Paquete SUV / truck', 'Proyecto personalizado'], submitSuccess: 'Tu solicitud de consulta ha sido recibida. El equipo KRKN revisará los datos de tu proyecto.', submitError: 'No se pudo enviar la solicitud. Escribe a info@krkngarage.com.', submitting: 'Enviando solicitud...', cards: [{ label: 'Consulta online', value: 'Solicitar cotización' }, { label: 'Email', value: 'info@krkngarage.com' }, { label: 'Ubicación', value: 'EE. UU.' }, { label: 'Instagram', value: '@krkneluxxcustoms' }] },
     footer: { slogan: 'Detailing. Tuning. Rendimiento aftermarket.', quickLinks: 'Enlaces rápidos', services: 'Servicios', shopCategories: 'Categorías', contact: 'Contacto', newsletter: 'Newsletter', newsletterBody: 'Recibe notas de detailing, novedades de tuning, lanzamientos de piezas y proyectos.', emailPlaceholder: 'Email', subscribe: 'Suscribirse', copyright: '© 2026 KRKN Eluxx Customs. Todos los derechos reservados.', legal: ['Política de Privacidad', 'Términos y Condiciones', 'Política de Devoluciones', 'Política de Cookies'] },
   },
 };
@@ -792,6 +755,7 @@ const technicalNotes: TechnicalNote[] = [
 
 function App() {
   const [language, setLanguage] = useState<Language>('en');
+  const [catalogProducts, setCatalogProducts] = useState<Product[]>(products);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeCategory, setActiveCategory] = useState<CategoryId | 'all'>('all');
   const [query, setQuery] = useState('');
@@ -806,6 +770,21 @@ function App() {
 
   const t = translations[language];
   const normalPageTitleRef = useRef(t.meta.title);
+
+  useEffect(() => {
+    let cancelled = false;
+    fetch('/api/catalog', { cache: 'no-store' })
+      .then((response) => {
+        if (!response.ok) throw new Error('Catalog unavailable');
+        return response.json();
+      })
+      .then((payload) => {
+        const liveProducts = catalogProductsFrom(payload);
+        if (!cancelled && liveProducts) setCatalogProducts(liveProducts);
+      })
+      .catch(() => undefined);
+    return () => { cancelled = true; };
+  }, []);
 
   useEffect(() => {
     document.documentElement.lang = language;
@@ -832,15 +811,15 @@ function App() {
     return () => window.clearTimeout(timeout);
   }, [toast]);
 
-  const brands = useMemo(() => ['all', ...Array.from(new Set(products.map((product) => product.brand)))], []);
+  const brands = useMemo(() => ['all', ...Array.from(new Set(catalogProducts.map((product) => product.brand)))], [catalogProducts]);
   const vehicles = useMemo(
-    () => ['all', ...Array.from(new Set(products.flatMap((product) => product.compatibility)))],
-    [],
+    () => ['all', ...Array.from(new Set(catalogProducts.flatMap((product) => product.compatibility)))],
+    [catalogProducts],
   );
 
   const filteredProducts = useMemo(() => {
     const normalizedQuery = query.trim().toLowerCase();
-    return products.filter((product) => {
+    return catalogProducts.filter((product) => {
       const matchesCategory = activeCategory === 'all' || product.category === activeCategory;
       const searchable = [
         product.name[language],
@@ -857,11 +836,11 @@ function App() {
       const matchesVehicle = vehicleFilter === 'all' || product.compatibility.includes(vehicleFilter);
       return matchesCategory && matchesSearch && matchesBrand && matchesVehicle;
     });
-  }, [activeCategory, brandFilter, language, query, t.categoryLabels, vehicleFilter]);
+  }, [activeCategory, brandFilter, catalogProducts, language, query, t.categoryLabels, vehicleFilter]);
 
-  const selectedProduct = products.find((product) => product.id === selectedProductId) ?? products[0];
+  const selectedProduct = catalogProducts.find((product) => product.id === selectedProductId) ?? catalogProducts[0] ?? products[0];
   const cartCount = Object.values(cart).reduce((sum, quantity) => sum + quantity, 0);
-  const cartProducts = products.filter((product) => cart[product.id]);
+  const cartProducts = catalogProducts.filter((product) => cart[product.id]);
 
   const showToast = (message: string) => setToast(message);
 
@@ -891,7 +870,7 @@ function App() {
     setVehicleFilter('all');
 
     const nextProduct =
-      category === 'all' ? products[0] : products.find((product) => product.category === category);
+      category === 'all' ? catalogProducts[0] : catalogProducts.find((product) => product.category === category);
     if (nextProduct) {
       setSelectedProductId(nextProduct.id);
     }
@@ -904,17 +883,55 @@ function App() {
     }, 0);
   };
 
-  const handleQuoteSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleQuoteSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setQuoteStatus(t.contact.submitSuccess);
-    event.currentTarget.reset();
+    const form = event.currentTarget;
+    const body = Object.fromEntries(new FormData(form));
+    setQuoteStatus(t.contact.submitting);
+    try {
+      const response = await fetch('/api/inquiries', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...body, language }),
+      });
+      if (!response.ok) throw new Error('Request failed');
+      setQuoteStatus(t.contact.submitSuccess);
+      form.reset();
+    } catch {
+      setQuoteStatus(t.contact.submitError);
+    }
   };
 
-  const handleNewsletterSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleNewsletterSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setNewsletterStatus(t.common.newsletterSuccess);
-    event.currentTarget.reset();
+    const form = event.currentTarget;
+    const email = String(new FormData(form).get('email') || '');
+    try {
+      const response = await fetch('/api/newsletter', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      });
+      if (!response.ok) throw new Error('Request failed');
+      setNewsletterStatus(t.common.newsletterSuccess);
+      form.reset();
+    } catch {
+      setNewsletterStatus(t.contact.submitError);
+    }
   };
+
+  const isAdminRoute = window.location.pathname.replace(/\/+$/, '').endsWith('/admin');
+  if (isAdminRoute) {
+    return (
+      <AdminStudio
+        language={language}
+        setLanguage={setLanguage}
+        products={catalogProducts}
+        onProductsChange={setCatalogProducts}
+        productImage={(product) => imageSource(productImageFor(product))}
+      />
+    );
+  }
 
   return (
     <>
@@ -968,7 +985,7 @@ function App() {
         <Testimonials t={t} />
         <TechnicalNotes language={language} />
         <About t={t} />
-        <Contact t={t} handleQuoteSubmit={handleQuoteSubmit} quoteStatus={quoteStatus} />
+        <Contact language={language} t={t} handleQuoteSubmit={handleQuoteSubmit} quoteStatus={quoteStatus} />
       </main>
 
       <Footer
@@ -2291,10 +2308,12 @@ function About({ t }: { t: Translation }) {
 }
 
 function Contact({
+  language,
   t,
   handleQuoteSubmit,
   quoteStatus,
 }: {
+  language: Language;
   t: Translation;
   handleQuoteSubmit: (event: FormEvent<HTMLFormElement>) => void;
   quoteStatus: string;
@@ -2310,10 +2329,10 @@ function Contact({
           />
           <div className="contact-cards">
             {t.contact.cards.map((card, index) => {
-              const icons = [Phone, Mail, MapPin, Instagram];
-              const Icon = icons[index] ?? Phone;
+              const icons = [ClipboardCheck, Mail, MapPin, Instagram];
+              const Icon = icons[index] ?? ClipboardCheck;
               const hrefs = [
-                'tel:+15550000000',
+                '#contact-form',
                 'mailto:info@krkngarage.com',
                 'https://www.google.com/maps/search/?api=1&query=USA',
                 'https://www.instagram.com/krkneluxxcustoms',
@@ -2336,7 +2355,8 @@ function Contact({
           </div>
         </div>
 
-        <form className="quote-form" onSubmit={handleQuoteSubmit}>
+        <form className="quote-form" id="contact-form" onSubmit={handleQuoteSubmit}>
+          <input className="form-honeypot" type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" />
           <div className="form-grid">
             <FormField label={t.contact.fields.fullName} name="fullName" autoComplete="name" required />
             <FormField label={t.contact.fields.email} name="email" type="email" autoComplete="email" required />
@@ -2463,7 +2483,7 @@ function Footer({
           <h2>{t.footer.newsletter}</h2>
           <p>{t.footer.newsletterBody}</p>
           <form className="newsletter-form" onSubmit={handleNewsletterSubmit}>
-            <input type="email" placeholder={t.footer.emailPlaceholder} required />
+            <input type="email" name="email" placeholder={t.footer.emailPlaceholder} required />
             <button type="submit">{t.footer.subscribe}</button>
           </form>
           {newsletterStatus && (
