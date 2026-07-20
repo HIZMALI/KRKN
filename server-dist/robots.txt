@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /admin
 
-Sitemap: https://krkngarage.com/sitemap.xml
+Sitemap: https://eluxx.us/sitemap.xml

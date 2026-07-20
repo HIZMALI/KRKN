@@ -34,11 +34,11 @@ Do not put the real password in Git. `.env.example` is only a template; `server.
 npm start
 ```
 
-Point `krkngarage.com` to this Node process with the hosting panel or a reverse proxy. HTTPS should terminate at the hosting platform or proxy.
+Point `eluxx.us` to this Node process with the hosting panel or a reverse proxy. HTTPS should terminate at the hosting platform or proxy.
 
-Public website: `https://krkngarage.com/`
+Public website: `https://eluxx.us/`
 
-Admin studio: `https://krkngarage.com/admin`
+Admin studio: `https://eluxx.us/admin`
 
 ## 4. Persistent directories
 
@@ -62,7 +62,7 @@ Back up `data/` and `uploads/` regularly. The admin studio can also export the f
 ```nginx
 server {
   listen 443 ssl http2;
-  server_name krkngarage.com www.krkngarage.com;
+  server_name eluxx.us www.eluxx.us;
 
   client_max_body_size 8m;
 
